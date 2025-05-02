@@ -6,17 +6,35 @@ const nextConfig = {
     return [
       // Redirect from www to non-www (or vice versa, depending on preference)
       {
-        source: 'https://www.rampa.cash/:path*',
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.rampa.cash',
+          },
+        ],
         destination: 'https://rampa.cash/:path*',
         permanent: true,
       },
       {
-        source: 'https://www.rampacash.com/:path*',
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.rampacash.com',
+          },
+        ],
         destination: 'https://rampa.cash/:path*',
         permanent: true,
       },
       {
-        source: 'https://rampacash.com/:path*',
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'rampacash.com',
+          },
+        ],
         destination: 'https://rampa.cash/:path*',
         permanent: true,
       },
