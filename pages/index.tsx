@@ -149,7 +149,7 @@ const Home: NextPage = () => {
 
       <footer className="py-6 md:py-8 border-t">
         <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>© 2024 Rampa.cash</p>
+          <p>© {new Date().getFullYear()} Rampa.cash</p>
         </div>
       </footer>
     </div>
