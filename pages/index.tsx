@@ -1,85 +1,116 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import Head from "next/head";
+import Head from 'next/head'
+import Link from 'next/link'
+import type { NextPage } from 'next'
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
-    <>
-      {/* SEO Meta Tags */}
+    <div className="min-h-screen bg-white">
       <Head>
-        <title>rampa.cash - Fast, Secure Remittances</title>
-        <meta name="description" content="Send money globally with rampa.cash. Fast, secure, and regulated remittances powered by blockchain." />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>RAMPA - Fast, Secure Money Transfers</title>
+        <meta name="description" content="Send money globally with RAMPA" />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      {/* Navbar */}
-      <nav className="flex items-center justify-between p-6 bg-white shadow-md w-full">
-        <div className="flex items-center space-x-4">
-          <Image src="/logo.png" alt="rampa.cash logo" width={40} height={40} />
-          <span className="text-xl font-bold text-gray-900">rampa.cash</span>
-        </div>
-        <div className="hidden md:flex space-x-6">
-          <a href="#" className="text-gray-700 hover:text-gray-900">Home</a>
-          <a href="#how-it-works" className="text-gray-700 hover:text-gray-900">How It Works</a>
-          <a href="#pricing" className="text-gray-700 hover:text-gray-900">Pricing</a>
-          <a href="#about" className="text-gray-700 hover:text-gray-900">About Us</a>
-        </div>
-      </nav>
+      <header className="py-4 px-6 md:px-16">
+        <nav className="container mx-auto flex items-center justify-between">
+          <div className="flex items-center">
+            <img src="/logo.png" alt="RAMPA logo" className="logo" />
+            <span className="font-bold text-xl ml-2">rampa.cash</span>
+          </div>
+          <div className="hidden md:flex items-center space-x-8">
+            <Link href="/" className="font-medium text-gray-800 hover:text-indigo-600">
+              Home
+            </Link>
+            <Link href="/how-it-works" className="font-medium text-gray-800 hover:text-indigo-600">
+              How It Works
+            </Link>
+            <Link href="/pricing" className="font-medium text-gray-800 hover:text-indigo-600">
+              Pricing
+            </Link>
+            <Link href="/about-us" className="font-medium text-gray-800 hover:text-indigo-600">
+              About Us
+            </Link>
+          </div>
+          <button className="bg-indigo-600 text-white px-4 py-2 rounded-md font-medium hover:bg-indigo-700 transition">
+            Start Sending Money
+          </button>
+        </nav>
+      </header>
 
-      <main className="flex flex-col items-center justify-center min-h-screen p-8 bg-gray-50">
+      <main>
         {/* Hero Section */}
-        <section className="text-center space-y-6 mt-12">
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl font-bold text-gray-900"
-          >
-            Send Money Globally with rampa.cash
-          </motion.h1>
-          <p className="text-lg text-gray-600">
-            Fast, secure, and regulated remittances. Powered by blockchain.
-          </p>
-          <Button className="px-6 py-3 text-lg">Start Sending</Button>
+        <section className="py-20 text-center px-4">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+              Send money globally.
+              <br />
+              Fast. Secure. Regulated.
+            </h1>
+            <button className="bg-indigo-600 text-white px-6 py-3 rounded-md font-medium hover:bg-indigo-700 transition text-lg mt-6">
+              Start Sending Money
+            </button>
+          </div>
         </section>
 
-        {/* How it Works */}
-        <section id="how-it-works" className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
-          {[
-            { title: "Create Account", description: "Sign up in minutes with your email and ID." },
-            { title: "Deposit Funds", description: "Securely deposit using your local bank or crypto." },
-            { title: "Send Money", description: "Send remittances globally at the best rates." },
-          ].map((step, index) => (
-            <Card key={index} className="shadow-lg">
-              <CardContent className="p-6 text-center">
-                <h2 className="text-2xl font-semibold mb-2">{step.title}</h2>
-                <p className="text-gray-600">{step.description}</p>
-              </CardContent>
-            </Card>
-          ))}
+        {/* How It Works Section */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4 md:px-8">
+            <h2 className="text-3xl font-bold text-center mb-16">How It Works</h2>
+            
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-white p-8 rounded-lg shadow-sm relative">
+                <div className="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold mb-4">
+                  1
+                </div>
+                <h3 className="text-xl font-bold mb-2">Create an account</h3>
+                <p className="text-gray-600">Fill in account details to set up your account.</p>
+              </div>
+              
+              <div className="bg-white p-8 rounded-lg shadow-sm relative">
+                <div className="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold mb-4">
+                  2
+                </div>
+                <h3 className="text-xl font-bold mb-2">Enter recipient details</h3>
+                <p className="text-gray-600">Provide a confirmation and confirm email.</p>
+              </div>
+              
+              <div className="bg-white p-8 rounded-lg shadow-sm relative">
+                <div className="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold mb-4">
+                  3
+                </div>
+                <h3 className="text-xl font-bold mb-2">Confirm and send</h3>
+                <p className="text-gray-600">Make secure, easy and fast payment.</p>
+              </div>
+            </div>
+          </div>
         </section>
 
-        {/* Placeholder for Pricing Section */}
-        <section id="pricing" className="mt-24 text-center">
-          <h2 className="text-3xl font-bold mb-4">Pricing</h2>
-          <p className="text-gray-600">Best exchange rates. Minimal fees. Coming soon!</p>
+        {/* Pricing Section */}
+        <section className="py-16">
+          <div className="container mx-auto px-4 md:px-8 text-center">
+            <h2 className="text-3xl font-bold mb-4">Pricing</h2>
+            <p className="text-xl mb-8 max-w-2xl mx-auto">Best exchange rates. Minimal fees.</p>
+          </div>
         </section>
 
-        {/* Placeholder for About Us Section */}
-        <section id="about" className="mt-24 text-center">
-          <h2 className="text-3xl font-bold mb-4">About Us</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            At rampa.cash, we believe sending money should be simple, fast, and accessible for everyone. Based in Germany, we combine blockchain technology with financial regulation to offer the best remittance experience.
-          </p>
+        {/* About Us Section */}
+        <section className="py-16 bg-gray-50">
+          <div className="container mx-auto px-4 md:px-8 text-center">
+            <h2 className="text-3xl font-bold mb-4">About Us</h2>
+            <p className="text-xl mb-8 max-w-3xl mx-auto">
+              We are dedicated to providing secure and efficient global transfers.
+            </p>
+          </div>
         </section>
-
-        {/* Footer */}
-        <footer className="mt-24 text-gray-500">
-          &copy; {new Date().getFullYear()} rampa.cash - All rights reserved.
-        </footer>
       </main>
-    </>
-  );
+
+      <footer className="py-8 border-t">
+        <div className="container mx-auto px-4 text-center text-gray-600">
+          <p>© 2024 Rampa.cash</p>
+        </div>
+      </footer>
+    </div>
+  )
 }
+
+export default Home
