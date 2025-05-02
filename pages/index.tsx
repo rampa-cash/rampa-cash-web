@@ -12,7 +12,7 @@ const Home: NextPage = () => {
         <title>RAMPA - Fast, Secure Money Transfers</title>
         <meta name="description" content="Send money globally with RAMPA" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo.png" type="image/png" />
       </Head>
 
       <header className="py-4 px-4 md:px-6 shadow-sm">
