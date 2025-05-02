@@ -1,22 +1,28 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import type { NextPage } from 'next'
+import { useState } from 'react'
 
 const Home: NextPage = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-white">
       <Head>
         <title>RAMPA - Fast, Secure Money Transfers</title>
         <meta name="description" content="Send money globally with RAMPA" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <header className="py-4 px-6 md:px-16">
+      <header className="py-4 px-4 md:px-6 shadow-sm">
         <nav className="container mx-auto flex items-center justify-between">
           <div className="flex items-center">
             <img src="/logo.png" alt="RAMPA logo" className="logo" />
             <span className="font-bold text-xl ml-2">rampa.cash</span>
           </div>
+          
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <Link href="/" className="font-medium text-gray-800 hover:text-indigo-600">
               Home
@@ -31,34 +37,71 @@ const Home: NextPage = () => {
               About Us
             </Link>
           </div>
-          <button className="bg-indigo-600 text-white px-4 py-2 rounded-md font-medium hover:bg-indigo-700 transition">
-            Start Sending Money
-          </button>
+          
+          {/* Mobile Menu Button */}
+          <div className="flex items-center md:hidden">
+            <button 
+              className="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md font-medium hover:bg-indigo-700 transition mr-3"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              Menu
+            </button>
+            <Link href="/start" className="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md font-medium hover:bg-indigo-700 transition">
+              Send Money
+            </Link>
+          </div>
+          
+          {/* Desktop CTA Button */}
+          <div className="hidden md:block">
+            <Link href="/start" className="bg-indigo-600 text-white px-4 py-2 rounded-md font-medium hover:bg-indigo-700 transition">
+              Start Sending Money
+            </Link>
+          </div>
         </nav>
+        
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-white py-4 px-4 border-t">
+            <div className="flex flex-col space-y-4">
+              <Link href="/" className="font-medium text-gray-800 hover:text-indigo-600">
+                Home
+              </Link>
+              <Link href="/how-it-works" className="font-medium text-gray-800 hover:text-indigo-600">
+                How It Works
+              </Link>
+              <Link href="/pricing" className="font-medium text-gray-800 hover:text-indigo-600">
+                Pricing
+              </Link>
+              <Link href="/about-us" className="font-medium text-gray-800 hover:text-indigo-600">
+                About Us
+              </Link>
+            </div>
+          </div>
+        )}
       </header>
 
       <main>
         {/* Hero Section */}
-        <section className="py-20 text-center px-4">
+        <section className="py-12 md:py-20 text-center px-4">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
               Send money globally.
               <br />
               Fast. Secure. Regulated.
             </h1>
-            <button className="bg-indigo-600 text-white px-6 py-3 rounded-md font-medium hover:bg-indigo-700 transition text-lg mt-6">
+            <Link href="/start" className="inline-block bg-indigo-600 text-white px-6 py-3 rounded-md font-medium hover:bg-indigo-700 transition text-lg mt-4">
               Start Sending Money
-            </button>
+            </Link>
           </div>
         </section>
 
         {/* How It Works Section */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-12 md:py-16 bg-gray-50">
           <div className="container mx-auto px-4 md:px-8">
-            <h2 className="text-3xl font-bold text-center mb-16">How It Works</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-16">How It Works</h2>
             
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="bg-white p-8 rounded-lg shadow-sm relative">
+            <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="bg-white p-6 md:p-8 rounded-lg shadow-sm relative">
                 <div className="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold mb-4">
                   1
                 </div>
@@ -66,7 +109,7 @@ const Home: NextPage = () => {
                 <p className="text-gray-600">Fill in account details to set up your account.</p>
               </div>
               
-              <div className="bg-white p-8 rounded-lg shadow-sm relative">
+              <div className="bg-white p-6 md:p-8 rounded-lg shadow-sm relative">
                 <div className="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold mb-4">
                   2
                 </div>
@@ -74,7 +117,7 @@ const Home: NextPage = () => {
                 <p className="text-gray-600">Provide a confirmation and confirm email.</p>
               </div>
               
-              <div className="bg-white p-8 rounded-lg shadow-sm relative">
+              <div className="bg-white p-6 md:p-8 rounded-lg shadow-sm relative sm:col-span-2 lg:col-span-1">
                 <div className="w-10 h-10 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold mb-4">
                   3
                 </div>
@@ -86,25 +129,25 @@ const Home: NextPage = () => {
         </section>
 
         {/* Pricing Section */}
-        <section className="py-16">
+        <section className="py-12 md:py-16">
           <div className="container mx-auto px-4 md:px-8 text-center">
-            <h2 className="text-3xl font-bold mb-4">Pricing</h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">Best exchange rates. Minimal fees.</p>
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Pricing</h2>
+            <p className="text-lg md:text-xl mb-6 md:mb-8 max-w-2xl mx-auto">Best exchange rates. Minimal fees.</p>
           </div>
         </section>
 
         {/* About Us Section */}
-        <section className="py-16 bg-gray-50">
+        <section className="py-12 md:py-16 bg-gray-50">
           <div className="container mx-auto px-4 md:px-8 text-center">
-            <h2 className="text-3xl font-bold mb-4">About Us</h2>
-            <p className="text-xl mb-8 max-w-3xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">About Us</h2>
+            <p className="text-lg md:text-xl mb-6 md:mb-8 max-w-3xl mx-auto">
               We are dedicated to providing secure and efficient global transfers.
             </p>
           </div>
         </section>
       </main>
 
-      <footer className="py-8 border-t">
+      <footer className="py-6 md:py-8 border-t">
         <div className="container mx-auto px-4 text-center text-gray-600">
           <p>© 2024 Rampa.cash</p>
         </div>
