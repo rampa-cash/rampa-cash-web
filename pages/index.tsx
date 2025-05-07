@@ -87,7 +87,7 @@ const Home: NextPage = () => {
             <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
               Send money globally.
               <br />
-              Fast. Secure. Regulated.
+              Fast. Secure. Easy.
             </h1>
             <Link href="/start" className="inline-block bg-indigo-600 text-white px-6 py-3 rounded-md font-medium hover:bg-indigo-700 transition text-lg mt-4">
               Start Sending Money
@@ -149,7 +149,24 @@ const Home: NextPage = () => {
 
       <footer className="py-6 md:py-8 border-t">
         <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>© {new Date().getFullYear()} Rampa.cash</p>
+          <div className="flex flex-col items-center justify-center">
+            <p className="mb-4">© {new Date().getFullYear()} Rampa.cash</p>
+            
+            <div className="flex items-center">
+              <span className="mr-2">Follow us on</span>
+              <a 
+                href="https://x.com/rampa_cash" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center text-gray-700 hover:text-indigo-600 transition-colors"
+              >
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                </svg>
+                <span className="ml-1">@rampa_cash</span>
+              </a>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
