@@ -5,6 +5,50 @@ import { useState } from 'react'
 const WhatsAppTransfer = () => {
   const [amount, setAmount] = useState('200');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [countryCode, setCountryCode] = useState('+1');
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+  
+  // Common country codes + all European Union countries
+  const countryCodes = [
+    // Common non-EU codes
+    { code: '+1', country: 'USA/Canada' },
+    { code: '+52', country: 'Mexico' },
+    
+    // European Union countries
+    { code: '+43', country: 'Austria' },
+    { code: '+32', country: 'Belgium' },
+    { code: '+359', country: 'Bulgaria' },
+    { code: '+385', country: 'Croatia' },
+    { code: '+357', country: 'Cyprus' },
+    { code: '+420', country: 'Czech Republic' },
+    { code: '+45', country: 'Denmark' },
+    { code: '+372', country: 'Estonia' },
+    { code: '+358', country: 'Finland' },
+    { code: '+33', country: 'France' },
+    { code: '+49', country: 'Germany' },
+    { code: '+30', country: 'Greece' },
+    { code: '+36', country: 'Hungary' },
+    { code: '+353', country: 'Ireland' },
+    { code: '+39', country: 'Italy' },
+    { code: '+371', country: 'Latvia' },
+    { code: '+370', country: 'Lithuania' },
+    { code: '+352', country: 'Luxembourg' },
+    { code: '+356', country: 'Malta' },
+    { code: '+31', country: 'Netherlands' },
+    { code: '+48', country: 'Poland' },
+    { code: '+351', country: 'Portugal' },
+    { code: '+40', country: 'Romania' },
+    { code: '+421', country: 'Slovakia' },
+    { code: '+386', country: 'Slovenia' },
+    { code: '+34', country: 'Spain' },
+    { code: '+46', country: 'Sweden' },
+    
+    // Other popular codes
+    { code: '+44', country: 'UK' },
+    { code: '+57', country: 'Colombia' },
+    { code: '+54', country: 'Argentina' },
+    { code: '+55', country: 'Brazil' },
+  ];
   
   return (
     <div className="min-h-screen bg-white">
@@ -34,16 +78,15 @@ const WhatsAppTransfer = () => {
         <section className="py-12 md:py-16 px-4">
           <div className="container mx-auto max-w-2xl">
             <div className="flex items-center justify-center mb-8">
-              <svg className="w-10 h-10 text-green-600 mr-3" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.531 16.983c-.484 1.488-2.376 2.716-4.587 3.068-1.713.271-3.434.075-4.887-.611-1.115-.529-1.988-1.116-2.796-1.898-1.967-1.905-3.092-4.614-2.849-7.273.13-1.428.716-2.722 1.706-3.7 1.262-1.247 2.97-1.896 4.746-1.896.58 0 1.152.077 1.707.23.278.077 2.09.563 2.582.845 1.177.674 2.128 1.613 2.802 2.775 1.023 1.772 1.308 3.932.798 6.072-.415 1.739-1.144 3.023-2.216 3.767-.358.248-.828.172-1.064-.174-.236-.348-.137-.819.223-1.064.894-.612 1.319-1.834 1.467-2.494.34-1.518.175-3.219-.467-4.702-.456-1.05-1.2-1.972-2.052-2.544-.394-.265-.854-.437-1.297-.505-.14-.02-.294-.026-.444-.026-1.326 0-2.505.834-2.98 2.085-.197.517-.274 1.085-.228 1.674.037.48.186.909.406 1.27.179.292.38.563.59.82.089.11.167.51.298.87.205.057.435.01.499-.167.591-1.412 1.022-1.8 1.596-2.11.425-.23.905-.364 1.384-.409.176-.017.356-.014.533.01.161.022.324.055.483.098.067.018.057-.038.09-.094.013-.022.04-.066.073-.12.034-.056.073-.12.112-.184.08-.132.16-.264.166-.294.013-.067-.048-.13-.126-.173-.077-.043-.186-.087-.308-.118-.123-.032-.192-.076-.301-.118-.109-.042-.23-.103-.317-.155-.087-.051-.122-.071-.122-.071l-.058-.034c-.801-.46-1.943-.818-2.996-.846-.97-.026-2.25.206-3.07.843-.821.637-1.228 1.24-1.664 2.125-.435.886-.801 1.404-1.154 2.316-.352.913-.411 1.89-.264 2.786.147.896.5 1.768 1.038 2.486.538.719 1.167 1.14 1.692 1.56.526.419 1.424.83 2.21 1.093.786.262 1.302.288 2.133.321.83.033 1.841-.085 2.793-.462.952-.376 1.793-.877 2.512-1.62.718-.745 1.192-1.584 1.285-2.545.092-.961-.059-1.891-.43-2.66-.371-.77-.95-1.33-1.586-1.669-.318-.169-.842-.32-.985-.344-.142-.024-.681-.012-.681-.012-.435-.067-.821.052-1.171.312-.35.26-.672.521-.965.812-.148.146-.287.299-.416.458-.13.159-.249.324-.341.499-.09.171-.154.356-.167.553-.011.168.005.342.054.502.048.16.131.301.232.421.101.12.224.218.355.294.132.076.394.171.516.204.61.166 1.02.209 1.463.214.109.001.217-.003.324-.01.106-.007.154-.059.249-.11l.014-.008c.123-.068.24-.152.348-.249.324-.292.548-.677.617-1.082.068-.405-.016-.829-.222-1.172-.103-.171-.238-.323-.394-.446-.156-.122-.333-.215-.52-.269-.186-.055-.507-.093-.605-.093-.098 0-.432.038-.432.038-.234.035-.456.112-.656.226-.2.114-.385.244-.554.402-.338.316-.601.747-.736 1.212-.134.465-.151.959-.028 1.425.123.466.385.896.742 1.228.178.166.513.36.764.468.251.108.523.176.801.199.278.023.559.002.828-.05.269-.052.529-.142.764-.254.235-.111.444-.242.632-.39.189-.148.357-.311.505-.488.148-.176.276-.365.387-.564.111-.198.206-.405.284-.617.063-.174.114-.352.154-.533.039-.18.066-.364.08-.55.007-.091.01-.183.01-.274 0-1.031-.459-2.058-.907-2.791-.448-.732-1.147-1.37-1.914-1.772-.767-.403-1.786-.78-2.698-.819z" fillRule="evenodd" clipRule="evenodd"/>
+              <svg className="w-10 h-10 text-green-600 mr-3" viewBox="0 0 448 512" fill="currentColor">
+                <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
               </svg>
               <h1 className="text-3xl md:text-4xl font-bold">Send Money via WhatsApp</h1>
             </div>
             
             <div className="bg-white rounded-lg shadow-lg p-6 md:p-8">
-              <div className="flex items-center justify-center mb-6">
-                <div className="border border-indigo-200 rounded-md p-3">
+              <div className="flex flex-col md:flex-row items-center justify-center mb-6">
+                <div className="border border-indigo-200 rounded-md p-3 w-full md:w-auto mb-4 md:mb-0">
                   <div className="text-sm text-gray-500 mb-1">You send</div>
                   <div className="flex items-center">
                     <input
@@ -56,13 +99,13 @@ const WhatsAppTransfer = () => {
                   </div>
                 </div>
                 
-                <div className="mx-4 text-indigo-600">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <div className="mx-2 md:mx-4 text-indigo-600 mb-4 md:mb-0">
+                  <svg className="w-6 h-6 transform rotate-90 md:rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                   </svg>
                 </div>
                 
-                <div className="border border-indigo-200 rounded-md p-3">
+                <div className="border border-indigo-200 rounded-md p-3 w-full md:w-auto">
                   <div className="text-sm text-gray-500 mb-1">Recipient gets</div>
                   <div className="flex items-center">
                     <span className="text-2xl font-medium">{(parseFloat(amount || '0') * 19.77).toFixed(2)}</span>
@@ -73,18 +116,44 @@ const WhatsAppTransfer = () => {
               
               <div className="mb-6">
                 <label className="block text-gray-700 mb-1">Your WhatsApp</label>
-                <div className="flex">
-                  <div className="bg-gray-100 px-3 py-2 rounded-l-md flex items-center text-gray-500">
-                    <span className="inline-block ml-1">+1</span>
+                <div className="flex relative">
+                  <div 
+                    className="bg-gray-100 px-3 py-2 rounded-l-md flex items-center text-gray-700 cursor-pointer hover:bg-gray-200 transition"
+                    onClick={() => setShowCountryDropdown(!showCountryDropdown)}
+                  >
+                    <span className="inline-block">{countryCode}</span>
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
                   </div>
+                  
                   <input
                     type="tel"
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                    placeholder="201-555-0123"
+                    placeholder="Enter phone number"
                     className="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   />
+                  
+                  {showCountryDropdown && (
+                    <div className="absolute top-full left-0 mt-1 bg-white shadow-lg border border-gray-200 rounded-md z-10 max-h-60 overflow-y-auto">
+                      {countryCodes.map((country) => (
+                        <div 
+                          key={country.code}
+                          className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center"
+                          onClick={() => {
+                            setCountryCode(country.code);
+                            setShowCountryDropdown(false);
+                          }}
+                        >
+                          <span className="font-medium mr-2">{country.code}</span>
+                          <span className="text-gray-600">{country.country}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
+                <p className="text-xs text-gray-500 mt-1">Include country code and number</p>
               </div>
               
               <div className="flex items-center justify-between text-sm text-gray-600 mb-6">
