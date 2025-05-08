@@ -15,12 +15,14 @@ const Home: NextPage = () => {
         <link rel="icon" href="/logo.png" type="image/png" />
       </Head>
 
-      <header className="py-4 px-4 md:px-6 shadow-sm">
+      <header className="py-3 px-4 md:py-4 md:px-6 shadow-sm">
         <nav className="container mx-auto flex items-center justify-between">
-          <div className="flex items-center">
-            <img src="/logo.png" alt="RAMPA logo" className="logo" />
-            <span className="font-bold text-xl ml-2">rampa.cash</span>
-          </div>
+          <Link href="/">
+            <div className="flex items-center cursor-pointer">
+              <img src="/logo.png" alt="RAMPA logo" className="w-8 h-8 md:w-10 md:h-10" />
+              <span className="font-bold text-lg md:text-xl ml-2">rampa.cash</span>
+            </div>
+          </Link>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
@@ -38,16 +40,28 @@ const Home: NextPage = () => {
             </Link>
           </div>
           
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Button and CTA */}
           <div className="flex items-center md:hidden">
             <button 
-              className="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md font-medium hover:bg-indigo-700 transition mr-3"
+              className="bg-indigo-600 text-white px-2 py-1 text-xs rounded-md font-medium hover:bg-indigo-700 transition mr-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               Menu
             </button>
-            <Link href="/start" className="bg-indigo-600 text-white px-3 py-1 text-sm rounded-md font-medium hover:bg-indigo-700 transition">
-              Send Money
+            <Link 
+              href="/whatsapp-transfer" 
+              className="flex items-center bg-green-600 text-white px-2 py-1 text-xs rounded-md font-medium hover:bg-green-700 transition mr-2"
+            >
+              <svg className="w-3 h-3 mr-1" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.893c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652c1.746.943 3.71 1.444 5.71 1.447h.006c6.585 0 11.946-5.336 11.949-11.896 0-3.176-1.24-6.165-3.495-8.411l.015-.039z" />
+              </svg>
+              WA
+            </Link>
+            <Link 
+              href="/start" 
+              className="bg-indigo-600 text-white px-2 py-1 text-xs rounded-md font-medium hover:bg-indigo-700 transition"
+            >
+              App
             </Link>
           </div>
           
@@ -58,7 +72,7 @@ const Home: NextPage = () => {
               className="flex items-center bg-green-600 text-white px-4 py-2 rounded-md font-medium hover:bg-green-700 transition"
             >
               <svg className="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="currentColor">
-                <path fillRule="evenodd" clipRule="evenodd" d="M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.893c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652c1.746.943 3.71 1.444 5.71 1.447h.006c6.585 0 11.946-5.336 11.949-11.896 0-3.176-1.24-6.165-3.495-8.411l.015-.039zM12.042 21.785h-.004c-1.78 0-3.524-.478-5.038-1.377l-.361-.214-3.741.975 1.001-3.648-.239-.379c-.986-1.568-1.504-3.379-1.503-5.26.004-5.431 4.438-9.849 9.893-9.849 2.64 0 5.122 1.03 6.988 2.898 1.866 1.869 2.893 4.352 2.892 6.994-.003 5.442-4.431 9.86-9.885 9.86h-.002z" />
+                <path d="M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.893c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652c1.746.943 3.71 1.444 5.71 1.447h.006c6.585 0 11.946-5.336 11.949-11.896 0-3.176-1.24-6.165-3.495-8.411l.015-.039zM12.042 21.785h-.004c-1.78 0-3.524-.478-5.038-1.377l-.361-.214-3.741.975 1.001-3.648-.239-.379c-.986-1.568-1.504-3.379-1.503-5.26.004-5.431 4.438-9.849 9.893-9.849 2.64 0 5.122 1.03 6.988 2.898 1.866 1.869 2.893 4.352 2.892 6.994-.003 5.442-4.431 9.86-9.885 9.86h-.002z" />
               </svg>
               Send via WhatsApp
             </Link>
@@ -69,10 +83,10 @@ const Home: NextPage = () => {
           </div>
         </nav>
         
-        {/* Mobile Menu */}
+        {/* Mobile Menu - Improved for mobile */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white py-4 px-4 border-t">
-            <div className="flex flex-col space-y-4">
+          <div className="md:hidden bg-white py-3 px-4 border-t">
+            <div className="flex flex-col space-y-3">
               <Link href="/" className="font-medium text-gray-800 hover:text-indigo-600">
                 Home
               </Link>
@@ -91,17 +105,33 @@ const Home: NextPage = () => {
       </header>
 
       <main>
-        {/* Hero Section */}
-        <section className="py-12 md:py-20 text-center px-4">
+        {/* Hero Section - Mobile optimized */}
+        <section className="py-8 md:py-16 text-center px-4">
           <div className="max-w-4xl mx-auto">
-            <h1 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 md:mb-6 leading-tight">
               Send money globally.
-              <br />
-              Fast. Secure. Easy.
+              <br className="hidden sm:block" />
+              <span className="sm:inline"> Fast. Secure. Easy.</span>
             </h1>
-            <Link href="/start" className="inline-block bg-indigo-600 text-white px-6 py-3 rounded-md font-medium hover:bg-indigo-700 transition text-lg mt-4">
-              Send via App
-            </Link>
+            
+            <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-3 mt-4">
+              <Link 
+                href="/whatsapp-transfer" 
+                className="w-full sm:w-auto flex items-center justify-center bg-green-600 text-white px-4 py-2 rounded-md font-medium hover:bg-green-700 transition"
+              >
+                <svg className="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.893c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652c1.746.943 3.71 1.444 5.71 1.447h.006c6.585 0 11.946-5.336 11.949-11.896 0-3.176-1.24-6.165-3.495-8.411l.015-.039z" />
+                </svg>
+                Send via WhatsApp
+              </Link>
+              
+              <Link 
+                href="/start" 
+                className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-2 rounded-md font-medium hover:bg-indigo-700 transition text-lg"
+              >
+                Send via App
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -160,20 +190,20 @@ const Home: NextPage = () => {
       <footer className="py-6 md:py-8 border-t">
         <div className="container mx-auto px-4 text-center text-gray-600">
           <div className="flex flex-col items-center justify-center">
-            <p className="mb-4">© {new Date().getFullYear()} Rampa.cash</p>
+            <p className="mb-3 md:mb-4 text-sm md:text-base">© {new Date().getFullYear()} Rampa.cash</p>
             
-            <div className="flex items-center">
-              <span className="mr-2">Follow us on</span>
+            <div className="flex flex-wrap items-center justify-center">
+              <span className="mr-2 text-sm md:text-base">Follow us on</span>
               <a 
                 href="https://x.com/rampa_cash" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-gray-700 hover:text-indigo-600 transition-colors"
               >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <svg className="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
-                <span className="ml-1">@rampa_cash</span>
+                <span className="ml-1 text-sm md:text-base">@rampa_cash</span>
               </a>
             </div>
           </div>
