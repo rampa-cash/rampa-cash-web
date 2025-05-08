@@ -8,46 +8,46 @@ const WhatsAppTransfer = () => {
   const [countryCode, setCountryCode] = useState('+1');
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   
-  // Common country codes + all European Union countries
+  // Update your country codes array to include flag emojis
   const countryCodes = [
     // Common non-EU codes
-    { code: '+1', country: 'USA/Canada' },
-    { code: '+52', country: 'Mexico' },
+    { code: '+1', country: 'USA/Canada', flag: '🇺🇸' },
+    { code: '+52', country: 'Mexico', flag: '🇲🇽' },
     
     // European Union countries
-    { code: '+43', country: 'Austria' },
-    { code: '+32', country: 'Belgium' },
-    { code: '+359', country: 'Bulgaria' },
-    { code: '+385', country: 'Croatia' },
-    { code: '+357', country: 'Cyprus' },
-    { code: '+420', country: 'Czech Republic' },
-    { code: '+45', country: 'Denmark' },
-    { code: '+372', country: 'Estonia' },
-    { code: '+358', country: 'Finland' },
-    { code: '+33', country: 'France' },
-    { code: '+49', country: 'Germany' },
-    { code: '+30', country: 'Greece' },
-    { code: '+36', country: 'Hungary' },
-    { code: '+353', country: 'Ireland' },
-    { code: '+39', country: 'Italy' },
-    { code: '+371', country: 'Latvia' },
-    { code: '+370', country: 'Lithuania' },
-    { code: '+352', country: 'Luxembourg' },
-    { code: '+356', country: 'Malta' },
-    { code: '+31', country: 'Netherlands' },
-    { code: '+48', country: 'Poland' },
-    { code: '+351', country: 'Portugal' },
-    { code: '+40', country: 'Romania' },
-    { code: '+421', country: 'Slovakia' },
-    { code: '+386', country: 'Slovenia' },
-    { code: '+34', country: 'Spain' },
-    { code: '+46', country: 'Sweden' },
+    { code: '+43', country: 'Austria', flag: '🇦🇹' },
+    { code: '+32', country: 'Belgium', flag: '🇧🇪' },
+    { code: '+359', country: 'Bulgaria', flag: '🇧🇬' },
+    { code: '+385', country: 'Croatia', flag: '🇭🇷' },
+    { code: '+357', country: 'Cyprus', flag: '🇨🇾' },
+    { code: '+420', country: 'Czech Republic', flag: '🇨🇿' },
+    { code: '+45', country: 'Denmark', flag: '🇩🇰' },
+    { code: '+372', country: 'Estonia', flag: '🇪🇪' },
+    { code: '+358', country: 'Finland', flag: '🇫🇮' },
+    { code: '+33', country: 'France', flag: '🇫🇷' },
+    { code: '+49', country: 'Germany', flag: '🇩🇪' },
+    { code: '+30', country: 'Greece', flag: '🇬🇷' },
+    { code: '+36', country: 'Hungary', flag: '🇭🇺' },
+    { code: '+353', country: 'Ireland', flag: '🇮🇪' },
+    { code: '+39', country: 'Italy', flag: '🇮🇹' },
+    { code: '+371', country: 'Latvia', flag: '🇱🇻' },
+    { code: '+370', country: 'Lithuania', flag: '🇱🇹' },
+    { code: '+352', country: 'Luxembourg', flag: '🇱🇺' },
+    { code: '+356', country: 'Malta', flag: '🇲🇹' },
+    { code: '+31', country: 'Netherlands', flag: '🇳🇱' },
+    { code: '+48', country: 'Poland', flag: '🇵🇱' },
+    { code: '+351', country: 'Portugal', flag: '🇵🇹' },
+    { code: '+40', country: 'Romania', flag: '🇷🇴' },
+    { code: '+421', country: 'Slovakia', flag: '🇸🇰' },
+    { code: '+386', country: 'Slovenia', flag: '🇸🇮' },
+    { code: '+34', country: 'Spain', flag: '🇪🇸' },
+    { code: '+46', country: 'Sweden', flag: '🇸🇪' },
     
     // Other popular codes
-    { code: '+44', country: 'UK' },
-    { code: '+57', country: 'Colombia' },
-    { code: '+54', country: 'Argentina' },
-    { code: '+55', country: 'Brazil' },
+    { code: '+44', country: 'UK', flag: '🇬🇧' },
+    { code: '+57', country: 'Colombia', flag: '🇨🇴' },
+    { code: '+54', country: 'Argentina', flag: '🇦🇷' },
+    { code: '+55', country: 'Brazil', flag: '🇧🇷' },
   ];
   
   return (
@@ -121,6 +121,9 @@ const WhatsAppTransfer = () => {
                     className="bg-gray-100 px-3 py-2 rounded-l-md flex items-center text-gray-700 cursor-pointer hover:bg-gray-200 transition"
                     onClick={() => setShowCountryDropdown(!showCountryDropdown)}
                   >
+                    <span className="inline-block mr-1">
+                      {countryCodes.find(c => c.code === countryCode)?.flag}
+                    </span>
                     <span className="inline-block">{countryCode}</span>
                     <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
@@ -136,7 +139,7 @@ const WhatsAppTransfer = () => {
                   />
                   
                   {showCountryDropdown && (
-                    <div className="absolute top-full left-0 mt-1 bg-white shadow-lg border border-gray-200 rounded-md z-10 max-h-60 overflow-y-auto">
+                    <div className="absolute top-full left-0 mt-1 bg-white shadow-lg border border-gray-200 rounded-md z-10 max-h-60 overflow-y-auto w-64">
                       {countryCodes.map((country) => (
                         <div 
                           key={country.code}
@@ -146,6 +149,7 @@ const WhatsAppTransfer = () => {
                             setShowCountryDropdown(false);
                           }}
                         >
+                          <span className="inline-block mr-2 text-lg">{country.flag}</span>
                           <span className="font-medium mr-2">{country.code}</span>
                           <span className="text-gray-600">{country.country}</span>
                         </div>
