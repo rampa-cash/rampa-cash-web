@@ -20,7 +20,7 @@ const Home: NextPage = () => {
           <Link href="/">
             <div className="flex items-center cursor-pointer">
               <img src="/logo.png" alt="RAMPA logo" className="w-8 h-8 md:w-10 md:h-10" />
-              <span className="font-bold text-lg md:text-xl ml-2">rampa.cash</span>
+              <span className="font-bold text-lg md:text-xl ml-2">rampa</span>
             </div>
           </Link>
           
@@ -109,9 +109,9 @@ const Home: NextPage = () => {
         <section className="py-8 md:py-16 text-center px-4">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 md:mb-6 leading-tight">
-              Send money globally.
+              No Hidden Fees. No Delays.
               <br className="hidden sm:block" />
-              <span className="sm:inline"> Fast. Secure. Easy.</span>
+              <span className="sm:inline"> Just Money Home.</span>
             </h1>
             
             <div className="flex flex-col sm:flex-row items-center justify-center space-y-3 sm:space-y-0 sm:space-x-3 mt-4">
