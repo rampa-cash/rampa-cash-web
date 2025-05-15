@@ -90,7 +90,7 @@ const WhatsAppTransfer = () => {
           <Link href="/">
             <div className="flex items-center cursor-pointer">
               <img src="/logo.png" alt="RAMPA logo" className="w-8 h-8 md:w-10 md:h-10" />
-              <span className="font-bold text-lg md:text-xl ml-2">rampa.cash</span>
+              <span className="font-bold text-lg md:text-xl ml-2">rampa</span>
             </div>
           </Link>
           
