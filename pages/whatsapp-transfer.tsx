@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 const WhatsAppTransfer = () => {
   const [amount, setAmount] = useState('200');
@@ -9,6 +9,11 @@ const WhatsAppTransfer = () => {
   const [selectedRecipientCountry, setSelectedRecipientCountry] = useState('MXN');
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
+  
+  // Add these new state variables for API interaction
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   
   // Exchange rates (for demo purposes - in production, these would come from an API)
   const exchangeRates = {
@@ -22,6 +27,63 @@ const WhatsAppTransfer = () => {
   // Calculate recipient amount based on selected currency
   const calculatedAmount = (parseFloat(amount) || 0) * (exchangeRates[selectedRecipientCountry] || 0);
   
+  // Add the handleSendMoney function
+  const handleSendMoney = async () => {
+    if (!phoneNumber) {
+      setError("Please enter your WhatsApp number");
+      return;
+    }
+
+    setLoading(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      const fullPhoneNumber = `${countryCode}${phoneNumber}`;
+      const transferMessage = `🚀 RAMPA Transfer Initiated!
+      
+✅ Amount: ${amount} EUR
+💰 Recipient gets: ${calculatedAmount.toFixed(2)} ${selectedRecipientCountry}
+📱 From: ${fullPhoneNumber}
+
+Your transfer is being processed on the Solana blockchain. You'll receive updates shortly!
+
+Transaction details will be sent once confirmed.`;
+
+      // Call your WhatsApp API
+      const response = await fetch('/api/send-whatsapp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: fullPhoneNumber,
+          message: transferMessage
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Something went wrong');
+      }
+
+      setSuccess(`✅ Transfer notification sent! Check your WhatsApp at ${fullPhoneNumber} for confirmation.`);
+      
+      // Reset form after success
+      setTimeout(() => {
+        setAmount('200');
+        setPhoneNumber('');
+        setSuccess('');
+      }, 5000);
+      
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Latin American currencies
   const recipientCurrencies = [
     { currency: 'MXN', country: 'Mexico', flag: '🇲🇽' },
@@ -31,9 +93,9 @@ const WhatsAppTransfer = () => {
     { currency: 'PEN', country: 'Peru', flag: '🇵🇪' },
   ];
 
-  // Country codes array
+  // Country codes array (keep your existing array)
   const countryCodes = [
-    // European Union countries first (for Europe-LatAm corridor focus)
+    // Your existing country codes array stays the same...
     { code: '+34', country: 'Spain', flag: '🇪🇸' },
     { code: '+33', country: 'France', flag: '🇫🇷' },
     { code: '+49', country: 'Germany', flag: '🇩🇪' },
@@ -131,7 +193,7 @@ const WhatsAppTransfer = () => {
                 
                 <div className="mx-2 md:mx-4 text-indigo-600 mb-4 md:mb-0">
                   <svg className="w-6 h-6 transform rotate-90 md:rotate-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
                   </svg>
                 </div>
                 
@@ -240,17 +302,56 @@ const WhatsAppTransfer = () => {
               </div>
               
               <button
-                className="w-full bg-indigo-600 text-white py-3 px-4 rounded-md font-medium hover:bg-indigo-700 transition flex items-center justify-center"
+                onClick={handleSendMoney}
+                disabled={loading}
+                className={`w-full bg-indigo-600 text-white py-3 px-4 rounded-md font-medium hover:bg-indigo-700 transition flex items-center justify-center ${
+                  loading ? 'opacity-70 cursor-not-allowed' : ''
+                }`}
               >
-                <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                </svg>
-                Send money now
+                {loading ? (
+                  <>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Sending WhatsApp message...
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    </svg>
+                    Send money now
+                  </>
+                )}
               </button>
+              
+              {/* Add error and success messages after the button */}
+              {error && (
+                <div className="mt-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-md">
+                  <div className="flex">
+                    <svg className="w-5 h-5 text-red-400 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                    {error}
+                  </div>
+                </div>
+              )}
+
+              {success && (
+                <div className="mt-4 p-4 bg-green-50 border border-green-200 text-green-700 rounded-md">
+                  <div className="flex">
+                    <svg className="w-5 h-5 text-green-400 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    {success}
+                  </div>
+                </div>
+              )}
               
               <div className="mt-4 text-xs text-center text-gray-500">
                 By continuing, you accept the <a href="#" className="text-indigo-600">terms of use</a> and{' '}
-                <a href="#" className="text-indigo-600">privacy policies</a> of Rampa.cash
+                <a href="#" className="text-indigo-600">privacy policies</a> of rampa
               </div>
             </div>
             
@@ -293,7 +394,7 @@ const WhatsAppTransfer = () => {
       <footer className="py-6 md:py-8 border-t">
         <div className="container mx-auto px-4 text-center text-gray-600">
           <div className="flex flex-col items-center justify-center">
-            <p className="mb-3 md:mb-4 text-sm md:text-base">© {new Date().getFullYear()} Rampa.cash</p>
+            <p className="mb-3 md:mb-4 text-sm md:text-base">© {new Date().getFullYear()} rampa.cash</p>
             
             <div className="flex flex-wrap items-center justify-center">
               <span className="mr-2 text-sm md:text-base">Follow us on</span>
