@@ -40,17 +40,24 @@ const WhatsAppTransfer = () => {
 
     try {
       const fullPhoneNumber = `${countryCode}${phoneNumber}`;
-      const transferMessage = `🚀 RAMPA Transfer Initiated!
       
+      // Enhanced transfer message with more details
+      const transferMessage = `🚀 RAMPA Transfer Initiated!
+
+📋 TRANSFER DETAILS:
 ✅ Amount: ${amount} EUR
 💰 Recipient gets: ${calculatedAmount.toFixed(2)} ${selectedRecipientCountry}
 📱 From: ${fullPhoneNumber}
+📍 To: ${recipientCurrencies.find(c => c.currency === selectedRecipientCountry)?.country}
+💱 Exchange rate: 1 EUR = ${exchangeRates[selectedRecipientCountry]} ${selectedRecipientCountry}
+💸 Fee: FREE (first transaction)
 
-Your transfer is being processed on the Solana blockchain. You'll receive updates shortly!
+⏳ Your transfer is being processed on the Solana blockchain.
+📲 You'll receive updates shortly!
 
-Transaction details will be sent once confirmed.`;
+Transaction ID: TXN${Date.now()}`;
 
-      // Call your WhatsApp API
+      // Call your enhanced WhatsApp API
       const response = await fetch('/api/send-whatsapp', {
         method: 'POST',
         headers: {
@@ -58,7 +65,15 @@ Transaction details will be sent once confirmed.`;
         },
         body: JSON.stringify({
           to: fullPhoneNumber,
-          message: transferMessage
+          message: transferMessage,
+          // Add extra data for multiple messages
+          transferData: {
+            amount: parseFloat(amount),
+            currency: selectedRecipientCountry,
+            recipientAmount: calculatedAmount,
+            country: recipientCurrencies.find(c => c.currency === selectedRecipientCountry)?.country,
+            exchangeRate: exchangeRates[selectedRecipientCountry]
+          }
         }),
       });
 
@@ -68,14 +83,14 @@ Transaction details will be sent once confirmed.`;
         throw new Error(data.error || 'Something went wrong');
       }
 
-      setSuccess(`✅ Transfer notification sent! Check your WhatsApp at ${fullPhoneNumber} for confirmation.`);
+      setSuccess(`✅ Transfer notification sent! Check your WhatsApp at ${fullPhoneNumber} for confirmation and updates.`);
       
       // Reset form after success
       setTimeout(() => {
         setAmount('200');
         setPhoneNumber('');
         setSuccess('');
-      }, 5000);
+      }, 8000);
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -344,7 +359,15 @@ Transaction details will be sent once confirmed.`;
                     <svg className="w-5 h-5 text-green-400 mr-2" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    {success}
+                    <div>
+                      <div className="font-medium">{success}</div>
+                      <div className="text-sm mt-1">
+                        📱 You'll receive 3 WhatsApp messages:
+                        <br />• Immediate confirmation
+                        <br />• Processing update (5 seconds)
+                        <br />• Completion notice (15 seconds)
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
