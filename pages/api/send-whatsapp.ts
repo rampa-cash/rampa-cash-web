@@ -49,8 +49,10 @@ export default async function handler(
           await client.messages.create({
             body: `⏳ PROCESSING UPDATE
 
-Your ${transferData.amount} EUR transfer to ${transferData.country} is being processed...
+Your ${transferData.amount} EUR transfer to ${transferData.recipientName || transferData.recipientPhone} is being processed...
 
+👤 Recipient: ${transferData.recipientName || 'Contact'}
+📞 Phone: ${transferData.recipientPhone}
 🔄 Status: Blockchain confirmation in progress
 ⏱️ Expected completion: 30-60 seconds
 
@@ -58,6 +60,21 @@ We'll notify you once completed! 🚀`,
             from: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`,
             to: `whatsapp:${to}`
           });
+
+          // Also update the recipient
+          if (transferData.recipientPhone) {
+            await client.messages.create({
+              body: `⏳ Your transfer is being processed...
+
+💰 Amount: ${transferData.recipientAmount.toFixed(2)} ${transferData.currency}
+📱 From: ${transferData.senderPhone}
+🔄 Status: Almost ready!
+
+You'll get notified when it's ready to collect! 🚀`,
+              from: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`,
+              to: `whatsapp:${transferData.recipientPhone}`
+            });
+          }
         } catch (error) {
           console.error('Error sending processing update:', error);
         }
@@ -66,28 +83,73 @@ We'll notify you once completed! 🚀`,
       // Send completion message after 15 seconds (simulated)
       setTimeout(async () => {
         try {
+          // Message to sender
           await client.messages.create({
             body: `✅ TRANSFER COMPLETED!
 
 🎉 SUCCESS! Your transfer has been completed:
 
-💰 ${transferData.recipientAmount.toFixed(2)} ${transferData.currency} delivered
-🏦 Recipient can collect the funds now
+💰 Sent: ${transferData.amount} EUR
+👤 To: ${transferData.recipientName || transferData.recipientPhone}
+📞 Recipient: ${transferData.recipientPhone}
+💵 They received: ${transferData.recipientAmount.toFixed(2)} ${transferData.currency}
 📍 Destination: ${transferData.country}
 🔗 Blockchain: Confirmed on Solana
 ⚡ Speed: Completed in under 1 minute
 
 Thank you for using RAMPA! 
-Your money, delivered fast. 🚀
-
-Need help? Reply to this message.`,
+Your money, delivered fast. 🚀`,
             from: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`,
             to: `whatsapp:${to}`
           });
+
+          // Message to recipient
+          if (transferData.recipientPhone) {
+            await client.messages.create({
+              body: `✅ MONEY RECEIVED!
+
+🎉 Your transfer is ready to collect:
+
+💰 Amount: ${transferData.recipientAmount.toFixed(2)} ${transferData.currency}
+📱 From: ${transferData.senderPhone}
+🏦 Via: RAMPA
+🔗 Blockchain confirmed on Solana
+
+💡 The money has been delivered successfully!
+Thank you for using RAMPA! 🚀`,
+              from: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`,
+              to: `whatsapp:${transferData.recipientPhone}`
+            });
+          }
         } catch (error) {
           console.error('Error sending completion message:', error);
         }
       }, 15000);
+
+      // If transferData includes recipient info, send them a notification too
+      if (transferData.recipientPhone) {
+        try {
+          await client.messages.create({
+            body: `💰 MONEY INCOMING!
+
+Hi${transferData.recipientName ? ` ${transferData.recipientName}` : ''}! You're receiving a money transfer:
+
+💵 Amount: ${transferData.recipientAmount.toFixed(2)} ${transferData.currency}
+📱 From: ${transferData.senderPhone}
+🏦 Via: RAMPA (Blockchain transfer)
+
+🔄 Processing now...
+⏱️ Expected completion: 30-60 seconds
+
+You'll receive another message when it's ready to collect! 🚀`,
+            from: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`,
+            to: `whatsapp:${transferData.recipientPhone}`
+          });
+        } catch (error) {
+          console.error('Error sending message to recipient:', error);
+          // Don't fail the whole transaction if recipient message fails
+        }
+      }
     }
     
     return res.status(200).json({ 

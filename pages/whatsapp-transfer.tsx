@@ -39,34 +39,23 @@ const WhatsAppTransfer = () => {
     setSuccess('');
 
     try {
-      const fullPhoneNumber = `${countryCode}${phoneNumber}`;
-      
-      // Enhanced transfer message with more details
-      const transferMessage = `🚀 RAMPA Transfer Initiated!
+      const fullSenderPhone = `${countryCode}${phoneNumber}`;
 
-📋 TRANSFER DETAILS:
-✅ Amount: ${amount} EUR
-💰 Recipient gets: ${calculatedAmount.toFixed(2)} ${selectedRecipientCountry}
-📱 From: ${fullPhoneNumber}
-📍 To: ${recipientCurrencies.find(c => c.currency === selectedRecipientCountry)?.country}
-💱 Exchange rate: 1 EUR = ${exchangeRates[selectedRecipientCountry]} ${selectedRecipientCountry}
-💸 Fee: FREE (first transaction)
+      const transferMessage = `🚀 RAMPA Transfer Started!
 
-⏳ Your transfer is being processed on the Solana blockchain.
-📲 You'll receive updates shortly!
+💰 Amount: ${amount} EUR → ${calculatedAmount.toFixed(2)} ${selectedRecipientCountry}
+💱 Rate: 1 EUR = ${exchangeRates[selectedRecipientCountry]} ${selectedRecipientCountry}
 
-Transaction ID: TXN${Date.now()}`;
+Let's choose who to send this to! 👇`;
 
-      // Call your enhanced WhatsApp API
-      const response = await fetch('/api/send-whatsapp', {
+      // Call the WhatsApp interactive API
+      const response = await fetch('/api/whatsapp-interactive', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          to: fullPhoneNumber,
-          message: transferMessage,
-          // Add extra data for multiple messages
+          senderPhone: fullSenderPhone,
           transferData: {
             amount: parseFloat(amount),
             currency: selectedRecipientCountry,
@@ -83,14 +72,14 @@ Transaction ID: TXN${Date.now()}`;
         throw new Error(data.error || 'Something went wrong');
       }
 
-      setSuccess(`✅ Transfer notification sent! Check your WhatsApp at ${fullPhoneNumber} for confirmation and updates.`);
+      setSuccess(`✅ Check your WhatsApp! We'll help you choose the recipient in the chat.`);
       
-      // Reset form after success
+      // Reset form
       setTimeout(() => {
         setAmount('200');
         setPhoneNumber('');
         setSuccess('');
-      }, 8000);
+      }, 5000);
       
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
@@ -252,8 +241,9 @@ Transaction ID: TXN${Date.now()}`;
                 </div>
               </div>
               
+              {/* Your WhatsApp (Sender) - Update the title */}
               <div className="mb-6">
-                <label className="block text-gray-700 mb-1">Your WhatsApp</label>
+                <h3 className="text-lg font-semibold mb-3">Your WhatsApp number</h3>
                 <div className="flex relative">
                   <div 
                     className="bg-gray-100 px-3 py-2 rounded-l-md flex items-center text-gray-700 cursor-pointer hover:bg-gray-200 transition"
