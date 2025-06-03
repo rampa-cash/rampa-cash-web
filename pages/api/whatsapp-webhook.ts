@@ -73,7 +73,7 @@ Or reply with:
 • *"rates"* - Check exchange rates
 • *"support"* - Contact support
 
-Fast, secure money transfers powered by blockchain! 🚀`,
+Fast, secure money transfers powered by the Solana blockchain! 🚀`,
     from: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`,
     to: `whatsapp:${senderPhone}`
   });
