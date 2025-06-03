@@ -66,7 +66,7 @@ async function sendHelpMessage(senderPhone: string) {
     body: `👋 Welcome to RAMPA!
 
 To start a money transfer, visit:
-🌐 https://your-domain.com/whatsapp-transfer
+🌐 https://rampa.cash/whatsapp-transfer
 
 Or reply with:
 • *"help"* - See this message
@@ -188,7 +188,7 @@ async function confirmRecipientAndTransfer(senderPhone: string, recipient: any, 
 💵 Recipient gets: ${transferData.recipientAmount.toFixed(2)} ${transferData.currency}
 👤 To: ${recipient.name}
 📱 Phone: ${recipient.phone}
-🏦 Via: RAMPA Blockchain
+🏦 Via: RAMPA 
 
 💡 Reply:
 • *"YES"* to confirm and send
@@ -225,7 +225,7 @@ async function handleTransferConfirmation(senderPhone: string, userMessage: stri
       body: `❌ Transfer cancelled.
 
 To start a new transfer, visit:
-🌐 https://your-domain.com/whatsapp-transfer
+🌐 https://rampa.cash/whatsapp-transfer
 
 Thank you for using RAMPA! 🚀`,
       from: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`,
@@ -331,7 +331,7 @@ Thank you! 🚀`,
 Thank you for using RAMPA! 🚀
 
 💡 Send another transfer? Visit:
-🌐 https://your-domain.com/whatsapp-transfer`,
+🌐 https://rampa.cash/whatsapp-transfer`,
           from: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`,
           to: `whatsapp:${senderPhone}`
         });
