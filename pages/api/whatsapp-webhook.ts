@@ -1,13 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import twilio from 'twilio';
+import { activeTransfers } from './whatsapp-interactive'; // Import the shared map
 
 const client = twilio(
   process.env.TWILIO_ACCOUNT_SID,
   process.env.TWILIO_AUTH_TOKEN
 );
-
-// In-memory storage for active transfers (use database in production)
-const activeTransfers = new Map();
 
 // Predefined contacts (you can expand this list)
 const savedContacts = [
@@ -378,6 +376,3 @@ Your money is safe and no charges were applied.`,
     activeTransfers.delete(senderPhone);
   }
 }
-
-// Export activeTransfers for use in other API routes
-export { activeTransfers };

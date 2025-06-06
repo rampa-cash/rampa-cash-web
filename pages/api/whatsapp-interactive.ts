@@ -6,19 +6,18 @@ const client = twilio(
   process.env.TWILIO_AUTH_TOKEN
 );
 
-// Store active transfers temporarily (in production, use a database)
+// Use the SAME activeTransfers map as the webhook
 const activeTransfers = new Map();
-
-type ResponseData = {
-  success: boolean;
-  message?: string;
-  error?: string;
-};
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
+  res: NextApiResponse
 ) {
+  console.log('🚀 Interactive API called');
+  console.log('Environment variables:');
+  console.log('TWILIO_ACCOUNT_SID:', process.env.TWILIO_ACCOUNT_SID ? 'Found' : 'Missing');
+  console.log('TWILIO_AUTH_TOKEN:', process.env.TWILIO_AUTH_TOKEN ? 'Found' : 'Missing');
+
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, error: 'Method not allowed' });
   }
@@ -26,6 +25,7 @@ export default async function handler(
   const { senderPhone, transferData } = req.body;
 
   if (!senderPhone || !transferData) {
+    console.log('❌ Missing required parameters');
     return res.status(400).json({ 
       success: false, 
       error: 'Missing required parameters' 
@@ -33,14 +33,18 @@ export default async function handler(
   }
 
   try {
-    // Store transfer data temporarily
+    console.log('💾 Storing transfer data for:', senderPhone);
+    
+    // Store transfer data
     activeTransfers.set(senderPhone, {
       ...transferData,
       step: 'choosing_recipient',
       timestamp: Date.now()
     });
 
-    // Send initial message with contact options
+    console.log('📱 Sending WhatsApp menu message');
+
+    // Send the recipient selection menu
     await client.messages.create({
       body: `🚀 RAMPA Transfer: ${transferData.amount} EUR → ${transferData.recipientAmount.toFixed(2)} ${transferData.currency}
 
@@ -58,19 +62,21 @@ Or send the recipient's WhatsApp number directly (e.g., +521234567890)
       to: `whatsapp:${senderPhone}`
     });
 
+    console.log('✅ Message sent successfully');
+
     return res.status(200).json({ 
       success: true, 
       message: 'Interactive transfer flow started' 
     });
     
   } catch (error) {
-    console.error('Error starting interactive transfer:', error);
+    console.error('❌ Error in interactive API:', error);
     return res.status(500).json({ 
       success: false, 
-      error: 'Failed to start transfer flow' 
+      error: `Failed to start transfer: ${error.message}` 
     });
   }
 }
 
-// Export the activeTransfers map for use in webhook
+// Export for sharing with webhook
 export { activeTransfers };
