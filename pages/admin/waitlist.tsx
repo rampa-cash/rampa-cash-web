@@ -16,13 +16,35 @@ const WaitlistAdmin = ({ emails, count }: WaitlistAdminProps) => {
           {emails.length === 0 ? (
             <p className="text-gray-500">No signups yet.</p>
           ) : (
-            <div className="space-y-2">
-              {emails.map((email, index) => (
-                <div key={index} className="p-3 bg-gray-50 rounded">
-                  {email}
-                </div>
-              ))}
-            </div>
+            <>
+              {/* Export Button */}
+              <div className="mb-4">
+                <button
+                  onClick={() => {
+                    const csvContent = emails.join('\n');
+                    const blob = new Blob([csvContent], { type: 'text/csv' });
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `waitlist-${new Date().toISOString().split('T')[0]}.csv`;
+                    a.click();
+                  }}
+                  className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                >
+                  📥 Export CSV
+                </button>
+              </div>
+              
+              {/* Email List */}
+              <div className="space-y-2 max-h-96 overflow-y-auto">
+                {emails.map((email, index) => (
+                  <div key={index} className="p-3 bg-gray-50 rounded flex justify-between items-center">
+                    <span>{email}</span>
+                    <span className="text-sm text-gray-500">#{index + 1}</span>
+                  </div>
+                ))}
+              </div>
+            </>
           )}
         </div>
       </div>
