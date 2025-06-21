@@ -1,11 +1,10 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import type { NextPage } from 'next'
-import { useState } from 'react'
+import Navigation from '../components/Navigation'
+import WaitlistSignup from '../components/WaitlistSignup'
 
 const Home: NextPage = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   return (
     <div className="min-h-screen bg-white">
       <Head>
@@ -15,98 +14,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/logo.png" type="image/png" />
       </Head>
 
-      <header className="py-3 px-4 md:py-4 md:px-6 shadow-sm">
-        <nav className="container mx-auto flex items-center justify-between">
-          <Link href="/">
-            <div className="flex items-center cursor-pointer">
-              <img src="/logo.png" alt="RAMPA logo" className="w-8 h-8 md:w-10 md:h-10" />
-              <span className="font-bold text-lg md:text-xl ml-2">rampa</span>
-            </div>
-          </Link>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="font-medium text-gray-800 hover:text-indigo-600">
-              Home
-            </Link>
-            <Link href="/how-it-works" className="font-medium text-gray-800 hover:text-indigo-600">
-              How It Works
-            </Link>
-            <Link href="/pricing" className="font-medium text-gray-800 hover:text-indigo-600">
-              Pricing
-            </Link>
-            <Link href="/about-us" className="font-medium text-gray-800 hover:text-indigo-600">
-              About Us
-            </Link>
-          </div>
-          
-          {/* Mobile Menu Button and CTA */}
-          <div className="flex items-center md:hidden">
-            <button 
-              className="bg-indigo-600 text-white px-2 py-1 text-xs rounded-md font-medium hover:bg-indigo-700 transition mr-2"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              Menu
-            </button>
-            <Link 
-              href="/whatsapp-transfer" 
-              className="flex items-center bg-green-600 text-white px-2 py-1 text-xs rounded-md font-medium hover:bg-green-700 transition mr-2"
-            >
-              <svg className="w-3 h-3 mr-1" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.893c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652c1.746.943 3.71 1.444 5.71 1.447h.006c6.585 0 11.946-5.336 11.949-11.896 0-3.176-1.24-6.165-3.495-8.411l.015-.039z" />
-              </svg>
-              WA
-            </Link>
-            <Link 
-              href="/start" 
-              className="bg-indigo-600 text-white px-2 py-1 text-xs rounded-md font-medium hover:bg-indigo-700 transition"
-            >
-              App
-            </Link>
-          </div>
-          
-          {/* Desktop CTA Buttons */}
-          <div className="hidden md:flex space-x-3">
-            <Link 
-              href="/whatsapp-transfer" 
-              className="flex items-center bg-green-600 text-white px-4 py-2 rounded-md font-medium hover:bg-green-700 transition"
-            >
-              <svg className="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.52 3.449C18.24 1.245 15.24 0 12.045 0 5.463 0 .104 5.334.101 11.893c0 2.096.549 4.14 1.595 5.945L0 24l6.335-1.652c1.746.943 3.71 1.444 5.71 1.447h.006c6.585 0 11.946-5.336 11.949-11.896 0-3.176-1.24-6.165-3.495-8.411l.015-.039zM12.042 21.785h-.004c-1.78 0-3.524-.478-5.038-1.377l-.361-.214-3.741.975 1.001-3.648-.239-.379c-.986-1.568-1.504-3.379-1.503-5.26.004-5.431 4.438-9.849 9.893-9.849 2.64 0 5.122 1.03 6.988 2.898 1.866 1.869 2.893 4.352 2.892 6.994-.003 5.442-4.431 9.86-9.885 9.86h-.002z" />
-              </svg>
-              Send via WhatsApp
-            </Link>
-            
-            <Link href="/start" className="bg-indigo-600 text-white px-4 py-2 rounded-md font-medium hover:bg-indigo-700 transition">
-              Send via App
-            </Link>
-          </div>
-        </nav>
-        
-        {/* Mobile Menu - Improved for mobile */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white py-3 px-4 border-t">
-            <div className="flex flex-col space-y-3">
-              <Link href="/" className="font-medium text-gray-800 hover:text-indigo-600">
-                Home
-              </Link>
-              <Link href="/how-it-works" className="font-medium text-gray-800 hover:text-indigo-600">
-                How It Works
-              </Link>
-              <Link href="/pricing" className="font-medium text-gray-800 hover:text-indigo-600">
-                Pricing
-              </Link>
-              <Link href="/about-us" className="font-medium text-gray-800 hover:text-indigo-600">
-                About Us
-              </Link>
-            </div>
-          </div>
-        )}
-      </header>
+      <Navigation />
 
-      <main>
-        {/* Hero Section - Mobile optimized */}
-        <section className="py-8 md:py-16 text-center px-4">
+      <main className="pt-16">
+        {/* Hero Section */}
+        <section id="home" className="py-8 md:py-16 text-center px-4">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 md:mb-6 leading-tight">
               No Hidden Fees. No Delays.
@@ -132,11 +44,20 @@ const Home: NextPage = () => {
                 Send via App
               </Link>
             </div>
+
+            {/* Add Waitlist Signup in Hero */}
+            <div className="mt-12">
+              <WaitlistSignup 
+                title="🚀 Get Early Access"
+                description="Join 500+ people waiting for the full RAMPA launch"
+                className="max-w-lg mx-auto"
+              />
+            </div>
           </div>
         </section>
 
         {/* How It Works Section */}
-        <section className="py-12 md:py-16 bg-gray-50">
+        <section id="how-it-works" className="py-12 md:py-16 bg-gray-50">
           <div className="container mx-auto px-4 md:px-8">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-16">How It Works</h2>
             
@@ -177,14 +98,13 @@ const Home: NextPage = () => {
         </section>
 
         {/* Pricing Section */}
-        <section className="py-12 md:py-16">
+        <section id="pricing" className="py-12 md:py-16">
           <div className="container mx-auto px-4 md:px-8 text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">Pricing</h2>
             <p className="text-lg md:text-xl mb-6 md:mb-8 max-w-3xl mx-auto text-gray-700">
               The exchange rate we use is one-to-one with the real-time market rate, without hidden fees and with low commissions.
             </p>
             
-            {/* Optional: Add a visual breakdown */}
             <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto mt-8">
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <div className="text-2xl font-bold text-green-600 mb-2">Real-time rates</div>
@@ -205,14 +125,13 @@ const Home: NextPage = () => {
         </section>
 
         {/* About Us Section */}
-        <section className="py-12 md:py-16 bg-gray-50">
+        <section id="about-us" className="py-12 md:py-16 bg-gray-50">
           <div className="container mx-auto px-4 md:px-8 text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">About Us</h2>
             <p className="text-lg md:text-xl mb-6 md:mb-8 max-w-3xl mx-auto text-gray-700">
               Bringing Web3 to real people, making it so simple that they don't realize they're using Web3 services.
             </p>
             
-            {/* Add visual elements to support the message */}
             <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto mt-8">
               <div className="bg-white p-6 rounded-lg shadow-sm border">
                 <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -246,8 +165,46 @@ const Home: NextPage = () => {
             </div>
           </div>
         </section>
+
+        {/* NEW: Dedicated Waitlist Section */}
+        <section id="waitlist" className="py-12 md:py-16">
+          <div className="container mx-auto px-4 md:px-8 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">Ready to Transform Money Transfers?</h2>
+            <p className="text-lg md:text-xl mb-8 max-w-3xl mx-auto text-gray-700">
+              Be among the first to experience the future of cross-border payments. 
+              Join our waitlist and get exclusive early access when we launch.
+            </p>
+            
+            <WaitlistSignup 
+              title="🎯 Reserve Your Spot"
+              description="Get notified the moment RAMPA MVP goes live + exclusive launch bonuses"
+            />
+            
+            <div className="grid gap-4 sm:grid-cols-3 max-w-2xl mx-auto mt-8 text-sm text-gray-600">
+              <div className="flex items-center justify-center">
+                <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                Early access
+              </div>
+              <div className="flex items-center justify-center">
+                <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                Launch bonuses
+              </div>
+              <div className="flex items-center justify-center">
+                <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                No spam ever
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
 
+      {/* Your existing footer */}
       <footer className="py-6 md:py-8 border-t">
         <div className="container mx-auto px-4 text-center text-gray-600">
           <div className="flex flex-col items-center justify-center">
