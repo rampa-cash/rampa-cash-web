@@ -7,6 +7,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)](#)
 [![Solana](https://img.shields.io/badge/Solana-9945FF?logo=solana&logoColor=fff)](#)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](#)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](#)
 
 RAMPA is a modern money transfer platform that brings Web3 technology to real people, making cross-border payments so simple that users don't realize they're using blockchain services. Built with Next.js, Solana blockchain, and WhatsApp integration.
 
@@ -30,42 +31,7 @@ RAMPA is a modern money transfer platform that brings Web3 technology to real pe
 - **API Routes**: RESTful API endpoints for all functionality
 - **Environment Configuration**: Secure environment variable management
 - **Error Handling**: Comprehensive error handling and user feedback
-
-## 🛠️ Tech Stack
-
-### Frontend
-- **Next.js** `^14.0.0` - React framework with server-side rendering
-- **React** `^18.2.0` - Modern React with hooks and concurrent features
-- **React DOM** `^18.2.0` - React rendering for web
-- **TypeScript** `^5.0.0` - Type-safe JavaScript development
-- **Tailwind CSS** `^3.0.0` - Utility-first CSS framework
-- **Framer Motion** `^11.0.0` - Smooth animations and transitions
-- **Radix UI** `^1.2.0` - Accessible component primitives
-- **Class Variance Authority** `^0.7.1` - Component variant management
-- **CLSX** `^2.1.1` - Conditional className utility
-- **Tailwind Merge** `^3.2.0` - Tailwind CSS class merging utility
-
-### Backend & APIs
-- **Next.js API Routes** `^14.0.0` - Serverless API endpoints
-- **Solana Web3.js** `^1.98.2` - Solana blockchain integration
-- **SPL Token** `^0.1.8` - Solana token program integration
-- **Twilio** `^5.6.1` - WhatsApp Business API integration
-- **BS58** `^6.0.0` - Base58 encoding/decoding for Solana
-
-### Development Tools
-- **ESLint** `^8.0.0` - Code linting and quality assurance
-- **ESLint Config Next** `^14.0.0` - Next.js ESLint configuration
-- **PostCSS** `^8.4.0` - CSS processing
-- **Autoprefixer** `^10.4.16` - CSS vendor prefixing
-- **Node Types** `^20.0.0` - TypeScript definitions for Node.js
-- **React Types** `^18.2.0` - TypeScript definitions for React
-- **React DOM Types** `^18.2.0` - TypeScript definitions for React DOM
-- **Twilio Types** `^3.19.2` - TypeScript definitions for Twilio
-- **BS58 Types** `^4.0.4` - TypeScript definitions for BS58
-
-### Runtime Requirements
-- **Node.js** `18+` - JavaScript runtime
-- **npm/yarn** - Package manager
+- **Docker Support**: Containerized deployment with optimized builds
 
 ## 📦 Installation
 
@@ -73,8 +39,9 @@ RAMPA is a modern money transfer platform that brings Web3 technology to real pe
 - Node.js 18+ 
 - npm or yarn
 - Solana CLI (optional, for development)
+- Docker & Docker Compose (for containerized deployment)
 
-### Setup Instructions
+### Local Development Setup
 
 1. **Clone the repository**
    ```bash
@@ -114,6 +81,66 @@ RAMPA is a modern money transfer platform that brings Web3 technology to real pe
 5. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
+### Docker Setup
+
+#### Prerequisites
+- Docker installed on your system
+- Docker Compose installed on your system
+
+#### Production Deployment with Docker
+
+**Using Docker Compose (Recommended):**
+
+1. **Build and run the application:**
+   ```bash
+   docker-compose up --build
+   ```
+
+2. **Run in detached mode:**
+   ```bash
+   docker-compose up -d --build
+   ```
+
+3. **Stop the application:**
+   ```bash
+   docker-compose down
+   ```
+
+**Using Docker directly:**
+
+1. **Build the image:**
+   ```bash
+   docker build -t rampa-cash-web .
+   ```
+
+2. **Run the container:**
+   ```bash
+   docker run -p 3000:3000 --env-file .env rampa-cash-web
+   ```
+
+#### Development Mode with Docker
+
+For development with hot reloading:
+
+```bash
+docker-compose --profile dev up --build
+```
+
+This will run the development server on port 3001 with hot reloading enabled.
+
+#### Docker Features
+
+- **Production**: Multi-stage build with optimized Next.js standalone output
+- **Development**: Single-stage build with volume mounting for hot reloading
+- **Health Checks**: Built-in monitoring for API endpoints
+- **Security**: Non-root user execution
+- **Optimization**: Alpine Linux base image for minimal size
+
+#### Ports
+
+- **Production**: `http://localhost:3000`
+- **Development**: `http://localhost:3001`
+
 ## 🏗️ Project Structure
 
 ```
@@ -137,6 +164,10 @@ rampa-cash-web/
 │   └── index.tsx       # Home page
 ├── public/             # Static assets
 ├── styles/             # Global styles
+├── Dockerfile          # Production Docker configuration
+├── Dockerfile.dev      # Development Docker configuration
+├── docker-compose.yml  # Docker Compose configuration
+├── .dockerignore       # Docker build exclusions
 └── package.json        # Dependencies and scripts
 ```
 
@@ -158,7 +189,10 @@ rampa-cash-web/
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
+### Docker Deployment (Recommended)
+Follow the Docker setup instructions above for containerized deployment.
+
+### Vercel Deployment
 1. Connect your GitHub repository to Vercel
 2. Configure environment variables in Vercel dashboard
 3. Deploy automatically on push to main branch
@@ -213,6 +247,12 @@ Currently, the project doesn't include automated tests. Consider adding:
 - Use hardware wallets for large amounts
 - Regular security audits
 
+### Docker Security
+- Never commit `.env` files to version control
+- Use Docker secrets for sensitive environment variables in production
+- The production container runs as a non-root user (nextjs:nodejs)
+- Regular base image updates
+
 ## 📱 WhatsApp Integration
 
 ### Setup Requirements
@@ -226,6 +266,23 @@ Currently, the project doesn't include automated tests. Consider adding:
 3. User selects recipient from contacts
 4. Confirmation and processing
 5. Transfer completion notification
+
+## 🐛 Troubleshooting
+
+### Build Issues
+- Ensure all environment variables are set in `.env` file
+- Check that Docker has enough memory allocated (recommended: 4GB+)
+- Verify all dependencies are installed correctly
+
+### Runtime Issues
+- Check container logs: `docker-compose logs`
+- Verify environment variables are loaded: `docker-compose exec rampa-cash-web env`
+- Check application logs for specific error messages
+
+### Performance
+- The production image uses Next.js standalone output for optimal performance
+- Alpine Linux base image keeps the container size minimal
+- Health checks ensure application availability
 
 ## 🤝 Contributing
 
