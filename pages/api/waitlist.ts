@@ -33,6 +33,7 @@ export default async function handler(
   }
 
   console.log('🔍 Waitlist API called');
+  console.log('Environment:', process.env.NODE_ENV);
   console.log('Method:', req.method);
   console.log('Body:', req.body);
 
@@ -60,18 +61,50 @@ export default async function handler(
 
   const { email } = validation.data;
 
+  const { email } = validation.data;
+
   try {
-    // Load current emails to check count before
-    const emailsBefore = loadWaitlist();
-    console.log('📊 Emails before:', emailsBefore.length);
+    // Choose storage based on environment
+    const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL;
     
-    // Try to add email using your existing function
-    const isNewEmail = addToWaitlist(email);
-    
-    // Load emails after to get current count
-    const emailsAfter = loadWaitlist();
-    console.log('📊 Emails after:', emailsAfter.length);
-    console.log('📧 All emails:', emailsAfter);
+    if (isProduction) {
+      console.log('🔧 Using Vercel KV storage');
+      const { addToWaitlist, loadWaitlist } = await import('../../lib/waitlist-storage-production');
+      
+      const emailsBefore = await loadWaitlist();
+      console.log('📊 Emails before (KV):', emailsBefore.length);
+      
+      const isNewEmail = await addToWaitlist(email);
+      
+      const emailsAfter = await loadWaitlist();
+      console.log('📊 Emails after (KV):', emailsAfter.length);
+
+      if (!isNewEmail) {
+        return res.status(200).json({ 
+          success: true, 
+          message: 'You\'re already on our waitlist!',
+          count: emailsAfter.length
+        });
+      }
+
+      return res.status(200).json({ 
+        success: true, 
+        message: 'Successfully joined the waitlist!',
+        count: emailsAfter.length 
+      });
+      
+    } else {
+      console.log('🔧 Using local file storage');
+      const { addToWaitlist, loadWaitlist } = await import('../../lib/waitlist-storage');
+      
+      const emailsBefore = loadWaitlist();
+      console.log('📊 Emails before:', emailsBefore.length);
+      
+      const isNewEmail = addToWaitlist(email);
+      
+      const emailsAfter = loadWaitlist();
+      console.log('📊 Emails after:', emailsAfter.length);
+      console.log('📧 All emails:', emailsAfter);
 
     if (!isNewEmail) {
       console.log('⚠️ Email already exists:', email);

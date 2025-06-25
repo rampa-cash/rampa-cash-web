@@ -29,6 +29,8 @@
     "@solana/web3.js": "^1.98.2",
     "@types/bs58": "^4.0.4",
     "@types/twilio": "^3.19.2",
+    "@upstash/redis": "^1.35.0",
+    "@vercel/kv": "^3.0.0",
     "bs58": "^6.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
