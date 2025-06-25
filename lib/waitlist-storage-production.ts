@@ -1,53 +1,46 @@
 import { Redis } from '@upstash/redis';
 
-// Convert your Redis URL to the format Upstash expects
-const REDIS_URL = 'redis://default:Sk4YJrNlcKtvGVEjsj8IInjbKuZFxQKC@redis-10317.c325.us-east-1-4.ec2.redns.redis-cloud.com:10317';
+console.log('🔍 Using Vector database as Redis storage');
 
-// Extract the parts from Redis URL
-const url = REDIS_URL.replace('redis://', 'https://').replace('default:', '');
-const [credentials, host] = url.split('@');
-const token = credentials.replace('https://', '');
-
-console.log('🔍 Using manual Redis URL with @upstash/redis');
-
+// Use your existing Vector database credentials
 const redis = new Redis({
-  url: `https://${host}`,
-  token: token,
+  url: process.env.UPSTASH_VECTOR_REST_URL!,
+  token: process.env.UPSTASH_VECTOR_REST_TOKEN!,
 });
 
 const WAITLIST_KEY = 'rampa-waitlist';
 
 export const loadWaitlist = async (): Promise<string[]> => {
   try {
-    console.log('📡 Loading waitlist from manual Redis URL...');
+    console.log('📡 Loading waitlist from Vector database...');
     const emails = await redis.get<string[]>(WAITLIST_KEY);
     const result = emails || [];
-    console.log('📁 Loaded emails from Redis:', result);
+    console.log('📁 Loaded emails:', result);
     return result;
   } catch (error) {
-    console.error('❌ Error loading waitlist from Redis:', error);
+    console.error('❌ Error loading waitlist:', error);
     return [];
   }
 };
 
 export const saveWaitlist = async (emails: string[]): Promise<void> => {
   try {
-    console.log('💾 Saving emails to Redis:', emails);
+    console.log('💾 Saving emails:', emails);
     await redis.set(WAITLIST_KEY, emails);
-    console.log(`✅ Successfully saved ${emails.length} emails to Redis`);
+    console.log(`✅ Successfully saved ${emails.length} emails`);
   } catch (error) {
-    console.error('❌ Error saving waitlist to Redis:', error);
+    console.error('❌ Error saving waitlist:', error);
   }
 };
 
 export const addToWaitlist = async (email: string): Promise<boolean> => {
-  console.log('🚀 addToWaitlist (manual Redis) called with:', email);
+  console.log('🚀 addToWaitlist called with:', email);
   
   const emails = await loadWaitlist();
   const emailLower = email.toLowerCase();
   
   if (!emails.includes(emailLower)) {
-    console.log('✅ Email is new, adding to Redis');
+    console.log('✅ Email is new, adding to list');
     emails.push(emailLower);
     await saveWaitlist(emails);
     return true;

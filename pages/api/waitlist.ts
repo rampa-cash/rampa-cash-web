@@ -64,23 +64,23 @@ export default async function handler(
   const { email } = validation.data;
 
   try {
-    // Force production storage when REDIS_URL exists
-    const isProduction = process.env.VERCEL || process.env.REDIS_URL;
+    // Use Vector Database when available (works as Redis storage)
+    const isProduction = process.env.VERCEL || process.env.UPSTASH_VECTOR_REST_URL;
     
     if (isProduction) {
-      console.log('📡 Using Vercel Redis storage');
+      console.log('📡 Using Vercel Vector Database storage');
       const { addToWaitlist } = await import('../../lib/waitlist-storage-production');
       const success = await addToWaitlist(email);
       
       if (success) {
         return res.status(200).json({ 
           message: 'Successfully added to waitlist!',
-          environment: 'production-redis'
+          environment: 'production-vector'
         });
       } else {
         return res.status(409).json({ 
           error: 'Email already exists in waitlist',
-          environment: 'production-redis'
+          environment: 'production-vector'
         });
       }
     } else {

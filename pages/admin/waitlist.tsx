@@ -46,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         props: {
           emails,
           count: emails.length,
-          environment: 'Production (Redis)',
+          environment: 'Production (Vector Database)', // Updated label
         },
       };
     } else {
