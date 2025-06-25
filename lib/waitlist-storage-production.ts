@@ -16,18 +16,32 @@ const dummyVector = new Array(1536).fill(0);
 export const loadWaitlist = async (): Promise<string[]> => {
   try {
     console.log('📡 Loading waitlist from Vector database...');
-    // Use metadata to store our emails list
-    const result = await index.query({
-      vector: dummyVector, // Use 1536-dimensional vector
-      topK: 1,
-      includeMetadata: true,
-      filter: `id = "${WAITLIST_KEY}"`
-    });
     
-    if (result.length > 0 && result[0].metadata?.emails) {
-      const emails = JSON.parse(result[0].metadata.emails as string);
-      console.log('📁 Loaded emails from Vector:', emails);
-      return emails;
+    // Try to fetch by ID directly instead of using query
+    try {
+      const result = await index.fetch([WAITLIST_KEY], { includeMetadata: true });
+      
+      if (result.length > 0 && result[0].metadata?.emails) {
+        const emails = JSON.parse(result[0].metadata.emails as string);
+        console.log('📁 Loaded emails from Vector (fetch):', emails);
+        return emails;
+      }
+    } catch (fetchError) {
+      console.log('📡 Fetch failed, trying query method...');
+      
+      // Fallback to query method
+      const result = await index.query({
+        vector: dummyVector,
+        topK: 10, // Increase to make sure we find it
+        includeMetadata: true,
+        filter: `type = "waitlist"` // Use metadata filter instead of id
+      });
+      
+      if (result.length > 0 && result[0].metadata?.emails) {
+        const emails = JSON.parse(result[0].metadata.emails as string);
+        console.log('📁 Loaded emails from Vector (query):', emails);
+        return emails;
+      }
     }
     
     console.log('📁 No emails found, returning empty array');
@@ -44,13 +58,13 @@ export const saveWaitlist = async (emails: string[]): Promise<void> => {
     
     // First, try to delete existing entry
     try {
-      await index.delete(WAITLIST_KEY);
+      await index.delete([WAITLIST_KEY]);
     } catch (e) {
-      // Ignore if doesn't exist
+      console.log('🗑️ No existing entry to delete');
     }
     
     // Upsert with emails in metadata using correct vector dimension
-    await index.upsert({
+    await index.upsert([{
       id: WAITLIST_KEY,
       vector: dummyVector, // Use 1536-dimensional vector
       metadata: {
@@ -59,7 +73,7 @@ export const saveWaitlist = async (emails: string[]): Promise<void> => {
         count: emails.length,
         timestamp: new Date().toISOString()
       }
-    });
+    }]);
     
     console.log(`✅ Successfully saved ${emails.length} emails to Vector`);
   } catch (error) {
