@@ -4,8 +4,21 @@ import { Redis } from '@upstash/redis';
 console.log('🔍 Environment check:');
 console.log('REDIS_URL exists:', !!process.env.REDIS_URL);
 
-// Use Redis.fromEnv() which will automatically use REDIS_URL
-const redis = Redis.fromEnv();
+// Parse the REDIS_URL to extract URL and token
+const redisUrl = process.env.REDIS_URL;
+if (!redisUrl) {
+  throw new Error('REDIS_URL environment variable is not set');
+}
+
+// Extract URL and token from the REDIS_URL
+// Format is usually: redis://default:password@host:port
+const url = redisUrl.replace('redis://', 'https://').split('@')[1];
+const token = redisUrl.split('//')[1].split('@')[0].split(':')[1];
+
+const redis = new Redis({
+  url: `https://${url}`,
+  token: token,
+});
 
 const WAITLIST_KEY = 'rampa-waitlist';
 
