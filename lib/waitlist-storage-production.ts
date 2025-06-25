@@ -1,13 +1,17 @@
 import { Redis } from '@upstash/redis';
 
-// Use Redis.fromEnv() which handles the configuration automatically
-const redis = Redis.fromEnv();
+// Use the specific environment variables that Vercel provides
+const redis = new Redis({
+  url: process.env.REDIS_URL || process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN || 'dummy-token',
+});
 
 const WAITLIST_KEY = 'rampa-waitlist';
 
 export const loadWaitlist = async (): Promise<string[]> => {
   try {
     console.log('📡 Loading waitlist from Upstash Redis...');
+    console.log('📡 Using REDIS_URL:', process.env.REDIS_URL ? 'Found' : 'Not found');
     const emails = await redis.get<string[]>(WAITLIST_KEY);
     const result = emails || [];
     console.log('📁 Loaded emails from Redis:', result);
