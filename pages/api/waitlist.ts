@@ -64,43 +64,29 @@ export default async function handler(
   const { email } = validation.data;
 
   try {
-    // Choose storage based on environment
-    const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL;
+    // Force production storage when REDIS_URL exists
+    const isProduction = process.env.VERCEL || process.env.REDIS_URL;
     
     if (isProduction) {
-      console.log('🔧 Using Vercel KV storage');
-      const { addToWaitlist, loadWaitlist } = await import('../../lib/waitlist-storage-production');
+      console.log('📡 Using Vercel Redis storage');
+      const { addToWaitlist } = await import('../../lib/waitlist-storage-production');
+      const success = await addToWaitlist(email);
       
-      const emailsBefore = await loadWaitlist();
-      console.log('📊 Emails before (KV):', emailsBefore.length);
-      
-      const isNewEmail = await addToWaitlist(email);
-      
-      const emailsAfter = await loadWaitlist();
-      console.log('📊 Emails after (KV):', emailsAfter.length);
-
-      if (!isNewEmail) {
+      if (success) {
         return res.status(200).json({ 
-          success: true, 
-          message: 'You\'re already on our waitlist!',
-          count: emailsAfter.length
+          message: 'Successfully added to waitlist!',
+          environment: 'production-redis'
+        });
+      } else {
+        return res.status(409).json({ 
+          error: 'Email already exists in waitlist',
+          environment: 'production-redis'
         });
       }
-
-      return res.status(200).json({ 
-        success: true, 
-        message: 'Successfully joined the waitlist!',
-        count: emailsAfter.length 
-      });
-      
     } else {
-      console.log('🔧 Using local file storage');
-      const { addToWaitlist, loadWaitlist } = await import('../../lib/waitlist-storage');
-      
-      const emailsBefore = loadWaitlist();
-      console.log('📊 Emails before:', emailsBefore.length);
-      
-      const isNewEmail = addToWaitlist(email);
+      console.log('📁 Using local file storage');
+      const { addToWaitlist } = await import('../../lib/waitlist-storage');
+      const success = addToWaitlist(email);
       
       const emailsAfter = loadWaitlist();
       console.log('📊 Emails after:', emailsAfter.length);
