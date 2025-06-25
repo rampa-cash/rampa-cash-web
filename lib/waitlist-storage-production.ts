@@ -10,12 +10,15 @@ const index = new Index({
 
 const WAITLIST_KEY = 'rampa-waitlist';
 
+// Create a dummy 1536-dimensional vector (all zeros)
+const dummyVector = new Array(1536).fill(0);
+
 export const loadWaitlist = async (): Promise<string[]> => {
   try {
     console.log('📡 Loading waitlist from Vector database...');
     // Use metadata to store our emails list
     const result = await index.query({
-      vector: [0], // dummy vector
+      vector: dummyVector, // Use 1536-dimensional vector
       topK: 1,
       includeMetadata: true,
       filter: `id = "${WAITLIST_KEY}"`
@@ -46,14 +49,15 @@ export const saveWaitlist = async (emails: string[]): Promise<void> => {
       // Ignore if doesn't exist
     }
     
-    // Upsert with emails in metadata
+    // Upsert with emails in metadata using correct vector dimension
     await index.upsert({
       id: WAITLIST_KEY,
-      vector: [0], // dummy vector
+      vector: dummyVector, // Use 1536-dimensional vector
       metadata: {
         emails: JSON.stringify(emails),
         type: 'waitlist',
-        count: emails.length
+        count: emails.length,
+        timestamp: new Date().toISOString()
       }
     });
     
@@ -66,21 +70,31 @@ export const saveWaitlist = async (emails: string[]): Promise<void> => {
 export const addToWaitlist = async (email: string): Promise<boolean> => {
   console.log('🚀 addToWaitlist (Vector) called with:', email);
   
-  const emails = await loadWaitlist();
-  const emailLower = email.toLowerCase();
-  
-  if (!emails.includes(emailLower)) {
-    console.log('✅ Email is new, adding to Vector');
-    emails.push(emailLower);
-    await saveWaitlist(emails);
-    return true;
+  try {
+    const emails = await loadWaitlist();
+    const emailLower = email.toLowerCase();
+    
+    if (!emails.includes(emailLower)) {
+      console.log('✅ Email is new, adding to Vector');
+      emails.push(emailLower);
+      await saveWaitlist(emails);
+      return true;
+    }
+    
+    console.log('⚠️ Email already exists');
+    return false;
+  } catch (error) {
+    console.error('❌ Error in addToWaitlist:', error);
+    return false;
   }
-  
-  console.log('⚠️ Email already exists');
-  return false;
 };
 
 export const getWaitlistCount = async (): Promise<number> => {
-  const emails = await loadWaitlist();
-  return emails.length;
+  try {
+    const emails = await loadWaitlist();
+    return emails.length;
+  } catch (error) {
+    console.error('❌ Error getting waitlist count:', error);
+    return 0;
+  }
 };
