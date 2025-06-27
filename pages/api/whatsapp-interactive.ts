@@ -70,10 +70,12 @@ Or send the recipient's WhatsApp number directly (e.g., +521234567890)
     });
     
   } catch (error) {
-    console.error('❌ Error in interactive API:', error);
-    return res.status(500).json({ 
-      success: false, 
-      error: `Failed to start transfer: ${error.message}` 
+    const errorMessage = (typeof error === 'object' && error !== null && 'message' in error)
+      ? (error as { message: string }).message
+      : 'Unknown error';
+    res.status(500).json({
+      success: false,
+      error: `Failed to start transfer: ${errorMessage}`
     });
   }
 }
