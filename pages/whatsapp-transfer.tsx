@@ -16,16 +16,18 @@ const WhatsAppTransfer = () => {
   const [success, setSuccess] = useState('');
   
   // Exchange rates (for demo purposes - in production, these would come from an API)
-  const exchangeRates = {
-    MXN: 18.50,  // EUR to MXN
-    COP: 4200,   // EUR to COP
-    BRL: 5.45,   // EUR to BRL
-    ARS: 950,    // EUR to ARS
-    PEN: 4.15    // EUR to PEN
+  const exchangeRates: Record<string, number> = {
+    MXN: 18.5,
+    COP: 4000,
+    BRL: 5.2,
+    ARS: 900,
+    PEN: 4.1,
   };
   
   // Calculate recipient amount based on selected currency
-  const calculatedAmount = (parseFloat(amount) || 0) * (exchangeRates[selectedRecipientCountry] || 0);
+  const calculatedAmount =
+    (parseFloat(amount) || 0) *
+    (exchangeRates[selectedRecipientCountry as keyof typeof exchangeRates] || 0);
   
   // Add the handleSendMoney function
   const handleSendMoney = async () => {
@@ -40,14 +42,6 @@ const WhatsAppTransfer = () => {
 
     try {
       const fullSenderPhone = `${countryCode}${phoneNumber}`;
-
-      const transferMessage = `🚀 RAMPA Transfer Started!
-
-💰 Amount: ${amount} EUR → ${calculatedAmount.toFixed(2)} ${selectedRecipientCountry}
-💱 Rate: 1 EUR = ${exchangeRates[selectedRecipientCountry]} ${selectedRecipientCountry}
-
-Let's choose who to send this to! 👇`;
-
       // Call the WhatsApp interactive API
       const response = await fetch('/api/whatsapp-interactive', {
         method: 'POST',

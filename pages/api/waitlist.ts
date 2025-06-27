@@ -1,45 +1,64 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { addToWaitlist, loadWaitlist } from '../../lib/waitlist-storage';
-
-type ResponseData = {
-  success: boolean;
-  message?: string;
-  error?: string;
-  count?: number;
-};
+import { 
+  validateRequest, 
+  sendApiResponse, 
+  sendErrorResponse, 
+  createApiError,
+  rateLimit,
+  corsMiddleware
+} from '../../lib/api-utils';
+import {
+  ApiErrorCode,
+  type WaitlistResponse,
+  WaitlistRequestSchema
+} from '../../lib/types/api';
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
-) {
+  res: NextApiResponse<WaitlistResponse>
+): Promise<void> {
+  // Handle CORS
+  corsMiddleware(req, res);
+  
+  // Apply rate limiting
+  const rateLimitCheck = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    maxRequests: 10, // 10 requests per 15 minutes for waitlist
+    message: 'Too many waitlist requests, please try again later.',
+  });
+  
+  if (!rateLimitCheck(req, res)) {
+    return;
+  }
+
   console.log('🔍 Waitlist API called');
   console.log('Method:', req.method);
   console.log('Body:', req.body);
 
   if (req.method !== 'POST') {
     console.log('❌ Wrong method');
-    return res.status(405).json({ success: false, error: 'Method not allowed' });
+    sendErrorResponse(
+      res,
+      405,
+      createApiError(ApiErrorCode.VALIDATION_ERROR, 'Method not allowed')
+    );
+    return;
   }
 
-  const { email } = req.body;
-
-  if (!email) {
-    console.log('❌ No email provided');
-    return res.status(400).json({ 
-      success: false, 
-      error: 'Email is required' 
-    });
+  // Validate request body
+  const validation = validateRequest(WaitlistRequestSchema, req);
+  if (!validation.success) {
+    console.log('❌ Validation failed:', validation.error);
+    sendErrorResponse(
+      res,
+      400,
+      createApiError(ApiErrorCode.VALIDATION_ERROR, validation.error)
+    );
+    return;
   }
 
-  // Basic email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    console.log('❌ Invalid email format:', email);
-    return res.status(400).json({ 
-      success: false, 
-      error: 'Please enter a valid email address' 
-    });
-  }
+  const { email } = validation.data;
 
   try {
     // Load current emails to check count before
@@ -56,26 +75,31 @@ export default async function handler(
 
     if (!isNewEmail) {
       console.log('⚠️ Email already exists:', email);
-      return res.status(200).json({ 
-        success: true, 
+      sendApiResponse(res, 200, {
+        success: true,
         message: 'You\'re already on our waitlist!',
         count: emailsAfter.length
       });
+      return;
     }
 
     console.log('✅ Email added successfully:', email);
 
-    return res.status(200).json({ 
-      success: true, 
+    sendApiResponse(res, 200, {
+      success: true,
       message: 'Successfully joined the waitlist!',
-      count: emailsAfter.length 
+      count: emailsAfter.length
     });
 
   } catch (error) {
     console.error('❌ Error adding to waitlist:', error);
-    return res.status(500).json({ 
-      success: false, 
-      error: 'Failed to join waitlist. Please try again.' 
-    });
+    sendErrorResponse(
+      res,
+      500,
+      createApiError(
+        ApiErrorCode.INTERNAL_ERROR,
+        'Failed to join waitlist. Please try again.'
+      )
+    );
   }
 }
