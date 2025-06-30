@@ -7,6 +7,8 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+      - UPSTASH_VECTOR_REST_URL=https://diverse-pelican-18660-us1-vector.upstash.io
+      - UPSTASH_VECTOR_REST_TOKEN=ABkFMGRpdmVyc2UtcGVsaWNhbi0xODY2MC11czFhZG1pbk9XSTVPR1UyTlRjdFlqWTFaQzAwWWpGa0xUaGhabVF0WkRRNE5URmtOelJqTWpGbA==
       # Add your environment variables here
       # - SOLANA_PRIVATE_KEY=your_private_key_here
       # - TWILIO_ACCOUNT_SID=your_twilio_sid
