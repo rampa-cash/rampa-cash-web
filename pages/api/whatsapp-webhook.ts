@@ -14,10 +14,26 @@ const savedContacts = [
   { id: '3', name: 'Ana Santos', phone: '+5511234567890', country: 'Brazil', flag: '🇧🇷' },
 ];
 
-export default async function handler(
+interface TransferData {
+  amount: number;
+  recipientAmount: number;
+  currency: string;
+  step: string;
+  recipient?: RecipientInfo;
+  timestamp: number;
+}
+
+interface RecipientInfo {
+  name: string;
+  phone: string;
+  country: string;
+  flag: string;
+}
+
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse
-) {
+): Promise<void> => {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -57,9 +73,9 @@ export default async function handler(
     console.error('❌ Webhook error:', error);
     return res.status(500).json({ error: 'Internal server error' });
   }
-}
+};
 
-async function sendHelpMessage(senderPhone: string) {
+const sendHelpMessage = async (senderPhone: string): Promise<void> => {
   await client.messages.create({
     body: `👋 Welcome to RAMPA!
 
@@ -75,15 +91,15 @@ Fast, secure money transfers powered by the Solana blockchain! 🚀`,
     from: `whatsapp:${process.env.TWILIO_WHATSAPP_NUMBER}`,
     to: `whatsapp:${senderPhone}`
   });
-}
+};
 
-async function handleRecipientSelection(senderPhone: string, userMessage: string, transferData: any) {
+const handleRecipientSelection = async (senderPhone: string, userMessage: string, transferData: TransferData): Promise<void> => {
   const message = userMessage.toLowerCase();
-  let recipientInfo = null;
+  let recipientInfo: RecipientInfo | null = null;
 
   // Check if user selected a predefined contact
   if (['1', '2', '3'].includes(message)) {
-    recipientInfo = savedContacts.find(contact => contact.id === message);
+    recipientInfo = savedContacts.find(contact => contact.id === message) ?? null;
     
     if (recipientInfo) {
       await confirmRecipientAndTransfer(senderPhone, recipientInfo, transferData);
@@ -141,14 +157,14 @@ Please send the recipient's WhatsApp number in international format.
       to: `whatsapp:${senderPhone}`
     });
   }
-}
+};
 
-async function handlePhoneNumberInput(senderPhone: string, userMessage: string, transferData: any) {
+const handlePhoneNumberInput = async (senderPhone: string, userMessage: string, transferData: TransferData): Promise<void> => {
   const phoneNumber = userMessage.trim();
   
   // Validate phone number format
   if (phoneNumber.startsWith('+') && phoneNumber.length >= 10) {
-    const recipientInfo = {
+    const recipientInfo: RecipientInfo = {
       name: `Contact ${phoneNumber}`,
       phone: phoneNumber,
       country: 'International',
@@ -172,9 +188,9 @@ Please send a valid international number:
       to: `whatsapp:${senderPhone}`
     });
   }
-}
+};
 
-async function confirmRecipientAndTransfer(senderPhone: string, recipient: any, transferData: any) {
+const confirmRecipientAndTransfer = async (senderPhone: string, recipient: RecipientInfo, transferData: TransferData): Promise<void> => {
   try {
     // Send confirmation message
     await client.messages.create({
@@ -211,9 +227,9 @@ async function confirmRecipientAndTransfer(senderPhone: string, recipient: any, 
       to: `whatsapp:${senderPhone}`
     });
   }
-}
+};
 
-async function handleTransferConfirmation(senderPhone: string, userMessage: string, transferData: any) {
+const handleTransferConfirmation = async (senderPhone: string, userMessage: string, transferData: TransferData): Promise<void> => {
   const message = userMessage.toLowerCase();
   
   if (message === 'yes' || message === 'y' || message === 'confirm') {
@@ -264,11 +280,15 @@ Thank you for using RAMPA! 🚀`,
       to: `whatsapp:${senderPhone}`
     });
   }
-}
+};
 
-async function processConfirmedTransfer(senderPhone: string, transferData: any) {
+const processConfirmedTransfer = async (senderPhone: string, transferData: TransferData): Promise<void> => {
   try {
     const { recipient } = transferData;
+    
+    if (!recipient) {
+      throw new Error('No recipient information found');
+    }
     
     // Send processing message to sender
     await client.messages.create({
@@ -375,4 +395,6 @@ Your money is safe and no charges were applied.`,
     // Clear the failed transfer
     activeTransfers.delete(senderPhone);
   }
-}
+};
+
+export default handler;

@@ -17,7 +17,7 @@ export const defaultRateLimit: RateLimitConfig = {
   message: 'Too many requests, please try again later.',
 }
 
-export function rateLimit(config: RateLimitConfig = defaultRateLimit) {
+export const rateLimit = (config: RateLimitConfig = defaultRateLimit) => {
   return (req: NextApiRequest, res: NextApiResponse): boolean => {
     const ip = req.headers['x-forwarded-for'] ?? req.socket.remoteAddress ?? 'unknown'
     const key = `rate_limit:${ip}`
@@ -41,10 +41,10 @@ export function rateLimit(config: RateLimitConfig = defaultRateLimit) {
   }
 }
 
-export function validateRequest<T>(
+export const validateRequest = <T>(
   schema: z.ZodSchema<T>,
   req: NextApiRequest
-): { success: true; data: T } | { success: false; error: string } {
+): { success: true; data: T } | { success: false; error: string } => {
   try {
     const data = schema.parse(req.body)
     return { success: true, data }
@@ -57,11 +57,11 @@ export function validateRequest<T>(
   }
 }
 
-export function createApiError(
+export const createApiError = (
   code: ApiErrorCode,
   message: string,
   details?: Record<string, unknown>
-): ApiError {
+): ApiError => {
   return { 
     code, 
     message, 
@@ -69,19 +69,19 @@ export function createApiError(
   }
 }
 
-export function sendApiResponse<T>(
+export const sendApiResponse = <T>(
   res: NextApiResponse,
   statusCode: number,
   data: T
-): void {
+): void => {
   res.status(statusCode).json(data)
 }
 
-export function sendErrorResponse(
+export const sendErrorResponse = (
   res: NextApiResponse,
   statusCode: number,
   error: ApiError
-): void {
+): void => {
   res.status(statusCode).json({
     success: false,
     error: error.message,
@@ -90,26 +90,26 @@ export function sendErrorResponse(
   })
 }
 
-export function sanitizeInput(input: string): string {
+export const sanitizeInput = (input: string): string => {
   return input
     .trim()
     .replace(/[<>]/g, '') // Remove potential HTML tags
     .slice(0, 1000) // Limit length
 }
 
-export function validateEmail(email: string): boolean {
+export const validateEmail = (email: string): boolean => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   return emailRegex.test(email)
 }
 
-export function validateSolanaAddress(address: string): boolean {
+export const validateSolanaAddress = (address: string): boolean => {
   // Basic Solana address validation (base58, 32-44 characters)
   const addressRegex = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/
   return addressRegex.test(address)
 }
 
 // CORS middleware
-export function corsMiddleware(req: NextApiRequest, res: NextApiResponse): void {
+export const corsMiddleware = (req: NextApiRequest, res: NextApiResponse): void => {
   res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGINS ?? '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
@@ -120,10 +120,10 @@ export function corsMiddleware(req: NextApiRequest, res: NextApiResponse): void 
 }
 
 // Authentication middleware (basic implementation)
-export function requireAuth(
+export const requireAuth = (
   req: NextApiRequest,
   res: NextApiResponse
-): boolean {
+): boolean => {
   const authHeader = req.headers.authorization
   
   if (!authHeader || !authHeader.startsWith('Bearer ')) {

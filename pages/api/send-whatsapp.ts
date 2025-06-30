@@ -13,10 +13,10 @@ type ResponseData = {
   error?: string;
 };
 
-export default async function handler(
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
-) {
+): Promise<void> => {
   // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, error: 'Method not allowed' });
@@ -164,4 +164,6 @@ You'll receive another message when it's ready to collect! 🚀`,
       error: 'Failed to send WhatsApp messages' 
     });
   }
-}
+};
+
+export default handler;

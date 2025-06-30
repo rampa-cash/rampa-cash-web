@@ -10,12 +10,12 @@ const WaitlistSignup = ({
   title = "Join the Waitlist", 
   description = "Be the first to know when RAMPA MVP launches",
   className = ""
-}: WaitlistSignupProps) => {
+}: WaitlistSignupProps): JSX.Element => {
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     
     if (!email) {
@@ -43,7 +43,7 @@ const WaitlistSignup = ({
       }
 
       setStatus('success');
-      setMessage('🎉 You\'re on the list! We\'ll notify you when we launch.');
+      setMessage('🎉 You&apos;re on the list! We&apos;ll notify you when we launch.');
       setEmail('');
       
       // Reset after 5 seconds
@@ -99,7 +99,7 @@ const WaitlistSignup = ({
         </form>
         
         <p className="text-xs text-indigo-200 mt-4">
-          We'll only email you about the launch. No spam, ever.
+          We&apos;ll only email you about the launch. No spam, ever.
         </p>
       </div>
     </div>

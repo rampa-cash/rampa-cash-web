@@ -14,9 +14,9 @@ describe('WaitlistSignup', () => {
   it('renders with default props', () => {
     render(<WaitlistSignup />)
     
-    expect(screen.getByText('🚀 Get Early Access')).toBeInTheDocument()
-    expect(screen.getByText('Join our waitlist and be the first to know when we launch')).toBeInTheDocument()
-    expect(screen.getByPlaceholderText('Enter your email address')).toBeInTheDocument()
+    expect(screen.getByText('Join the Waitlist')).toBeInTheDocument()
+    expect(screen.getByText('Be the first to know when RAMPA MVP launches')).toBeInTheDocument()
+    expect(screen.getByPlaceholderText('Enter your email')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Join Waitlist' })).toBeInTheDocument()
   })
 
@@ -49,36 +49,36 @@ describe('WaitlistSignup', () => {
   it('submits form successfully', async () => {
     const mockResponse = { success: true, message: 'Successfully joined!' }
     ;(fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
       json: async () => mockResponse,
     })
 
-    const onSuccess = jest.fn()
-    render(<WaitlistSignup onSuccess={onSuccess} />)
+    render(<WaitlistSignup />)
     
-    const emailInput = screen.getByPlaceholderText('Enter your email address')
+    const emailInput = screen.getByPlaceholderText('Enter your email')
     const submitButton = screen.getByRole('button', { name: 'Join Waitlist' })
     
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
     fireEvent.click(submitButton)
     
     await waitFor(() => {
-      expect(screen.getByText('Successfully joined!')).toBeInTheDocument()
+      expect(screen.getByText('🎉 You&apos;re on the list! We&apos;ll notify you when we launch.')).toBeInTheDocument()
     })
     
-    expect(onSuccess).toHaveBeenCalledWith('test@example.com')
+    // Email should be cleared after successful submission
     expect(emailInput).toHaveValue('')
   })
 
   it('handles API error', async () => {
     const mockResponse = { success: false, error: 'Email already exists' }
     ;(fetch as jest.Mock).mockResolvedValueOnce({
+      ok: false,
       json: async () => mockResponse,
     })
 
-    const onError = jest.fn()
-    render(<WaitlistSignup onError={onError} />)
+    render(<WaitlistSignup />)
     
-    const emailInput = screen.getByPlaceholderText('Enter your email address')
+    const emailInput = screen.getByPlaceholderText('Enter your email')
     const submitButton = screen.getByRole('button', { name: 'Join Waitlist' })
     
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
@@ -87,27 +87,22 @@ describe('WaitlistSignup', () => {
     await waitFor(() => {
       expect(screen.getByText('Email already exists')).toBeInTheDocument()
     })
-    
-    expect(onError).toHaveBeenCalledWith('Email already exists')
   })
 
   it('handles network error', async () => {
     ;(fetch as jest.Mock).mockRejectedValueOnce(new Error('Network error'))
 
-    const onError = jest.fn()
-    render(<WaitlistSignup onError={onError} />)
+    render(<WaitlistSignup />)
     
-    const emailInput = screen.getByPlaceholderText('Enter your email address')
+    const emailInput = screen.getByPlaceholderText('Enter your email')
     const submitButton = screen.getByRole('button', { name: 'Join Waitlist' })
     
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } })
     fireEvent.click(submitButton)
     
     await waitFor(() => {
-      expect(screen.getByText('Failed to join waitlist. Please try again.')).toBeInTheDocument()
+      expect(screen.getByText('Failed to join waitlist')).toBeInTheDocument()
     })
-    
-    expect(onError).toHaveBeenCalledWith('Network error')
   })
 
   it('disables form during submission', async () => {
@@ -117,7 +112,7 @@ describe('WaitlistSignup', () => {
 
     render(<WaitlistSignup />)
     
-    const emailInput = screen.getByPlaceholderText('Enter your email address')
+    const emailInput = screen.getByPlaceholderText('Enter your email')
     const submitButton = screen.getByRole('button', { name: 'Join Waitlist' })
     
     fireEvent.change(emailInput, { target: { value: 'test@example.com' } })

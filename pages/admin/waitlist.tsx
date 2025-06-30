@@ -7,7 +7,7 @@ interface WaitlistAdminProps {
   error?: string;
 }
 
-const WaitlistAdmin = ({ emails, count, environment, error }: WaitlistAdminProps) => {
+const WaitlistAdmin = ({ emails, count, environment, error }: WaitlistAdminProps): JSX.Element => {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
@@ -45,16 +45,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL;
     
-    console.log('🔍 Admin page - Environment check:');
-    console.log('isProduction:', isProduction);
-    console.log('UPSTASH_VECTOR_REST_URL exists:', !!process.env.UPSTASH_VECTOR_REST_URL);
-    
     if (isProduction) {
-      console.log('📡 Loading waitlist from production Vector database...');
       const { loadWaitlist } = await import('../../lib/waitlist-storage-production');
       const emails = await loadWaitlist();
-      
-      console.log('📁 Admin loaded emails:', emails);
       
       return {
         props: {
@@ -64,7 +57,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
         },
       };
     } else {
-      console.log('📁 Loading waitlist from development file...');
       const { loadWaitlist } = await import('../../lib/waitlist-storage');
       const emails = loadWaitlist();
       
@@ -77,7 +69,6 @@ export const getServerSideProps: GetServerSideProps = async () => {
       };
     }
   } catch (error) {
-    console.error('❌ Error in admin getServerSideProps:', error);
     return {
       props: {
         emails: [],

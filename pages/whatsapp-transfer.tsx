@@ -1,8 +1,9 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 
-const WhatsAppTransfer = () => {
+const WhatsAppTransfer = (): JSX.Element => {
   const [amount, setAmount] = useState('200');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [countryCode, setCountryCode] = useState('+34'); // Default to Spain
@@ -30,7 +31,7 @@ const WhatsAppTransfer = () => {
     (exchangeRates[selectedRecipientCountry as keyof typeof exchangeRates] || 0);
   
   // Add the handleSendMoney function
-  const handleSendMoney = async () => {
+  const handleSendMoney = async (): Promise<void> => {
     if (!phoneNumber) {
       setError("Please enter your WhatsApp number");
       return;
@@ -149,7 +150,7 @@ const WhatsAppTransfer = () => {
         <nav className="container mx-auto flex items-center justify-between">
           <Link href="/">
             <div className="flex items-center cursor-pointer">
-              <img src="/logo.png" alt="RAMPA logo" className="w-8 h-8 md:w-10 md:h-10" />
+              <Image src="/logo.png" alt="RAMPA logo" width={40} height={40} className="w-8 h-8 md:w-10 md:h-10" />
               <span className="font-bold text-lg md:text-xl ml-2">rampa</span>
             </div>
           </Link>

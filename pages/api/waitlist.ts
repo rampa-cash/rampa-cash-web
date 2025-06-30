@@ -14,10 +14,10 @@ import {
   WaitlistRequestSchema
 } from '../../lib/types/api';
 
-export default async function handler(
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<WaitlistResponse>
-): Promise<void> {
+): Promise<void> => {
   // Handle CORS
   corsMiddleware(req, res);
   
@@ -122,4 +122,6 @@ export default async function handler(
       )
     );
   }
-}
+};
+
+export default handler;
