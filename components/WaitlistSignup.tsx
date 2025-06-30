@@ -53,14 +53,14 @@ const WaitlistSignup: React.FC<WaitlistSignupProps> = ({
       const data: WaitlistResponse = await response.json();
 
       if (data.success) {
-        setMessage(data.message || 'Successfully joined the waitlist!');
+          setMessage(data.message ?? 'Successfully joined the waitlist!');
         setIsSuccess(true);
         setEmail('');
         onSuccess?.(email.trim());
       } else {
-        setMessage(data.error || 'Failed to join waitlist');
+        setMessage(data.error ?? 'Failed to join waitlist');
         setIsSuccess(false);
-        onError?.(data.error || 'Failed to join waitlist');
+        onError?.(data.error ?? 'Failed to join waitlist');
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Network error occurred';

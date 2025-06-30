@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { addToWaitlist, loadWaitlist } from '../../lib/waitlist-storage';
+import { loadWaitlist } from '../../lib/waitlist-storage';
 import { 
   validateRequest, 
   sendApiResponse, 
@@ -61,11 +61,9 @@ export default async function handler(
 
   const { email } = validation.data;
 
-  const { email } = validation.data;
-
   try {
     // Use Vector Database when available (works as Redis storage)
-    const isProduction = process.env.VERCEL || process.env.UPSTASH_VECTOR_REST_URL;
+    const isProduction = process.env.VERCEL ?? process.env.UPSTASH_VECTOR_REST_URL;
     
     if (isProduction) {
       console.log('📡 Using Vercel Vector Database storage');
@@ -73,15 +71,17 @@ export default async function handler(
       const success = await addToWaitlist(email);
       
       if (success) {
-        return res.status(200).json({ 
-          message: 'Successfully added to waitlist!',
-          environment: 'production-vector'
+        sendApiResponse(res, 200, {
+          success: true,
+          message: 'Successfully added to waitlist!'
         });
+        return;
       } else {
-        return res.status(409).json({ 
-          error: 'Email already exists in waitlist',
-          environment: 'production-vector'
+        sendApiResponse(res, 409, {
+          success: false,
+          error: 'Email already exists in waitlist'
         });
+        return;
       }
     } else {
       console.log('📁 Using local file storage');
@@ -92,23 +92,24 @@ export default async function handler(
       console.log('📊 Emails after:', emailsAfter.length);
       console.log('📧 All emails:', emailsAfter);
 
-    if (!isNewEmail) {
-      console.log('⚠️ Email already exists:', email);
+      if (!success) {
+        console.log('⚠️ Email already exists:', email);
+        sendApiResponse(res, 200, {
+          success: true,
+          message: 'You\'re already on our waitlist!',
+          count: emailsAfter.length
+        });
+        return;
+      }
+
+      console.log('✅ Email added successfully:', email);
+
       sendApiResponse(res, 200, {
         success: true,
-        message: 'You\'re already on our waitlist!',
+        message: 'Successfully joined the waitlist!',
         count: emailsAfter.length
       });
-      return;
     }
-
-    console.log('✅ Email added successfully:', email);
-
-    sendApiResponse(res, 200, {
-      success: true,
-      message: 'Successfully joined the waitlist!',
-      count: emailsAfter.length
-    });
 
   } catch (error) {
     console.error('❌ Error adding to waitlist:', error);

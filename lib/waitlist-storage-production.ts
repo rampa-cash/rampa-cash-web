@@ -21,7 +21,7 @@ export const loadWaitlist = async (): Promise<string[]> => {
     try {
       const result = await index.fetch([WAITLIST_KEY], { includeMetadata: true });
       
-      if (result.length > 0 && result[0].metadata?.emails) {
+      if (result.length > 0 && result[0]?.metadata?.emails) {
         const emails = JSON.parse(result[0].metadata.emails as string);
         console.log('📁 Loaded emails from Vector (fetch):', emails);
         return emails;
@@ -37,7 +37,7 @@ export const loadWaitlist = async (): Promise<string[]> => {
         filter: `type = "waitlist"` // Use metadata filter instead of id
       });
       
-      if (result.length > 0 && result[0].metadata?.emails) {
+      if (result.length > 0 && result[0]?.metadata?.emails) {
         const emails = JSON.parse(result[0].metadata.emails as string);
         console.log('📁 Loaded emails from Vector (query):', emails);
         return emails;

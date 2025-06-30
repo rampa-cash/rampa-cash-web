@@ -19,7 +19,7 @@ export const defaultRateLimit: RateLimitConfig = {
 
 export function rateLimit(config: RateLimitConfig = defaultRateLimit) {
   return (req: NextApiRequest, res: NextApiResponse): boolean => {
-    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || 'unknown'
+    const ip = req.headers['x-forwarded-for'] ?? req.socket.remoteAddress ?? 'unknown'
     const key = `rate_limit:${ip}`
     
     const now = Date.now()
@@ -110,7 +110,7 @@ export function validateSolanaAddress(address: string): boolean {
 
 // CORS middleware
 export function corsMiddleware(req: NextApiRequest, res: NextApiResponse): void {
-  res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGINS || '*')
+  res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGINS ?? '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
   
@@ -139,6 +139,7 @@ export function requireAuth(
   const token = authHeader.substring(7)
   
   // Placeholder validation - replace with actual JWT validation
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
   if (!token || token.length < 10) {
     sendErrorResponse(
       res,

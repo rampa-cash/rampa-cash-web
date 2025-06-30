@@ -73,7 +73,7 @@ const TestWaitlist = () => {
           <ol className="list-decimal list-inside space-y-1 text-sm">
             <li>Open Browser DevTools (F12)</li>
             <li>Go to Console tab</li>
-            <li>Enter an email and click "Test Submit"</li>
+            <li>Enter an email and click &quot;Test Submit&quot;</li>
             <li>Check console for logs</li>
             <li>Check Network tab for API request</li>
           </ol>

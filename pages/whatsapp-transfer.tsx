@@ -346,7 +346,7 @@ const WhatsAppTransfer = () => {
                     <div>
                       <div className="font-medium">{success}</div>
                       <div className="text-sm mt-1">
-                        📱 You'll receive 3 WhatsApp messages:
+                        📱 You&apos;ll receive 3 WhatsApp messages:
                         <br />• Immediate confirmation
                         <br />• Processing update (5 seconds)
                         <br />• Completion notice (15 seconds)

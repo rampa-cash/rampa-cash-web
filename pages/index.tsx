@@ -91,7 +91,7 @@ const Home: NextPage = () => {
                   4
                 </div>
                 <h3 className="text-xl font-bold mb-2">Confirm and send</h3>
-                <p className="text-gray-600">And that's all, your money arrives after a few seconds.</p>
+                <p className="text-gray-600">And that&apos;s all, your money arrives after a few seconds.</p>
               </div>
             </div>
           </div>
@@ -129,7 +129,7 @@ const Home: NextPage = () => {
           <div className="container mx-auto px-4 md:px-8 text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">About Us</h2>
             <p className="text-lg md:text-xl mb-6 md:mb-8 max-w-3xl mx-auto text-gray-700">
-              Bringing Web3 to real people, making it so simple that they don't realize they're using Web3 services.
+              Bringing Web3 to real people, making it so simple that they don&apos;t realize they&apos;re using Web3 services.
             </p>
             
             <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto mt-8">
