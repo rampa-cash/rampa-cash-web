@@ -1,7 +1,6 @@
-version: '3.8'
-
 services:
   rampa-cash-web:
+    container_name: rampa-web
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,6 +8,8 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+      - UPSTASH_VECTOR_REST_URL=https://diverse-pelican-18660-us1-vector.upstash.io
+      - UPSTASH_VECTOR_REST_TOKEN=ABkFMGRpdmVyc2UtcGVsaWNhbi0xODY2MC11czFhZG1pbk9XSTVPR1UyTlRjdFlqWTFaQzAwWWpGa0xUaGhabVF0WkRRNE5URmtOelJqTWpGbA==
       # Add your environment variables here
       # - SOLANA_PRIVATE_KEY=your_private_key_here
       # - TWILIO_ACCOUNT_SID=your_twilio_sid
@@ -21,9 +22,12 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    profiles:
+      - prod
 
   # Development service (optional)
   rampa-cash-web-dev:
+    container_name: rampa-web-dev
     build:
       context: .
       dockerfile: Dockerfile.dev

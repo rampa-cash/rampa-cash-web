@@ -1,44 +1,30 @@
 import { useState } from 'react';
-import { Button } from './ui/button';
 
 interface WaitlistSignupProps {
   title?: string;
   description?: string;
   className?: string;
-  onSuccess?: (email: string) => void;
-  onError?: (error: string) => void;
 }
 
-interface WaitlistResponse {
-  success: boolean;
-  message?: string;
-  error?: string;
-  count?: number;
-}
+const WaitlistSignup = ({ 
+  title = "Join the Waitlist", 
+  description = "Be the first to know when RAMPA MVP launches",
+  className = ""
+}: WaitlistSignupProps): JSX.Element => {
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [message, setMessage] = useState('');
 
-const WaitlistSignup: React.FC<WaitlistSignupProps> = ({
-  title = "🚀 Get Early Access",
-  description = "Join our waitlist and be the first to know when we launch",
-  className = "",
-  onSuccess,
-  onError
-}) => {
-  const [email, setEmail] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>('');
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     
-    if (!email.trim()) {
+    if (!email) {
+      setStatus('error');
       setMessage('Please enter your email address');
-      setIsSuccess(false);
-      onError?.('Please enter your email address');
       return;
     }
 
-    setIsLoading(true);
+    setStatus('loading');
     setMessage('');
 
     try {
@@ -47,67 +33,75 @@ const WaitlistSignup: React.FC<WaitlistSignupProps> = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email: email.trim() }),
+        body: JSON.stringify({ email }),
       });
 
-      const data: WaitlistResponse = await response.json();
+      const data = await response.json();
 
-      if (data.success) {
-        setMessage(data.message || 'Successfully joined the waitlist!');
-        setIsSuccess(true);
-        setEmail('');
-        onSuccess?.(email.trim());
-      } else {
-        setMessage(data.error || 'Failed to join waitlist');
-        setIsSuccess(false);
-        onError?.(data.error || 'Failed to join waitlist');
+      if (!response.ok) {
+        throw new Error(data.error || 'Something went wrong');
       }
+
+      setStatus('success');
+      setMessage('🎉 You&apos;re on the list! We&apos;ll notify you when we launch.');
+      setEmail('');
+      
+      // Reset after 5 seconds
+      setTimeout(() => {
+        setStatus('idle');
+        setMessage('');
+      }, 5000);
+
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Network error occurred';
-      setMessage('Failed to join waitlist. Please try again.');
-      setIsSuccess(false);
-      onError?.(errorMessage);
-    } finally {
-      setIsLoading(false);
+      setStatus('error');
+      setMessage(error instanceof Error ? error.message : 'Failed to join waitlist');
+      
+      // Reset error after 3 seconds
+      setTimeout(() => {
+        setStatus('idle');
+        setMessage('');
+      }, 3000);
     }
   };
 
   return (
-    <div className={`bg-white p-6 rounded-lg shadow-sm border ${className}`}>
-      <h3 className="text-xl font-bold mb-2">{title}</h3>
-      <p className="text-gray-600 mb-4">{description}</p>
-      
-      <form onSubmit={handleSubmit} className="space-y-3">
-        <div>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email address"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-            disabled={isLoading}
-            required
-          />
-        </div>
+    <div className={`bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 md:p-8 text-white ${className}`}>
+      <div className="max-w-md mx-auto text-center">
+        <h3 className="text-xl md:text-2xl font-bold mb-2">{title}</h3>
+        <p className="text-indigo-100 mb-6">{description}</p>
         
-        <Button
-          type="submit"
-          disabled={isLoading}
-          className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md font-medium hover:bg-indigo-700 transition disabled:opacity-50"
-        >
-          {isLoading ? 'Joining...' : 'Join Waitlist'}
-        </Button>
-      </form>
-      
-      {message && (
-        <div className={`mt-3 p-2 rounded text-sm ${
-          isSuccess 
-            ? 'bg-green-100 text-green-700 border border-green-200' 
-            : 'bg-red-100 text-red-700 border border-red-200'
-        }`}>
-          {message}
-        </div>
-      )}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="flex flex-col sm:flex-row gap-3">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              className="flex-1 px-4 py-3 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+              disabled={status === 'loading'}
+            />
+            <button
+              type="submit"
+              disabled={status === 'loading' || status === 'success'}
+              className="bg-white text-indigo-600 px-6 py-3 rounded-md font-medium hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {status === 'loading' ? 'Joining...' : 'Join Waitlist'}
+            </button>
+          </div>
+          
+          {message && (
+            <div className={`text-sm ${
+              status === 'success' ? 'text-green-200' : 'text-red-200'
+            }`}>
+              {message}
+            </div>
+          )}
+        </form>
+        
+        <p className="text-xs text-indigo-200 mt-4">
+          We&apos;ll only email you about the launch. No spam, ever.
+        </p>
+      </div>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import path from 'path';
 const WAITLIST_FILE = path.join(process.cwd(), 'data', 'waitlist.json');
 
 // Ensure data directory exists
-const ensureDataDir = () => {
+const ensureDataDir = (): void => {
   const dataDir = path.dirname(WAITLIST_FILE);
   if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
@@ -16,10 +16,11 @@ export const loadWaitlist = (): string[] => {
     ensureDataDir();
     if (fs.existsSync(WAITLIST_FILE)) {
       const data = fs.readFileSync(WAITLIST_FILE, 'utf8');
-      return JSON.parse(data);
+      const emails = JSON.parse(data);
+      return emails;
     }
   } catch (error) {
-    console.error('Error loading waitlist:', error);
+    // Error loading waitlist
   }
   return [];
 };
@@ -27,18 +28,30 @@ export const loadWaitlist = (): string[] => {
 export const saveWaitlist = (emails: string[]): void => {
   try {
     ensureDataDir();
-    fs.writeFileSync(WAITLIST_FILE, JSON.stringify(emails, null, 2));
+    const jsonData = JSON.stringify(emails, null, 2);
+    
+    fs.writeFileSync(WAITLIST_FILE, jsonData);
+    
+    // Verify the save worked
+    fs.readFileSync(WAITLIST_FILE, 'utf8');
   } catch (error) {
-    console.error('Error saving waitlist:', error);
+    // Error saving waitlist
   }
 };
 
 export const addToWaitlist = (email: string): boolean => {
   const emails = loadWaitlist();
-  if (!emails.includes(email.toLowerCase())) {
-    emails.push(email.toLowerCase());
+  const emailLower = email.toLowerCase();
+  
+  if (!emails.includes(emailLower)) {
+    emails.push(emailLower);
     saveWaitlist(emails);
     return true;
   }
+  
   return false;
+};
+
+export const getWaitlistCount = (): number => {
+  return loadWaitlist().length;
 };

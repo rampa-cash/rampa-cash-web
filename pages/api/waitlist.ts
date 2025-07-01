@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { addToWaitlist, loadWaitlist } from '../../lib/waitlist-storage';
+import { loadWaitlist } from '../../lib/waitlist-storage';
 import { 
   validateRequest, 
   sendApiResponse, 
@@ -14,10 +14,10 @@ import {
   WaitlistRequestSchema
 } from '../../lib/types/api';
 
-export default async function handler(
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<WaitlistResponse>
-): Promise<void> {
+): Promise<void> => {
   // Handle CORS
   corsMiddleware(req, res);
   
@@ -33,6 +33,7 @@ export default async function handler(
   }
 
   console.log('🔍 Waitlist API called');
+  console.log('Environment:', process.env.NODE_ENV);
   console.log('Method:', req.method);
   console.log('Body:', req.body);
 
@@ -61,35 +62,54 @@ export default async function handler(
   const { email } = validation.data;
 
   try {
-    // Load current emails to check count before
-    const emailsBefore = loadWaitlist();
-    console.log('📊 Emails before:', emailsBefore.length);
+    // Use Vector Database when available (works as Redis storage)
+    const isProduction = process.env.VERCEL ?? process.env.UPSTASH_VECTOR_REST_URL;
     
-    // Try to add email using your existing function
-    const isNewEmail = addToWaitlist(email);
-    
-    // Load emails after to get current count
-    const emailsAfter = loadWaitlist();
-    console.log('📊 Emails after:', emailsAfter.length);
-    console.log('📧 All emails:', emailsAfter);
+    if (isProduction) {
+      console.log('📡 Using Vercel Vector Database storage');
+      const { addToWaitlist } = await import('../../lib/waitlist-storage-production');
+      const success = await addToWaitlist(email);
+      
+      if (success) {
+        sendApiResponse(res, 200, {
+          success: true,
+          message: 'Successfully added to waitlist!'
+        });
+        return;
+      } else {
+        sendApiResponse(res, 409, {
+          success: false,
+          error: 'Email already exists in waitlist'
+        });
+        return;
+      }
+    } else {
+      console.log('📁 Using local file storage');
+      const { addToWaitlist } = await import('../../lib/waitlist-storage');
+      const success = addToWaitlist(email);
+      
+      const emailsAfter = loadWaitlist();
+      console.log('📊 Emails after:', emailsAfter.length);
+      console.log('📧 All emails:', emailsAfter);
 
-    if (!isNewEmail) {
-      console.log('⚠️ Email already exists:', email);
+      if (!success) {
+        console.log('⚠️ Email already exists:', email);
+        sendApiResponse(res, 200, {
+          success: true,
+          message: 'You\'re already on our waitlist!',
+          count: emailsAfter.length
+        });
+        return;
+      }
+
+      console.log('✅ Email added successfully:', email);
+
       sendApiResponse(res, 200, {
         success: true,
-        message: 'You\'re already on our waitlist!',
+        message: 'Successfully joined the waitlist!',
         count: emailsAfter.length
       });
-      return;
     }
-
-    console.log('✅ Email added successfully:', email);
-
-    sendApiResponse(res, 200, {
-      success: true,
-      message: 'Successfully joined the waitlist!',
-      count: emailsAfter.length
-    });
 
   } catch (error) {
     console.error('❌ Error adding to waitlist:', error);
@@ -102,4 +122,6 @@ export default async function handler(
       )
     );
   }
-}
+};
+
+export default handler;

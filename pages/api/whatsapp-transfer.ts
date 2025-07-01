@@ -13,7 +13,7 @@ const twilioClient = twilio(
 );
 
 // Get keypair from environment variable
-const getKeypairFromEnv = () => {
+const getKeypairFromEnv = (): Keypair => {
   const privateKey = process.env.SOLANA_PRIVATE_KEY;
   if (!privateKey) throw new Error('Missing SOLANA_PRIVATE_KEY environment variable');
   
@@ -28,10 +28,10 @@ type ResponseData = {
   error?: string;
 };
 
-export default async function handler(
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
-) {
+): Promise<void> => {
   // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, error: 'Method not allowed' });
@@ -104,4 +104,6 @@ export default async function handler(
         (error as Error).message : 'Unknown error' 
     });
   }
-}
+};
+
+export default handler;

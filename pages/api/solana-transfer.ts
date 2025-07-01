@@ -35,10 +35,10 @@ const getKeypairFromEnv = (): Keypair => {
   }
 };
 
-export default async function handler(
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<SolanaTransferResponse>
-): Promise<void> {
+): Promise<void> => {
   // Handle CORS
   corsMiddleware(req, res);
   
@@ -159,4 +159,6 @@ export default async function handler(
       createApiError(ApiErrorCode.INTERNAL_ERROR, `Failed to process Solana transfer: ${errorMessage}`)
     );
   }
-}
+};
+
+export default handler;
