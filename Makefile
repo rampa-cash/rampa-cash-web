@@ -21,19 +21,19 @@ help:
 # Production commands
 up:
 	@echo "Starting production container..."
-	docker-compose up -d
+	docker-compose --profile prod up -d
 
 down:
 	@echo "Stopping production container..."
-	docker-compose down
+	docker-compose --profile prod down
 
 build:
 	@echo "Building production image..."
-	docker-compose build rampa-cash-web
+	docker-compose --profile prod build rampa-cash-web
 
 logs:
 	@echo "Showing production logs..."
-	docker-compose logs -f rampa-cash-web
+	docker-compose --profile prod logs -f rampa-cash-web
 
 # Development commands
 up-dev:
@@ -70,8 +70,8 @@ clean:
 
 # Status check
 status:
-	@echo "Container status:"
-	docker-compose ps
+	@echo "Production container status:"
+	docker-compose --profile prod ps
 	@echo ""
 	@echo "Development container status:"
 	docker-compose --profile dev ps 

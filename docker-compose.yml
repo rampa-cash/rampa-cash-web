@@ -1,5 +1,6 @@
 services:
   rampa-cash-web:
+    container_name: rampa-web
     build:
       context: .
       dockerfile: Dockerfile
@@ -21,9 +22,12 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    profiles:
+      - prod
 
   # Development service (optional)
   rampa-cash-web-dev:
+    container_name: rampa-web-dev
     build:
       context: .
       dockerfile: Dockerfile.dev
