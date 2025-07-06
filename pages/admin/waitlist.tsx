@@ -1,13 +1,13 @@
 import { GetServerSideProps } from 'next';
 
 interface WaitlistAdminProps {
-  emails: string[];
+  entries: { name: string; email: string }[];
   count: number;
   environment: string;
   error?: string;
 }
 
-const WaitlistAdmin = ({ emails, count, environment, error }: WaitlistAdminProps): JSX.Element => {
+const WaitlistAdmin = ({ entries, count, environment, error }: WaitlistAdminProps): JSX.Element => {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4">
@@ -23,13 +23,16 @@ const WaitlistAdmin = ({ emails, count, environment, error }: WaitlistAdminProps
         )}
         
         <div className="bg-white rounded-lg shadow p-6">
-          {emails.length === 0 ? (
+          {entries.length === 0 ? (
             <p className="text-gray-500">No signups yet.</p>
           ) : (
             <div className="space-y-2">
-              {emails.map((email, index) => (
-                <div key={index} className="p-3 bg-gray-50 rounded flex justify-between">
-                  <span>{email}</span>
+              {entries.map((entry, index) => (
+                <div key={index} className="p-3 bg-gray-50 rounded flex justify-between items-center">
+                  <div>
+                    <span className="font-medium">{entry.name}</span>
+                    <span className="ml-2 text-gray-600">{entry.email}</span>
+                  </div>
                   <span className="text-sm text-gray-500">#{index + 1}</span>
                 </div>
               ))}
@@ -43,35 +46,56 @@ const WaitlistAdmin = ({ emails, count, environment, error }: WaitlistAdminProps
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const isProduction = process.env.NODE_ENV === 'production' || process.env.VERCEL;
-    
-    if (isProduction) {
-      const { loadWaitlist } = await import('../../lib/waitlist-storage-production');
-      const emails = await loadWaitlist();
-      
+    // Import Prisma with better error handling
+    let prisma;
+    try {
+      const prismaModule = await import('../../lib/prisma');
+      prisma = prismaModule.default;
+    } catch (importError) {
+      console.error('Failed to import Prisma:', importError);
       return {
         props: {
-          emails,
-          count: emails.length,
-          environment: 'Production (Vector Database)',
-        },
-      };
-    } else {
-      const { loadWaitlist } = await import('../../lib/waitlist-storage');
-      const emails = loadWaitlist();
-      
-      return {
-        props: {
-          emails,
-          count: emails.length,
-          environment: 'Development (File)',
+          entries: [],
+          count: 0,
+          environment: 'Error - Prisma import failed',
+          error: `Failed to import Prisma: ${importError instanceof Error ? importError.message : 'Unknown import error'}`,
         },
       };
     }
-  } catch (error) {
+
+    // Test database connection
+    try {
+      await prisma.$connect();
+    } catch (connectionError) {
+      console.error('Failed to connect to database:', connectionError);
+      return {
+        props: {
+          entries: [],
+          count: 0,
+          environment: 'Error - Database connection failed',
+          error: `Database connection failed: ${connectionError instanceof Error ? connectionError.message : 'Unknown connection error'}. Check POSTGRES_PRISMA_URL environment variable.`,
+        },
+      };
+    }
+
+    const contacts = await prisma.contact.findMany({
+      where: { type: 'WAITLIST' },
+      select: { name: true, email: true },
+      orderBy: { createdAt: 'desc' },
+    });
+    
     return {
       props: {
-        emails: [],
+        entries: contacts,
+        count: contacts.length,
+        environment: 'PostgreSQL (Prisma)',
+      },
+    };
+  } catch (error) {
+    console.error('Error in getServerSideProps:', error);
+    return {
+      props: {
+        entries: [],
         count: 0,
         environment: 'Error',
         error: error instanceof Error ? error.message : 'Unknown error',

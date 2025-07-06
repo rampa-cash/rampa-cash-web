@@ -6,16 +6,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    environment:
-      - NODE_ENV=production
-      - UPSTASH_VECTOR_REST_URL=https://diverse-pelican-18660-us1-vector.upstash.io
-      - UPSTASH_VECTOR_REST_TOKEN=ABkFMGRpdmVyc2UtcGVsaWNhbi0xODY2MC11czFhZG1pbk9XSTVPR1UyTlRjdFlqWTFaQzAwWWpGa0xUaGhabVF0WkRRNE5URmtOelJqTWpGbA==
-      # Add your environment variables here
-      # - SOLANA_PRIVATE_KEY=your_private_key_here
-      # - TWILIO_ACCOUNT_SID=your_twilio_sid
-      # - TWILIO_AUTH_TOKEN=your_twilio_token
-      # - TWILIO_PHONE_NUMBER=your_twilio_phone
+    env_file:
+      - .env.production
     restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/api/waitlist"]
       interval: 30s
@@ -33,12 +29,40 @@ services:
       dockerfile: Dockerfile.dev
     ports:
       - "3001:3000"
-    environment:
-      - NODE_ENV=development
+    env_file:
+      - .env.development
     volumes:
       - .:/app
       - /app/node_modules
       - /app/.next
     restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
     profiles:
-      - dev 
+      - dev
+
+  # PostgreSQL Database
+  postgres:
+    container_name: rampa-postgres
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: rampa_cash_dev
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    profiles:
+      - dev
+      - prod
+
+volumes:
+  postgres_data: 

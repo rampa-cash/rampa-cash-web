@@ -1,94 +1,65 @@
-import { Index } from '@upstash/vector';
-
-// Use the Vector database with proper client
-const index = new Index({
-  url: process.env.UPSTASH_VECTOR_REST_URL ?? '',
-  token: process.env.UPSTASH_VECTOR_REST_TOKEN ?? '',
-})
-
-const WAITLIST_KEY = 'rampa-waitlist';
-
-// Create a dummy 1536-dimensional vector (all zeros)
-const dummyVector = new Array(1536).fill(0);
+import prisma from './prisma';
 
 export const loadWaitlist = async (): Promise<string[]> => {
   try {
-    // Try to fetch by ID directly instead of using query
-    try {
-      const result = await index.fetch([WAITLIST_KEY], { includeMetadata: true });
-      
-      if (result.length > 0 && result[0]?.metadata?.emails) {
-        const emails = JSON.parse(result[0].metadata.emails as string);
-        return emails;
-      }
-    } catch (fetchError) {
-      // Fallback to query method
-      const result = await index.query({
-        vector: dummyVector,
-        topK: 10, // Increase to make sure we find it
-        includeMetadata: true,
-        filter: `type = "waitlist"` // Use metadata filter instead of id
-      });
-      
-      if (result.length > 0 && result[0]?.metadata?.emails) {
-        const emails = JSON.parse(result[0].metadata.emails as string);
-        return emails;
-      }
-    }
+    const contacts = await prisma.contact.findMany({
+      where: { type: 'WAITLIST' },
+      select: { email: true }
+    });
     
-    return [];
+    return contacts.map(contact => contact.email);
   } catch (error) {
+    console.error('Error loading waitlist:', error);
     return [];
   }
 };
 
 export const saveWaitlist = async (emails: string[]): Promise<void> => {
-  try {
-    // First, try to delete existing entry
-    try {
-      await index.delete([WAITLIST_KEY]);
-    } catch (e) {
-      // No existing entry to delete
-    }
-    
-    // Upsert with emails in metadata using correct vector dimension
-    await index.upsert([{
-      id: WAITLIST_KEY,
-      vector: dummyVector, // Use 1536-dimensional vector
-      metadata: {
-        emails: JSON.stringify(emails),
-        type: 'waitlist',
-        count: emails.length,
-        timestamp: new Date().toISOString()
-      }
-    }]);
-  } catch (error) {
-    // Error saving waitlist
-  }
+  // This function is kept for compatibility but not used with Prisma
+  // Prisma handles individual record creation/updates
+  console.log('saveWaitlist called with emails:', emails);
 };
 
-export const addToWaitlist = async (email: string): Promise<boolean> => {
+export const addToWaitlist = async (name: string, email: string): Promise<boolean> => {
   try {
-    const emails = await loadWaitlist();
     const emailLower = email.toLowerCase();
     
-    if (!emails.includes(emailLower)) {
-      emails.push(emailLower);
-      await saveWaitlist(emails);
-      return true;
+    // Check if email already exists
+    const existingContact = await prisma.contact.findFirst({
+      where: { 
+        email: emailLower,
+        type: 'WAITLIST'
+      }
+    });
+    
+    if (existingContact) {
+      return false; // Email already exists
     }
     
-    return false;
+    // Create new waitlist entry
+    await prisma.contact.create({
+      data: {
+        name: name.trim(),
+        email: emailLower,
+        type: 'WAITLIST'
+      }
+    });
+    
+    return true; // Successfully added
   } catch (error) {
+    console.error('Error adding to waitlist:', error);
     return false;
   }
 };
 
 export const getWaitlistCount = async (): Promise<number> => {
   try {
-    const emails = await loadWaitlist();
-    return emails.length;
+    const count = await prisma.contact.count({
+      where: { type: 'WAITLIST' }
+    });
+    return count;
   } catch (error) {
+    console.error('Error getting waitlist count:', error);
     return 0;
   }
 };
