@@ -11,6 +11,7 @@ const WaitlistSignup = ({
   description = "Be the first to know when RAMPA MVP launches",
   className = ""
 }: WaitlistSignupProps): JSX.Element => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
@@ -18,6 +19,12 @@ const WaitlistSignup = ({
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     
+    if (!name.trim()) {
+      setStatus('error');
+      setMessage('Please enter your name');
+      return;
+    }
+
     if (!email) {
       setStatus('error');
       setMessage('Please enter your email address');
@@ -33,7 +40,7 @@ const WaitlistSignup = ({
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ name: name.trim(), email }),
       });
 
       const data = await response.json();
@@ -43,7 +50,8 @@ const WaitlistSignup = ({
       }
 
       setStatus('success');
-      setMessage('🎉 You&apos;re on the list! We&apos;ll notify you when we launch.');
+      setMessage('🎉 You\'re on the list! We\'ll notify you when we launch.');
+      setName('');
       setEmail('');
       
       // Reset after 5 seconds
@@ -71,13 +79,21 @@ const WaitlistSignup = ({
         <p className="text-indigo-100 mb-6">{description}</p>
         
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex flex-col sm:flex-row gap-3">
+          <div className="flex flex-col gap-3">
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter your name"
+              className="px-4 py-3 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+              disabled={status === 'loading'}
+            />
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="flex-1 px-4 py-3 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+              className="px-4 py-3 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
               disabled={status === 'loading'}
             />
             <button
@@ -99,7 +115,7 @@ const WaitlistSignup = ({
         </form>
         
         <p className="text-xs text-indigo-200 mt-4">
-          We&apos;ll only email you about the launch. No spam, ever.
+          We'll only email you about the launch. No spam, ever.
         </p>
       </div>
     </div>

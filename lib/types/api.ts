@@ -9,6 +9,7 @@ export const BaseApiResponseSchema = z.object({
 
 // Waitlist API Schemas
 export const WaitlistRequestSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
   email: z.string().email('Please enter a valid email address'),
 })
 

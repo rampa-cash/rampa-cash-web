@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { loadWaitlist } from '../../lib/waitlist-storage';
 import { 
   validateRequest, 
   sendApiResponse, 
@@ -13,6 +12,7 @@ import {
   type WaitlistResponse,
   WaitlistRequestSchema
 } from '../../lib/types/api';
+import { addToWaitlist, getWaitlistCount } from '../../lib/waitlist-storage-production';
 
 const handler = async (
   req: NextApiRequest,
@@ -59,55 +59,27 @@ const handler = async (
     return;
   }
 
-  const { email } = validation.data;
+  const { name, email } = validation.data;
 
   try {
-    // Use Vector Database when available (works as Redis storage)
-    const isProduction = process.env.VERCEL ?? process.env.UPSTASH_VECTOR_REST_URL;
+    console.log('📡 Using Prisma PostgreSQL storage');
     
-    if (isProduction) {
-      console.log('📡 Using Vercel Vector Database storage');
-      const { addToWaitlist } = await import('../../lib/waitlist-storage-production');
-      const success = await addToWaitlist(email);
-      
-      if (success) {
-        sendApiResponse(res, 200, {
-          success: true,
-          message: 'Successfully added to waitlist!'
-        });
-        return;
-      } else {
-        sendApiResponse(res, 409, {
-          success: false,
-          error: 'Email already exists in waitlist'
-        });
-        return;
-      }
-    } else {
-      console.log('📁 Using local file storage');
-      const { addToWaitlist } = await import('../../lib/waitlist-storage');
-      const success = addToWaitlist(email);
-      
-      const emailsAfter = loadWaitlist();
-      console.log('📊 Emails after:', emailsAfter.length);
-      console.log('📧 All emails:', emailsAfter);
-
-      if (!success) {
-        console.log('⚠️ Email already exists:', email);
-        sendApiResponse(res, 200, {
-          success: true,
-          message: 'You\'re already on our waitlist!',
-          count: emailsAfter.length
-        });
-        return;
-      }
-
+    const success = await addToWaitlist(name, email);
+    const count = await getWaitlistCount();
+    
+    if (success) {
       console.log('✅ Email added successfully:', email);
-
       sendApiResponse(res, 200, {
         success: true,
         message: 'Successfully joined the waitlist!',
-        count: emailsAfter.length
+        count: count
+      });
+    } else {
+      console.log('⚠️ Email already exists:', email);
+      sendApiResponse(res, 200, {
+        success: true,
+        message: 'You\'re already on our waitlist!',
+        count: count
       });
     }
 
