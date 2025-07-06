@@ -58,7 +58,22 @@ export const getServerSideProps: GetServerSideProps = async () => {
           entries: [],
           count: 0,
           environment: 'Error - Prisma import failed',
-          error: 'Failed to initialize database connection',
+          error: `Failed to import Prisma: ${importError instanceof Error ? importError.message : 'Unknown import error'}`,
+        },
+      };
+    }
+
+    // Test database connection
+    try {
+      await prisma.$connect();
+    } catch (connectionError) {
+      console.error('Failed to connect to database:', connectionError);
+      return {
+        props: {
+          entries: [],
+          count: 0,
+          environment: 'Error - Database connection failed',
+          error: `Database connection failed: ${connectionError instanceof Error ? connectionError.message : 'Unknown connection error'}. Check POSTGRES_PRISMA_URL environment variable.`,
         },
       };
     }
