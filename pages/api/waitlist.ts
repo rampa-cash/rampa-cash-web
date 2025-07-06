@@ -18,8 +18,13 @@ const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<WaitlistResponse>
 ): Promise<void> => {
-  // Handle CORS
+  // Handle CORS first
   corsMiddleware(req, res);
+  
+  // If it's an OPTIONS request, CORS middleware already handled it
+  if (req.method === 'OPTIONS') {
+    return;
+  }
   
   // Apply rate limiting
   const rateLimitCheck = rateLimit({
