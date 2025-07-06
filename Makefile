@@ -62,6 +62,16 @@ install:
 	@read -p "Enter package name(s): " package; \
 	docker-compose exec rampa-cash-web-dev npm install $$package
 
+# Database utilities
+db-shell:
+	@echo "Opening PostgreSQL shell..."
+	docker-compose exec postgres psql -U postgres -d rampa_cash_dev
+
+db-reset:
+	@echo "Resetting database (dropping and recreating)..."
+	docker-compose exec postgres psql -U postgres -c "DROP DATABASE IF EXISTS rampa_cash_dev;"
+	docker-compose exec postgres psql -U postgres -c "CREATE DATABASE rampa_cash_dev;"
+
 # Cleanup
 clean:
 	@echo "Cleaning up containers and images..."
