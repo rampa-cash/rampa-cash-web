@@ -1,7 +1,7 @@
 # Makefile for Rampa Cash Web
 # Usage: make up-dev (development) or make up (production)
 
-.PHONY: help up up-dev down down-dev build build-dev logs logs-dev exec-dev install clean
+.PHONY: help up up-dev down down-dev build build-dev logs logs-dev exec-dev install clean env-setup
 
 # Default target
 help:
@@ -17,6 +17,7 @@ help:
 	@echo "  make exec-dev  - Execute shell in development container"
 	@echo "  make install   - Install npm packages in development container"
 	@echo "  make clean     - Remove containers and images"
+	@echo "  make env-setup - Setup environment files from template"
 
 # Production commands
 up:
@@ -71,6 +72,24 @@ db-reset:
 	@echo "Resetting database (dropping and recreating)..."
 	docker-compose exec postgres psql -U postgres -c "DROP DATABASE IF EXISTS rampa_cash_dev;"
 	docker-compose exec postgres psql -U postgres -c "CREATE DATABASE rampa_cash_dev;"
+
+# Environment setup
+env-setup:
+	@echo "Setting up environment files..."
+	@if [ ! -f .env.development ]; then \
+		echo "Creating .env.development from template..."; \
+		cp .env.example .env.development; \
+		echo "Please edit .env.development with your development values"; \
+	else \
+		echo ".env.development already exists"; \
+	fi
+	@if [ ! -f .env.production ]; then \
+		echo "Creating .env.production from template..."; \
+		cp .env.example .env.production; \
+		echo "Please edit .env.production with your production values"; \
+	else \
+		echo ".env.production already exists"; \
+	fi
 
 # Cleanup
 clean:
