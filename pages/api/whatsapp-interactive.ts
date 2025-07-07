@@ -9,10 +9,10 @@ const client = twilio(
 // Use the SAME activeTransfers map as the webhook
 const activeTransfers = new Map();
 
-export default async function handler(
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse
-) {
+): Promise<void> => {
   console.log('🚀 Interactive API called');
   console.log('Environment variables:');
   console.log('TWILIO_ACCOUNT_SID:', process.env.TWILIO_ACCOUNT_SID ? 'Found' : 'Missing');
@@ -78,7 +78,9 @@ Or send the recipient's WhatsApp number directly (e.g., +521234567890)
       error: `Failed to start transfer: ${errorMessage}`
     });
   }
-}
+};
+
+export default handler;
 
 // Export for sharing with webhook
 export { activeTransfers };

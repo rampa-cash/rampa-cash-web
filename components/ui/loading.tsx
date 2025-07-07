@@ -13,21 +13,21 @@ const Loading: React.FC<LoadingProps> = ({
   variant = 'spinner',
   className,
   text
-}) => {
+}): JSX.Element => {
   const sizeClasses = {
     sm: 'w-4 h-4',
     md: 'w-6 h-6',
     lg: 'w-8 h-8'
   }
 
-  const Spinner = () => (
+  const Spinner = (): JSX.Element => (
     <div className={cn(
       'animate-spin rounded-full border-2 border-gray-300 border-t-indigo-600',
       sizeClasses[size]
     )} />
   )
 
-  const Dots = () => (
+  const Dots = (): JSX.Element => (
     <div className="flex space-x-1">
       <div className={cn(
         'bg-indigo-600 rounded-full animate-bounce',
@@ -44,7 +44,7 @@ const Loading: React.FC<LoadingProps> = ({
     </div>
   )
 
-  const Pulse = () => (
+  const Pulse = (): JSX.Element => (
     <div className={cn(
       'bg-indigo-600 rounded-full animate-pulse',
       sizeClasses[size]

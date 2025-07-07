@@ -1,19 +1,20 @@
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import Image from 'next/image';
+import { useState, useEffect, useMemo } from 'react';
 
-const Navigation = () => {
+const Navigation = (): JSX.Element => {
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Match your actual sections
-  const menuItems = [
+  // Match your actual sections - wrapped in useMemo to prevent re-creation
+  const menuItems = useMemo(() => [
     { id: 'home', label: 'Home' },
     { id: 'how-it-works', label: 'How It Works' },
     { id: 'pricing', label: 'Pricing' },
     { id: 'about-us', label: 'About Us' },
-  ];
+  ], []);
 
-  const scrollToSection = (sectionId: string) => {
+  const scrollToSection = (sectionId: string): void => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ 
@@ -25,7 +26,7 @@ const Navigation = () => {
 
   // Update active section based on scroll position
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = (): void => {
       const sections = menuItems.map(item => item.id);
       const scrollPosition = window.scrollY + 100; // Offset for header height
 
@@ -43,14 +44,14 @@ const Navigation = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [menuItems]);
 
   return (
     <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
       <nav className="container mx-auto flex items-center justify-between py-3 px-4 md:py-4 md:px-6">
         <Link href="/">
           <div className="flex items-center cursor-pointer">
-            <img src="/logo.png" alt="RAMPA logo" className="w-8 h-8 md:w-10 md:h-10" />
+            <Image src="/logo.png" alt="RAMPA logo" width={40} height={40} className="w-8 h-8 md:w-10 md:h-10" />
             <span className="font-bold text-lg md:text-xl ml-2">rampa</span>
           </div>
         </Link>

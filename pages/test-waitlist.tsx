@@ -1,17 +1,15 @@
 import { useState } from 'react';
 
-const TestWaitlist = () => {
+const TestWaitlist = (): JSX.Element => {
   const [email, setEmail] = useState('');
   const [result, setResult] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const testSubmit = async () => {
+  const testSubmit = async (): Promise<void> => {
     setLoading(true);
     setResult('Testing...');
     
     try {
-      console.log('🚀 Submitting email:', email);
-      
       const response = await fetch('/api/waitlist', {
         method: 'POST',
         headers: {
@@ -19,16 +17,12 @@ const TestWaitlist = () => {
         },
         body: JSON.stringify({ email }),
       });
-
-      console.log('📡 Response status:', response.status);
       
       const data = await response.json();
-      console.log('📋 Response data:', data);
       
       setResult(`Status: ${response.status}\n${JSON.stringify(data, null, 2)}`);
       
     } catch (error) {
-      console.error('❌ API Error:', error);
       setResult(`Error: ${error}`);
     } finally {
       setLoading(false);
@@ -73,7 +67,7 @@ const TestWaitlist = () => {
           <ol className="list-decimal list-inside space-y-1 text-sm">
             <li>Open Browser DevTools (F12)</li>
             <li>Go to Console tab</li>
-            <li>Enter an email and click "Test Submit"</li>
+            <li>Enter an email and click &quot;Test Submit&quot;</li>
             <li>Check console for logs</li>
             <li>Check Network tab for API request</li>
           </ol>

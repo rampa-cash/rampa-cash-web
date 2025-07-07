@@ -2,12 +2,13 @@ import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import ErrorBoundary from '../components/ErrorBoundary'
 
-export default function App({ Component, pageProps }: AppProps): JSX.Element {
+const App = ({ Component, pageProps }: AppProps): JSX.Element => {
   return (
     <ErrorBoundary
       onError={(error, errorInfo) => {
         // Log error to console in development
         if (process.env.NODE_ENV === 'development') {
+          // eslint-disable-next-line no-console
           console.error('App Error:', error, errorInfo)
         }
         
@@ -19,3 +20,5 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
     </ErrorBoundary>
   )
 }
+
+export default App

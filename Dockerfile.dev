@@ -1,19 +1,25 @@
 # Development Dockerfile for hot reloading
-FROM node:18-alpine
+FROM node:22-alpine
 
 # Install dependencies for development
-RUN apk add --no-cache libc6-compat curl
+RUN apk add --no-cache libc6-compat curl bash
 
 WORKDIR /app
+
+# Upgrade npm first
+RUN npm install -g npm@11.4.2
 
 # Copy package files
 COPY package.json package-lock.json* ./
 
 # Install all dependencies (including dev dependencies)
-RUN npm ci
+RUN npm install
 
 # Copy source code
 COPY . .
+
+# Generate Prisma client
+RUN npx prisma generate
 
 # Expose port
 EXPOSE 3000

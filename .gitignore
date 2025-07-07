@@ -25,6 +25,8 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env.development
+.env.production
 
 # vercel
 .vercel
@@ -32,3 +34,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Waitlist data (contains user emails)
+data/waitlist.json
+/generated/prisma

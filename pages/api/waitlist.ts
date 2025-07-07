@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { addToWaitlist, loadWaitlist } from '../../lib/waitlist-storage';
 import { 
   validateRequest, 
   sendApiResponse, 
@@ -13,13 +12,19 @@ import {
   type WaitlistResponse,
   WaitlistRequestSchema
 } from '../../lib/types/api';
+import { addToWaitlist, getWaitlistCount } from '../../lib/waitlist-storage-production';
 
-export default async function handler(
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<WaitlistResponse>
-): Promise<void> {
-  // Handle CORS
+): Promise<void> => {
+  // Handle CORS first
   corsMiddleware(req, res);
+  
+  // If it's an OPTIONS request, CORS middleware already handled it
+  if (req.method === 'OPTIONS') {
+    return;
+  }
   
   // Apply rate limiting
   const rateLimitCheck = rateLimit({
@@ -33,6 +38,7 @@ export default async function handler(
   }
 
   console.log('🔍 Waitlist API called');
+  console.log('Environment:', process.env.NODE_ENV);
   console.log('Method:', req.method);
   console.log('Body:', req.body);
 
@@ -58,38 +64,29 @@ export default async function handler(
     return;
   }
 
-  const { email } = validation.data;
+  const { name, email } = validation.data;
 
   try {
-    // Load current emails to check count before
-    const emailsBefore = loadWaitlist();
-    console.log('📊 Emails before:', emailsBefore.length);
+    console.log('📡 Using Prisma PostgreSQL storage');
     
-    // Try to add email using your existing function
-    const isNewEmail = addToWaitlist(email);
+    const success = await addToWaitlist(name, email);
+    const count = await getWaitlistCount();
     
-    // Load emails after to get current count
-    const emailsAfter = loadWaitlist();
-    console.log('📊 Emails after:', emailsAfter.length);
-    console.log('📧 All emails:', emailsAfter);
-
-    if (!isNewEmail) {
+    if (success) {
+      console.log('✅ Email added successfully:', email);
+      sendApiResponse(res, 200, {
+        success: true,
+        message: 'Successfully joined the waitlist!',
+        count: count
+      });
+    } else {
       console.log('⚠️ Email already exists:', email);
       sendApiResponse(res, 200, {
         success: true,
         message: 'You\'re already on our waitlist!',
-        count: emailsAfter.length
+        count: count
       });
-      return;
     }
-
-    console.log('✅ Email added successfully:', email);
-
-    sendApiResponse(res, 200, {
-      success: true,
-      message: 'Successfully joined the waitlist!',
-      count: emailsAfter.length
-    });
 
   } catch (error) {
     console.error('❌ Error adding to waitlist:', error);
@@ -102,4 +99,6 @@ export default async function handler(
       )
     );
   }
-}
+};
+
+export default handler;
