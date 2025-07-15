@@ -6,7 +6,7 @@ type LayoutProps = {
   children: React.ReactNode;
 };
 
-const Layout = ({ children }: LayoutProps) => (
+const Layout = ({ children }: LayoutProps): JSX.Element => (
   <div className="min-h-screen bg-white flex flex-col">
     <div className="min-h-screen bg-white">
         <Head>

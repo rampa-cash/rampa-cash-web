@@ -1,5 +1,6 @@
-// components/Footer.tsx
-const Footer = () => (
+import Link from 'next/link'
+
+const Footer = (): JSX.Element => (
     <footer className="py-6 md:py-8 border-t">
       <div className="container mx-auto px-4 text-center text-gray-600">
         <div className="flex flex-col items-center justify-center">
@@ -19,12 +20,12 @@ const Footer = () => (
             </a>
           </div>
           <div className="flex items-center justify-center">
-            <a 
+            <Link 
               href="/impressum" 
               className="text-sm md:text-base text-gray-600 hover:text-indigo-600 transition-colors"
             >
               Impressum
-            </a>
+            </Link>
           </div>
         </div>
       </div>
