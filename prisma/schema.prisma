@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Contact {
-  id        String   @default(cuid()) @id
+  id        Int      @id @default(autoincrement())
   name      String
   email     String
   inquiry   String?  // Optional field for contact form inquiries
