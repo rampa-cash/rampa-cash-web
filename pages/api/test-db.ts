@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse
-) {
+): Promise<void> => {
   if (req.method !== 'GET') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -55,4 +55,6 @@ export default async function handler(
       environment: process.env.NODE_ENV,
     });
   }
-} 
+}
+
+export default handler; 

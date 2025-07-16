@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect, useMemo } from 'react';
 
-const Navigation = (): JSX.Element => {
+const Header = (): JSX.Element => {
 	const [activeSection, setActiveSection] = useState('home');
   	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -107,4 +107,4 @@ const Navigation = (): JSX.Element => {
   );
 };
 
-export default Navigation;
+export default Header;
