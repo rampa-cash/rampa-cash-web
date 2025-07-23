@@ -38,3 +38,6 @@ next-env.d.ts
 # Waitlist data (contains user emails)
 data/waitlist.json
 /generated/prisma
+
+# Docker
+.docker/*

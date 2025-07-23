@@ -10,7 +10,7 @@ const Layout = ({ children }: LayoutProps): JSX.Element => (
   <div className="min-h-screen bg-white flex flex-col">
     <div className="min-h-screen bg-white">
         <Head>
-            <title>RAMPA - Fast, Secure Money Transfers</title>
+            <title>RAMPA - Empowering families with Web3 finance</title>
             <meta name="description" content="Send money globally with RAMPA" />
             <meta name="viewport" content="width=device-width, initial-scale=1.0" />
             <link rel="icon" href="/logo.png" type="image/png" />
