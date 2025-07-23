@@ -7,9 +7,9 @@ const Home: NextPage = () => {
        <section id="home" className="py-8 md:py-16 text-center px-4">
         <div className="max-w-4xl mx-auto">
             <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 md:mb-6 leading-tight">
-            No Hidden Fees. No Delays.
+            Turning everyday remittances into engines of shared prosperity.
             <br className="hidden sm:block" />
-            <span className="sm:inline"> Just Money Home.</span>
+            <span className="sm:inline"> Empowering families with Web3 finance.</span>
             </h1>
             <div className="mt-12">
             <WaitlistSignup 
@@ -30,7 +30,7 @@ const Home: NextPage = () => {
                 1
                 </div>
                 <h3 className="text-xl font-bold mb-2">Create an account</h3>
-                <p className="text-gray-600">Set up your account easily with Google, your favorite email or social media account.</p>
+                <p className="text-gray-600">Set up your account easily with your phone number.</p>
             </div>
             
             <div className="bg-white p-6 md:p-8 rounded-lg shadow-sm relative">
@@ -46,7 +46,7 @@ const Home: NextPage = () => {
                 3
                 </div>
                 <h3 className="text-xl font-bold mb-2">Add a recipient from your contacts</h3>
-                <p className="text-gray-600">Choose the recipient and add the amount EUR you want to send.</p>
+                <p className="text-gray-600">Choose the recipient and add the amount you want to send.</p>
             </div>
             
             <div className="bg-white p-6 md:p-8 rounded-lg shadow-sm relative">
@@ -54,7 +54,7 @@ const Home: NextPage = () => {
                 4
                 </div>
                 <h3 className="text-xl font-bold mb-2">Confirm and send</h3>
-                <p className="text-gray-600">And that&apos;s all, your money arrives after a few seconds.</p>
+                <p className="text-gray-600">And that&apos;s it: your family gets more of what they deserve.</p>
             </div>
             </div>
         </div>
@@ -63,7 +63,7 @@ const Home: NextPage = () => {
         <div className="container mx-auto px-4 md:px-8 text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">Pricing</h2>
             <p className="text-lg md:text-xl mb-6 md:mb-8 max-w-3xl mx-auto text-gray-700">
-            The exchange rate we use is one-to-one with the real-time market rate, without hidden fees and with low commissions.
+            Exchange rate without hidden fees and with low commissions.
             </p>
             
             <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto mt-8">
@@ -88,7 +88,9 @@ const Home: NextPage = () => {
         <div className="container mx-auto px-4 md:px-8 text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-4">About Us</h2>
             <p className="text-lg md:text-xl mb-6 md:mb-8 max-w-3xl mx-auto text-gray-700">
-            Bringing Web3 to real people, making it so simple that they don&apos;t realize they&apos;re using Web3 services.
+            Bringing Web3 and decentralized apps to real people, making it so simple that they don&apos;t realize they&apos;re using them. Rampa is an On-chain remittance platform
+            that turns stablecoin transfers into shared prosperity, empowering families to thrive trough financial education and a tokenized investment portfolio, so the money they
+            send home today grows into collective wealth.
             </p>
             
             <div className="grid gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto mt-8">
