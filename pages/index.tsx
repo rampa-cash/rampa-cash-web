@@ -9,6 +9,7 @@ const Home: NextPage = () => {
             <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 md:mb-6 leading-tight">
             Turning everyday remittances into engines of shared prosperity.
             <br className="hidden sm:block" />
+            <br className="hidden sm:block" />
             <span className="sm:inline"> Empowering families with Web3 finance.</span>
             </h1>
             <div className="mt-12">
