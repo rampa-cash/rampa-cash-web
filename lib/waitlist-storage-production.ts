@@ -17,7 +17,7 @@ export const loadWaitlist = async (): Promise<string[]> => {
 export const saveWaitlist = async (emails: string[]): Promise<void> => {
   // This function is kept for compatibility but not used with Prisma
   // Prisma handles individual record creation/updates
-  console.log('saveWaitlist called with emails:', emails);
+  console.warn('saveWaitlist called with emails:', emails);
 };
 
 export const addToWaitlist = async (name: string, email: string): Promise<boolean> => {

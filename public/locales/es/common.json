@@ -1,0 +1,161 @@
+{
+  "hero": {
+    "badge": "✨ Ahora en versión Beta • Impulsa el Cambio",
+    "title": {
+      "part1": "Convirtiendo las remesas cotidianas en motores de",
+      "part2": "prosperidad para todos",
+      "part3": "Educando y fortaleciendo familias con finanzas Web3."
+    },
+    "description": "Envía dinero globalmente sin comisiones ocultas, con transacciones ultrarrápidas, y haz crecer automáticamente el patrimonio de tu familia con la potencia de nuestra plataforma de inversión tokenizada, diseñada para que cada envío trabaje por tu futuro.",
+    "cta": {
+      "title": "🚀 Obtén Acceso Anticipado",
+      "description": "Sé de los primeros en experimentar el futuro de las remesas"
+    },
+    "socialProof": {
+      "betaTesters": "usuarios beta ya registrados",
+      "trustedBy": "Confiado por usuarios pioneros"
+    }
+  },
+  "howItWorks": {
+    "title": "Cómo Funciona",
+    "description": "Comienza con RAMPA en cuatro simples pasos y transforma la manera de enviar dinero a tus seres queridos.",
+    "steps": {
+      "step1": {
+        "title": "Crea una cuenta",
+        "description": "Configura tu cuenta fácilmente con tu número de teléfono."
+      },
+      "step2": {
+        "title": "Billetera MPC creada automáticamente",
+        "description": "Tu billetera digital de computación multipartita se genera instantáneamente para máxima seguridad y control."
+      },
+      "step3": {
+        "title": "Añade un destinatario de tus contactos",
+        "description": "Elige el destinatario y añade la cantidad que quieres enviar."
+      },
+      "step4": {
+        "title": "Confirma y envía",
+        "description": "Y eso es todo: tu familia recibe más de lo que se merece."
+      }
+    }
+  },
+  "pricing": {
+    "title": "Precios",
+    "description": "Tipo de cambio sin comisiones ocultas y con bajas comisiones.",
+    "features": {
+      "realTimeRates": {
+        "title": "Tasas en tiempo real",
+        "description": "Tipos de cambio del mercado en vivo actualizados cada minuto para máxima transparencia",
+        "badge": "Siempre actualizado"
+      },
+      "noHiddenFees": {
+        "title": "Sin comisiones ocultas",
+        "description": "Lo que ves es lo que pagas - transparencia completa en cada transacción",
+        "badge": "100% Transparente"
+      },
+      "lowCommission": {
+        "title": "Baja comisión",
+        "description": "Comisiones mínimas para mantener más dinero en el bolsillo de tu familia donde pertenece",
+        "badge": "Máximo ahorro"
+      }
+    },
+    "stats": {
+      "commission": "Comisión promedio",
+      "transferTime": "Tiempo de transferencia",
+      "countries": "Países soportados",
+      "support": "Soporte al cliente"
+    }
+  },
+  "aboutUs": {
+    "title": "Acerca de Nosotros",
+    "description": "Rampa lleva el poder de Web3 y las aplicaciones descentralizadas a la vida diaria, haciéndolas tan simples que ni siquiera notas que las estás usando. Es una plataforma de remesas digitales que transforma el envío de stablecoins en prosperidad compartida, ayudando a las familias a crecer mediante educación financiera y un portafolio de inversión tokenizado, para que el dinero que envías hoy se convierta en riqueza colectiva mañana.",
+    "features": {
+      "web3Simplified": {
+        "title": "Web3 Simplificado",
+        "description": "Tecnología blockchain poderosa oculta detrás de una interfaz intuitiva que cualquiera puede usar",
+        "badge": "Fácil de Usar"
+      },
+      "forRealPeople": {
+        "title": "Para Personas Reales",
+        "description": "Construido para usuarios cotidianos que envían dinero a familia y amigos alrededor del mundo",
+        "badge": "La Familia Primero",
+        "highlight": "Misión Central"
+      },
+      "invisibleInnovation": {
+        "title": "Innovación Invisible",
+        "description": "Seguridad y velocidad avanzadas sin la complejidad o jerga técnica",
+        "badge": "Simplemente Funciona"
+      }
+    }
+  },
+  "waitlist": {
+    "badge": "⚡ Tiempo Limitado • Acceso de Pioneros",
+    "title": "¿Te animas a Transformar las Transferencias de Dinero?",
+    "description": "Forma parte de quienes vivirán primero el futuro de los pagos transfronterizos. Únete a nuestra lista de espera y recibe acceso exclusivo anticipado en el lanzamiento.",
+    "cta": {
+      "title": "🎯 Reserva tu Lugar",
+      "description": "Recibe notificación en el momento que RAMPA MVP esté disponible + bonos exclusivos de lanzamiento"
+    },
+    "benefits": {
+      "earlyAccess": "Acceso anticipado",
+      "launchBonuses": "Bonos de lanzamiento",
+      "noSpam": "Sin spam jamás"
+    }
+  },
+  "navigation": {
+    "home": "Inicio",
+    "howItWorks": "Cómo Funciona",
+    "pricing": "Precios",
+    "aboutUs": "Acerca de Nosotros",
+    "waitlist": "Lista de Espera"
+  },
+  "impressum": {
+    "title": "Impressum",
+    "metaDescription": "Información legal y detalles de la empresa para RAMPA",
+    "sections": {
+      "companyInfo": {
+        "title": "Información según § 5 TMG",
+        "name": "Juan Betancur",
+        "address": "Arnulfstr, 171",
+        "city": "80634 Munich",
+        "country": "Alemania"
+      },
+      "contact": {
+        "title": "Contacto",
+        "phone": "Teléfono:",
+        "email": "Email:",
+        "website": "Sitio web:"
+      },
+      "editoriallyResponsible": {
+        "title": "Responsable editorial",
+        "name": "Juan Betancur",
+        "address": "Arnulfstr, 171",
+        "city": "80634 Munich"
+      },
+      "euDispute": {
+        "title": "Resolución de disputas de la UE",
+        "text": "La Comisión Europea proporciona una plataforma para la resolución de disputas en línea (ODR):",
+        "link": "https://ec.europa.eu/consumers/odr/",
+        "emailNote": "Nuestra dirección de email se puede encontrar arriba en el impressum."
+      },
+      "consumerDispute": {
+        "title": "Resolución de disputas del consumidor/Oficina de arbitraje universal",
+        "text": "No estamos dispuestos u obligados a participar en procedimientos de resolución de disputas ante una junta de arbitraje del consumidor."
+      },
+      "contentLiability": {
+        "title": "Responsabilidad por contenido",
+        "paragraph1": "Como proveedores de servicios, somos responsables de los contenidos propios de estas páginas según las leyes generales según § 7 para.1 TMG. Sin embargo, según §§ 8 a 10 TMG, nosotros como proveedores de servicios no estamos bajo la obligación de monitorear información enviada o almacenada o investigar circunstancias que apunten a actividad ilegal.",
+        "paragraph2": "Las obligaciones de eliminar o bloquear el uso de información bajo las leyes generales permanecen sin afectar. Sin embargo, una responsabilidad relacionada solo es posible desde el momento en que una infracción concreta de la ley se da a conocer. Si nos damos cuenta de tal violación, eliminaremos el contenido inmediatamente."
+      },
+      "linkLiability": {
+        "title": "Responsabilidad por enlaces",
+        "paragraph1": "Nuestra oferta contiene enlaces a sitios web externos de terceros sobre cuyos contenidos no tenemos influencia. Por lo tanto, no podemos asumir ninguna responsabilidad por estos contenidos externos. El proveedor u operador respectivo de los sitios es siempre responsable del contenido de los sitios enlazados. Los sitios enlazados fueron verificados por posibles violaciones de ley al momento del enlace. Contenidos ilegales no fueron detectados al momento del enlace.",
+        "paragraph2": "Sin embargo, un monitoreo permanente del contenido de sitios enlazados no puede asumirse sin evidencia concreta de una violación de ley. Si nos damos cuenta de tales violaciones, eliminaremos tales enlaces inmediatamente."
+      },
+      "copyright": {
+        "title": "Derechos de autor",
+        "paragraph1": "Los contenidos y trabajos creados por los operadores del sitio en estas páginas están sujetos a la ley de derechos de autor alemana. La duplicación, procesamiento, distribución y cualquier forma de comercialización de dicho material más allá del alcance de la ley de derechos de autor requerirá el consentimiento previo por escrito de su respectivo autor o creador. Las descargas y copias de este sitio solo están permitidas para uso privado, no comercial.",
+        "paragraph2": "En la medida en que el contenido en este sitio no fue creado por el operador, se respetan los derechos de autor de terceros. En particular, el contenido de terceros se identifica como tal. Si aún así te das cuenta de una infracción de derechos de autor, por favor infórmanos en consecuencia. Si nos damos cuenta de cualquier infracción, eliminaremos dicho contenido inmediatamente."
+      }
+    }
+  }
+}
