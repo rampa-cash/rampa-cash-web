@@ -1,18 +1,21 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect, useMemo } from 'react';
+import { useTranslation } from 'next-i18next';
+import LanguageSwitcher from '../LanguageSwitcher';
 
 const Header = (): JSX.Element => {
+	const { t } = useTranslation('common');
 	const [activeSection, setActiveSection] = useState('home');
   	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
 	// Match your actual sections - wrapped in useMemo to prevent re-creation
 	const menuItems = useMemo(() => [
-		{ id: 'home', label: 'Home' },
-		{ id: 'how-it-works', label: 'How It Works' },
-		{ id: 'pricing', label: 'Pricing' },
-		{ id: 'about-us', label: 'About Us' },
-	], []);
+		{ id: 'home', label: t('navigation.home') },
+		{ id: 'how-it-works', label: t('navigation.howItWorks') },
+		{ id: 'pricing', label: t('navigation.pricing') },
+		{ id: 'about-us', label: t('navigation.aboutUs') },
+	], [t]);
 
 	const scrollToSection = (sectionId: string): void => {
 		const element = document.getElementById(sectionId);
@@ -70,11 +73,13 @@ const Header = (): JSX.Element => {
               {item.label}
             </button>
           ))}
+          <LanguageSwitcher />
         </div>
         {/* Mobile Menu Button and CTA */}
         <div className="flex items-center md:hidden">
+          <LanguageSwitcher />
           <button 
-            className="bg-indigo-600 text-white px-2 py-1 text-xs rounded-md font-medium hover:bg-indigo-700 transition mr-2"
+            className="bg-indigo-600 text-white px-2 py-1 text-xs rounded-md font-medium hover:bg-indigo-700 transition ml-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             Menu

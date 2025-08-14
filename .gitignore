@@ -41,3 +41,13 @@ data/waitlist.json
 
 # Docker
 .docker/*
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+Thumbs.db
