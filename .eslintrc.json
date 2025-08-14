@@ -33,6 +33,12 @@
       "rules": {
         "no-console": "off"
       }
+    },
+    {
+      "files": ["pages/admin/**/*.tsx", "lib/waitlist-storage-production.ts"],
+      "rules": {
+        "no-console": ["warn", { "allow": ["error", "warn"] }]
+      }
     }
   ]
 } 

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 
-const LanguageSwitcher = () => {
+const LanguageSwitcher = (): JSX.Element => {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -10,9 +10,9 @@ const LanguageSwitcher = () => {
     { code: 'es', name: 'Español', flag: '🇪🇸' }
   ]
 
-  const currentLanguage = languages.find(lang => lang.code === router.locale) || languages[0]
+  const currentLanguage = languages.find(lang => lang.code === router.locale) ?? languages[0]
 
-  const handleLanguageChange = (locale: string) => {
+  const handleLanguageChange = (locale: string): void => {
     router.push(router.asPath, router.asPath, { locale })
     setIsOpen(false)
   }
