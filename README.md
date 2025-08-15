@@ -1,6 +1,6 @@
 # RAMPA Cash Web
 
-> Fast, secure money transfers powered by Web3 technology
+> Solana-based remittance and financial empowerment platform
 
 [![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white)](*)
 [![React](https://img.shields.io/badge/React-%2320232a.svg?logo=react&logoColor=%2361DAFB)](#)
@@ -9,12 +9,11 @@
 [![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](#)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](#)
 
-RAMPA is a modern money transfer platform that brings Web3 technology to real people, making cross-border payments so simple that users don't realize they're using blockchain services. Built with Next.js, Solana blockchain, and WhatsApp integration.
+Rampa brings Web3 and decentralized apps to real people, making it so simple that they don't realize they're using them. Built with Next.js, Solana blockchain, and WhatsApp integration.
 
 ## 🚀 Features
 
 ### Core Functionality
-- **WhatsApp Money Transfers**: Send money directly through WhatsApp
 - **Solana Blockchain Integration**: Fast, secure transactions on Solana network
 - **Waitlist System**: Early access signup with email collection
 - **Real-time Exchange Rates**: Live market rates without hidden fees
