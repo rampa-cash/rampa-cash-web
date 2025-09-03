@@ -1,6 +1,7 @@
 import Header from './Header';
 import Footer from './Footer';
 import Head from 'next/head';
+import CookieConsent from '../CookieConsent';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -26,6 +27,7 @@ const Layout = ({ children }: LayoutProps): JSX.Element => (
             {children}
         </main>
         <Footer />
+        <CookieConsent />
     </div>
   </div>
 );
