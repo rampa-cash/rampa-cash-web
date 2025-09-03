@@ -114,7 +114,7 @@
     "sections": {
       "companyInfo": {
         "title": "Company Information",
-        "name": "Lafitech UG",
+        "name": "Lafitech UG (limited liability)",
         "address": "Arnulfstr. 171",
         "city": "80634 Munich",
         "country": "Germany"
@@ -127,7 +127,7 @@
       },
       "editoriallyResponsible": {
         "title": "Editorially Responsible",
-        "name": "Lafitech UG",
+        "name": "Lafitech UG (limited liability)",
         "address": "Arnulfstr. 171",
         "city": "80634 Munich"
       },
