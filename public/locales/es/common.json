@@ -111,7 +111,52 @@
   "impressum": {
     "title": "Información Legal",
     "metaDescription": "Información legal y detalles de la empresa para RAMPA",
-    "content": "Información legal y términos de servicio para RAMPA se proporcionarán aquí."
+    "sections": {
+      "companyInfo": {
+        "title": "Información de la Empresa",
+        "name": "RAMPA Cash GmbH",
+        "address": "Musterstraße 123",
+        "city": "12345 Berlín",
+        "country": "Alemania"
+      },
+      "contact": {
+        "title": "Información de Contacto",
+        "phone": "Teléfono:",
+        "email": "Email:",
+        "website": "Sitio web:"
+      },
+      "editoriallyResponsible": {
+        "title": "Responsable Editorial",
+        "name": "RAMPA Cash GmbH",
+        "address": "Musterstraße 123",
+        "city": "12345 Berlín"
+      },
+      "euDispute": {
+        "title": "Resolución de Disputas de la UE",
+        "text": "La Comisión Europea proporciona una plataforma para la resolución de disputas en línea (ODR):",
+        "link": "https://ec.europa.eu/consumers/odr/",
+        "emailNote": "Nuestra dirección de correo electrónico se puede encontrar arriba en el aviso legal."
+      },
+      "consumerDispute": {
+        "title": "Resolución de Disputas del Consumidor",
+        "text": "No estamos dispuestos ni obligados a participar en procedimientos de resolución de disputas ante una junta de arbitraje de consumidores."
+      },
+      "contentLiability": {
+        "title": "Responsabilidad por el Contenido",
+        "paragraph1": "Como proveedores de servicios, somos responsables de nuestro propio contenido de estos sitios web según la Sec. 7, Para. 1 de la Ley Alemana de Telemedia (TMG). Sin embargo, de conformidad con las Secs. 8 a 10 de la Ley Alemana de Telemedia (TMG), nosotros como proveedores de servicios no tenemos la obligación de monitorear la información enviada o almacenada o investigar circunstancias que apunten a actividad ilegal.",
+        "paragraph2": "Las obligaciones legales de eliminar información o bloquear el uso de información permanecen sin cambios. En este caso, la responsabilidad solo es posible en el momento del conocimiento sobre una violación específica de la ley. El contenido ilegal será eliminado inmediatamente en el momento en que tengamos conocimiento de ello."
+      },
+      "linkLiability": {
+        "title": "Responsabilidad por Enlaces",
+        "paragraph1": "Nuestra oferta incluye enlaces a sitios web externos de terceros. No tenemos influencia sobre el contenido de esos sitios web, por lo tanto no podemos garantizar ese contenido. Los proveedores o administradores de sitios web enlazados siempre son responsables del contenido de los sitios web enlazados.",
+        "paragraph2": "Todos los sitios web enlazados han sido verificados en busca de posibles violaciones de la ley en el momento del establecimiento del enlace. No se detectaron contenidos ilegales en el momento del enlace. Un monitoreo permanente del contenido de sitios web enlazados no puede imponerse sin indicaciones razonables de que ha habido una violación de la ley. Los enlaces ilegales serán eliminados inmediatamente en el momento en que tengamos conocimiento de ello."
+      },
+      "copyright": {
+        "title": "Derechos de Autor",
+        "paragraph1": "Los contenidos y compilaciones publicados en estos sitios web por los proveedores están sujetos a las leyes alemanas de derechos de autor. La reproducción, edición, distribución así como el uso de cualquier tipo fuera del alcance de la ley de derechos de autor requiere un permiso por escrito del autor u originador.",
+        "paragraph2": "Las descargas y copias de estos sitios web están permitidas solo para uso privado. El uso comercial de nuestros contenidos sin permiso del originador está prohibido."
+      }
+    }
   },
   "cookies": {
     "title": "Usamos cookies para mejorar tu experiencia",
