@@ -102,11 +102,7 @@ export const validateEmail = (email: string): boolean => {
   return emailRegex.test(email)
 }
 
-export const validateSolanaAddress = (address: string): boolean => {
-  // Basic Solana address validation (base58, 32-44 characters)
-  const addressRegex = /^[1-9A-HJ-NP-Za-km-z]{32,44}$/
-  return addressRegex.test(address)
-}
+
 
 // CORS middleware
 export const corsMiddleware = (req: NextApiRequest, res: NextApiResponse): void => {

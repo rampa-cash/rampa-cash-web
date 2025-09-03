@@ -1,29 +1,27 @@
 # RAMPA Cash Web
 
-> Solana-based remittance and financial empowerment platform
+> Financial empowerment platform for families
 
 [![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white)](*)
 [![React](https://img.shields.io/badge/React-%2320232a.svg?logo=react&logoColor=%2361DAFB)](#)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)](#)
-[![Solana](https://img.shields.io/badge/Solana-9945FF?logo=solana&logoColor=fff)](#)
+
 [![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](#)
 [![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](#)
 
-Rampa brings Web3 and decentralized apps to real people, making it so simple that they don't realize they're using them. Built with Next.js, Solana blockchain, and WhatsApp integration.
+Rampa brings Web3 and decentralized apps to real people, making it so simple that they don't realize they're using them. Built with Next.js.
 
 ## 🚀 Features
 
 ### Core Functionality
-- **Solana Blockchain Integration**: Fast, secure transactions on Solana network
-- **Waitlist System**: Early access signup with email collection
-- **Real-time Exchange Rates**: Live market rates without hidden fees
-- **Multi-Party Computation (MPC) Wallets**: Enhanced security for user funds
+- **Waitlist Management**: Simple email collection and management
+- **Multi-language Support**: English and Spanish localization
+- **Responsive Design**: Mobile-first approach with modern UI
 
 ### User Experience
 - **Intuitive Interface**: Clean, modern UI built with Tailwind CSS
 - **Mobile-First Design**: Responsive design for all devices
-- **Contact Management**: Predefined contacts and custom recipient addition
-- **Instant Transfers**: Money arrives in seconds, not days
+
 
 ### Technical Features
 - **TypeScript**: Full type safety across the application
@@ -37,7 +35,7 @@ Rampa brings Web3 and decentralized apps to real people, making it so simple tha
 ### Prerequisites
 - Node.js 18+ 
 - npm or yarn
-- Solana CLI (optional, for development)
+
 - Docker & Docker Compose (for containerized deployment)
 
 ### Local Development Setup
@@ -58,13 +56,10 @@ Rampa brings Web3 and decentralized apps to real people, making it so simple tha
 3. **Environment Configuration**
    Create a `.env.local` file in the root directory:
    ```env
-   # Solana Configuration
-   SOLANA_PRIVATE_KEY=your_solana_private_key_here
+
    
-   # Twilio Configuration
-   TWILIO_ACCOUNT_SID=your_twilio_account_sid
-   TWILIO_AUTH_TOKEN=your_twilio_auth_token
-   TWILIO_WHATSAPP_NUMBER=your_twilio_whatsapp_number
+
+
    
    # Optional: Database/Storage
    DATABASE_URL=your_database_url
@@ -156,8 +151,8 @@ rampa-cash-web/
 ├── pages/              # Next.js pages and API routes
 │   ├── api/            # API endpoints
 │   │   ├── waitlist.ts # Waitlist management API
-│   │   ├── solana-transfer.ts # Solana transfer API
-│   │   ├── whatsapp-webhook.ts # WhatsApp webhook
+
+
 │   │   └── ...         # Other API routes
 │   ├── admin/          # Admin pages
 │   └── index.tsx       # Home page
@@ -176,15 +171,9 @@ rampa-cash-web/
 - **POST** `/api/waitlist` - Add email to waitlist
 - **GET** `/api/waitlist` - Get waitlist count (admin)
 
-### Solana Transfers
-- **POST** `/api/solana-transfer` - Process Solana blockchain transfers
-  - Body: `{ recipientAddress, amount }`
-  - Returns: `{ success, signature }`
 
-### WhatsApp Integration
-- **POST** `/api/whatsapp-webhook` - Handle WhatsApp messages
-- **POST** `/api/whatsapp-transfer` - Initiate WhatsApp transfers
-- **POST** `/api/send-whatsapp` - Send WhatsApp messages
+
+
 
 ## 🚀 Deployment
 
@@ -209,10 +198,9 @@ Follow the Docker setup instructions above for containerized deployment.
 
 ### Environment Variables for Production
 Ensure all required environment variables are set in your production environment:
-- `SOLANA_PRIVATE_KEY`
-- `TWILIO_ACCOUNT_SID`
-- `TWILIO_AUTH_TOKEN`
-- `TWILIO_WHATSAPP_NUMBER`
+
+
+
 
 ## 🔧 Development
 
@@ -240,11 +228,7 @@ Currently, the project doesn't include automated tests. Consider adding:
 - Add rate limiting to API endpoints
 - Use HTTPS in production
 
-### Solana Security
-- Store private keys in secure vaults (not in code)
-- Implement proper key management
-- Use hardware wallets for large amounts
-- Regular security audits
+
 
 ### Docker Security
 - Never commit `.env` files to version control
@@ -252,19 +236,7 @@ Currently, the project doesn't include automated tests. Consider adding:
 - The production container runs as a non-root user (nextjs:nodejs)
 - Regular base image updates
 
-## 📱 WhatsApp Integration
 
-### Setup Requirements
-1. Twilio account with WhatsApp Business API
-2. Verified WhatsApp Business number
-3. Webhook URL configuration
-
-### Message Flow
-1. User visits `/whatsapp-transfer`
-2. System initiates transfer via WhatsApp
-3. User selects recipient from contacts
-4. Confirmation and processing
-5. Transfer completion notification
 
 ## 🐛 Troubleshooting
 
