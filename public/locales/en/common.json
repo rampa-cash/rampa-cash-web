@@ -114,9 +114,9 @@
     "sections": {
       "companyInfo": {
         "title": "Company Information",
-        "name": "RAMPA Cash GmbH",
-        "address": "Musterstraße 123",
-        "city": "12345 Berlin",
+        "name": "Lafitech UG (limited liability)",
+        "address": "Arnulfstr. 171",
+        "city": "80634 Munich",
         "country": "Germany"
       },
       "contact": {
@@ -127,9 +127,9 @@
       },
       "editoriallyResponsible": {
         "title": "Editorially Responsible",
-        "name": "RAMPA Cash GmbH",
-        "address": "Musterstraße 123",
-        "city": "12345 Berlin"
+        "name": "Lafitech UG (limited liability)",
+        "address": "Arnulfstr. 171",
+        "city": "80634 Munich"
       },
       "euDispute": {
         "title": "EU Dispute Resolution",
