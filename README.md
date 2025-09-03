@@ -57,12 +57,8 @@ Rampa brings Web3 and decentralized apps to real people, making it so simple tha
    Create a `.env.local` file in the root directory:
    ```env
 
-   
-
-
-   
-   # Optional: Database/Storage
-   DATABASE_URL=your_database_url
+   # Backend API Configuration
+   BACKEND_API_URL=http://localhost:8000
    ```
 
 4. **Run the development server**
@@ -147,7 +143,7 @@ rampa-cash-web/
 │   └── waitlist.json   # Waitlist data storage
 ├── lib/                # Utility libraries
 │   ├── utils.ts        # General utilities
-│   └── waitlist-storage.ts # Waitlist management
+│   └── waitlist-storage-production.ts # Backend API integration
 ├── pages/              # Next.js pages and API routes
 │   ├── api/            # API endpoints
 │   │   ├── waitlist.ts # Waitlist management API
@@ -198,6 +194,7 @@ Follow the Docker setup instructions above for containerized deployment.
 
 ### Environment Variables for Production
 Ensure all required environment variables are set in your production environment:
+- `BACKEND_API_URL`
 
 
 
