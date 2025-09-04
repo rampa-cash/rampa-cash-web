@@ -46,9 +46,7 @@ const WaitlistAdmin = ({ entries, count, environment, error }: WaitlistAdminProp
 
 export const getServerSideProps: GetServerSideProps = async () => {
     try {
-        const backendApiUrl = process.env.BACKEND_API_URL || 'http://localhost:8000';
-
-        // Fetch waitlist entries from backend API
+        const backendApiUrl = process.env.BACKEND_API_URL;
         const response = await fetch(`${backendApiUrl}/api/waitlist`);
 
         if (!response.ok) {

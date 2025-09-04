@@ -1,13 +1,10 @@
-// Backend API configuration
-const BACKEND_API_URL = process.env.BACKEND_API_URL || 'http://localhost:8000';
+import { apiClient } from './api-client';
+import { API_ENDPOINTS } from './constants';
+import { waitlistRequestSchema } from './validators';
 
 export const loadWaitlist = async (): Promise<string[]> => {
     try {
-        const response = await fetch(`${BACKEND_API_URL}/api/waitlist`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
+        const data = await apiClient.get<{ emails: string[] }>(API_ENDPOINTS.waitlist);
         return data.emails || [];
     } catch (error) {
         console.error('Error loading waitlist:', error);
@@ -23,26 +20,18 @@ export const saveWaitlist = async (emails: string[]): Promise<void> => {
 
 export const addToWaitlist = async (name: string, email: string): Promise<boolean> => {
     try {
-        const response = await fetch(`${BACKEND_API_URL}/api/waitlist`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: name.trim(),
-                email: email.toLowerCase(),
-            }),
+        // Validate input data
+        const validatedData = waitlistRequestSchema.parse({
+            name: name.trim(),
+            email: email.toLowerCase(),
         });
 
-        if (!response.ok) {
-            if (response.status === 409) {
-                return false; // Email already exists
-            }
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
+        await apiClient.post(API_ENDPOINTS.waitlist, validatedData);
         return true; // Successfully added
     } catch (error) {
+        if (error instanceof Error && error.message.includes('409')) {
+            return false; // Email already exists
+        }
         console.error('Error adding to waitlist:', error);
         return false;
     }
@@ -50,11 +39,7 @@ export const addToWaitlist = async (name: string, email: string): Promise<boolea
 
 export const getWaitlistCount = async (): Promise<number> => {
     try {
-        const response = await fetch(`${BACKEND_API_URL}/api/waitlist/count`);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
+        const data = await apiClient.get<{ count: number }>(API_ENDPOINTS.waitlistCount);
         return data.count || 0;
     } catch (error) {
         console.error('Error getting waitlist count:', error);

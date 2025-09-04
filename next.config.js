@@ -1,51 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  output: 'standalone',
-  i18n: {
-    locales: ['en', 'es'],
-    defaultLocale: 'en',
-  },
-  // Comment out the redirects
-  // async redirects() {
-  //   return [
-  //     // Redirect from www to non-www (or vice versa, depending on preference)
-  //     {
-  //       source: '/:path*',
-  //       has: [
-  //         {
-  //           type: 'host',
-  //           value: 'www.rampa.cash',
-  //         },
-  //       ],
-  //       destination: 'https://rampa.cash/:path*',
-  //       permanent: true,
-  //     },
-  //     {
-  //       source: '/:path*',
-  //       has: [
-  //         {
-  //           type: 'host',
-  //           value: 'www.rampacash.com',
-  //         },
-  //       ],
-  //       destination: 'https://rampa.cash/:path*',
-  //       permanent: true,
-  //     },
-  //     {
-  //       source: '/:path*',
-  //       has: [
-  //         {
-  //           type: 'host',
-  //           value: 'rampacash.com',
-  //         },
-  //       ],
-  //       destination: 'https://rampa.cash/:path*',
-  //       permanent: true,
-  //     },
-  //   ];
-  // },
+    reactStrictMode: true,
+    swcMinify: true,
+    output: 'standalone',
+    i18n: {
+        locales: ['en', 'es'],
+        defaultLocale: 'en',
+    },
 }
 
 module.exports = nextConfig

@@ -7,11 +7,8 @@ import {
     rateLimit,
     corsMiddleware
 } from '../../lib/api-utils';
-import {
-    ApiErrorCode,
-    type WaitlistResponse,
-    WaitlistRequestSchema
-} from '../../lib/types/api';
+import { ApiErrorCode } from '../../lib/api-utils';
+import { type WaitlistResponse, waitlistRequestSchema } from '../../lib/validators';
 import { addToWaitlist, getWaitlistCount } from '../../lib/waitlist-storage-production';
 
 const handler = async (
@@ -53,7 +50,7 @@ const handler = async (
     }
 
     // Validate request body
-    const validation = validateRequest(WaitlistRequestSchema, req);
+    const validation = validateRequest(waitlistRequestSchema, req);
     if (!validation.success) {
         console.log('❌ Validation failed:', validation.error);
         sendErrorResponse(
