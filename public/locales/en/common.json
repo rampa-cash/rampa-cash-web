@@ -4,7 +4,7 @@
     "title": {
       "part1": "Turning everyday remittances into engines of",
       "part2": "shared prosperity",
-      "part3": "Empowering families with Web3 finance."
+      "part3": "Empowering families with Web3 finance"
     },
     "description": "Send money globally with zero hidden fees, lightning-fast transactions, and effortlessly grow your family’s wealth through our tokenized investment platform designed to make every transfer work harder for you.",
     "cta": {
@@ -44,17 +44,17 @@
     "features": {
       "realTimeRates": {
         "title": "Real-time rates",
-        "description": "Live market exchange rates updated every minute for maximum transparency",
+        "description": "Live market exchange rates updated every minute for maximum transparency.",
         "badge": "Always up-to-date"
       },
       "noHiddenFees": {
         "title": "No hidden fees",
-        "description": "What you see is what you pay - complete transparency in every transaction",
+        "description": "What you see is what you pay - complete transparency in every transaction.",
         "badge": "100% Transparent"
       },
       "lowCommission": {
         "title": "Low commission",
-        "description": "Minimal fees to keep more money in your family's pocket where it belongs",
+        "description": "Minimal fees to keep more money in your family's pocket where it belongs.",
         "badge": "Maximum savings"
       }
     },
@@ -71,18 +71,18 @@
     "features": {
       "web3Simplified": {
         "title": "Web3 Simplified",
-        "description": "Powerful blockchain technology hidden behind an intuitive interface that anyone can use",
+        "description": "Powerful blockchain technology hidden behind an intuitive interface that anyone can use.",
         "badge": "Easy to Use"
       },
       "forRealPeople": {
         "title": "For Real People",
-        "description": "Built for everyday users sending money to family and friends across the globe",
+        "description": "Built for everyday users sending money to family and friends across the globe.",
         "badge": "Family First",
         "highlight": "Core Mission"
       },
       "invisibleInnovation": {
         "title": "Invisible Innovation",
-        "description": "Advanced security and speed without the complexity or technical jargon",
+        "description": "Advanced security and speed without the complexity or technical jargon.",
         "badge": "Just Works"
       }
     }
