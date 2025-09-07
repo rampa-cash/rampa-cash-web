@@ -36,16 +36,6 @@ export const serverRequest = async <T>(
 ): Promise<T> => {
     try {
         const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:3001';
-        
-        // Debug logging for production issues
-        if (typeof window !== 'undefined') {
-            console.log('🔍 Environment Debug:', {
-                NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
-                baseURL,
-                NODE_ENV: process.env.NODE_ENV,
-                location: window.location.origin
-            });
-        }
 
         const axiosConfig = {
             method,
