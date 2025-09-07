@@ -1,14 +1,8 @@
 "use client";
 import { useWaitlistEntries } from '../hooks/useWaitlist';
-import { useState, useEffect } from 'react';
 
 const WaitlistAdmin = (): JSX.Element => {
     const { data: entries = [], isLoading, error } = useWaitlistEntries();
-    const [lastUpdated, setLastUpdated] = useState<string>('');
-
-    useEffect(() => {
-        setLastUpdated(new Date().toLocaleString());
-    }, []);
 
     return (
         <div className="min-h-screen bg-gray-50 py-20 md:py-32">
