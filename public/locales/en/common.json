@@ -1,161 +1,199 @@
 {
-    "hero": {
-        "badge": "✨ Now in Beta • Join the Movement",
-        "title": {
-            "part1": "Turning everyday remittances into engines of",
-            "part2": "shared prosperity",
-            "part3": "Empowering families with Web3 finance."
-        },
-        "description": "Send money globally with zero hidden fees, lightning-fast transactions, and effortlessly grow your family’s wealth through our tokenized investment platform designed to make every transfer work harder for you.",
-        "cta": {
-            "title": "🚀 Get Early Access",
-            "description": "Be among the first to experience the future of remittances"
-        },
-        "socialProof": {
-            "betaTesters": "beta testers already signed up",
-            "trustedBy": "Trusted by early adopters"
-        }
+  "hero": {
+    "badge": "✨ Now in Beta • Join the Movement",
+    "title": {
+      "part1": "Turning everyday remittances into engines of",
+      "part2": "shared prosperity",
+      "part3": "Empowering families with Web3 finance"
     },
-    "howItWorks": {
-        "title": "How It Works",
-        "description": "Get started with RAMPA in four simple steps and transform the way you send money to your loved ones.",
-        "steps": {
-            "step1": {
-                "title": "Create an account",
-                "description": "Set up your account easily with your phone number."
-            },
-            "step2": {
-                "title": "MPC Wallet created automatically",
-                "description": "Your secure multi-party computation wallet is generated instantly for maximum security and control."
-            },
-            "step3": {
-                "title": "Add a recipient from your contacts",
-                "description": "Choose the recipient and add the amount you want to send."
-            },
-            "step4": {
-                "title": "Confirm and send",
-                "description": "In seconds, your family receives more value with every transfer."
-            }
-        }
+    "description": "Send money globally with zero hidden fees, lightning-fast transactions, and effortlessly grow your family’s wealth through our tokenized investment platform designed to make every transfer work harder for you.",
+    "cta": {
+      "title": "🚀 Get Early Access",
+      "description": "Be among the first to experience the future of remittances"
     },
-    "pricing": {
-        "title": "Pricing",
-        "description": "Exchange rate without hidden fees and with low commissions.",
-        "features": {
-            "realTimeRates": {
-                "title": "Real-time rates",
-                "description": "Live market exchange rates updated every minute for maximum transparency",
-                "badge": "Always up-to-date"
-            },
-            "noHiddenFees": {
-                "title": "No hidden fees",
-                "description": "What you see is what you pay - complete transparency in every transaction",
-                "badge": "100% Transparent"
-            },
-            "lowCommission": {
-                "title": "Low commission",
-                "description": "Minimal fees to keep more money in your family's pocket where it belongs",
-                "badge": "Maximum savings"
-            }
-        },
-        "stats": {
-            "commission": "Average commission",
-            "transferTime": "Transfer time",
-            "countries": "Countries supported",
-            "support": "Customer support"
-        }
-    },
-    "aboutUs": {
-        "title": "About Us",
-        "description": "Bringing Web3 and decentralized apps to real people, making it so simple that they don't realize they're using them. Rampa is an On-chain remittance platform that turns stablecoin transfers into shared prosperity, empowering families to thrive through financial education and a tokenized investment portfolio, so the money they send home today grows into collective wealth.",
-        "features": {
-            "web3Simplified": {
-                "title": "Web3 Simplified",
-                "description": "Powerful blockchain technology hidden behind an intuitive interface that anyone can use",
-                "badge": "Easy to Use"
-            },
-            "forRealPeople": {
-                "title": "For Real People",
-                "description": "Built for everyday users sending money to family and friends across the globe",
-                "badge": "Family First",
-                "highlight": "Core Mission"
-            },
-            "invisibleInnovation": {
-                "title": "Invisible Innovation",
-                "description": "Advanced security and speed without the complexity or technical jargon",
-                "badge": "Just Works"
-            }
-        }
-    },
-    "waitlist": {
-        "badge": "⚡ Limited Time • Early Bird Access",
-        "title": "Ready to Transform Money Transfers?",
-        "description": "Be among the first to experience the future of cross-border payments. Join our waitlist and get exclusive early access when we launch.",
-        "cta": {
-            "title": "🎯 Reserve Your Spot",
-            "description": "Get notified the moment RAMPA MVP goes live + exclusive launch bonuses"
-        },
-        "benefits": {
-            "earlyAccess": "Early access",
-            "launchBonuses": "Launch bonuses",
-            "noSpam": "No spam ever"
-        }
-    },
-    "navigation": {
-        "home": "Home",
-        "howItWorks": "How It Works",
-        "pricing": "Pricing",
-        "aboutUs": "About Us",
-        "waitlist": "Waitlist"
-    },
-    "impressum": {
-        "title": "Impressum",
-        "metaDescription": "Legal information and company details for RAMPA",
-        "sections": {
-            "companyInfo": {
-                "title": "Information according to § 5 TMG",
-                "name": "Juan Betancur",
-                "address": "Arnulfstr, 171",
-                "city": "80634 Munich",
-                "country": "Germany"
-            },
-            "contact": {
-                "title": "Contact",
-                "phone": "Phone:",
-                "email": "Email:",
-                "website": "Website:"
-            },
-            "editoriallyResponsible": {
-                "title": "Editorially responsible",
-                "name": "Juan Betancur",
-                "address": "Arnulfstr, 171",
-                "city": "80634 Munich"
-            },
-            "euDispute": {
-                "title": "EU Dispute Resolution",
-                "text": "The European Commission provides a platform for online dispute resolution (ODR):",
-                "link": "https://ec.europa.eu/consumers/odr/",
-                "emailNote": "Our email address can be found above in the impressum."
-            },
-            "consumerDispute": {
-                "title": "Consumer dispute resolution/Universal arbitration office",
-                "text": "We are not willing or obliged to participate in dispute resolution procedures before a consumer arbitration board."
-            },
-            "contentLiability": {
-                "title": "Liability for content",
-                "paragraph1": "As service providers, we are liable for own contents of these pages according to general laws according to § 7 para.1 TMG. However, according to §§ 8 to 10 TMG, we as service providers are not under obligation to monitor submitted or stored information or to research circumstances pointing to illegal activity.",
-                "paragraph2": "Obligations to remove or block the use of information under the general laws remain unaffected. However, a related liability is only possible from the point in time at which a concrete infringement of law becomes known. If we become aware of such a violation, we will remove the content immediately."
-            },
-            "linkLiability": {
-                "title": "Liability for links",
-                "paragraph1": "Our offer contains links to external websites of third parties on whose contents we have no influence. Therefore, we cannot assume any liability for these external contents. The respective provider or operator of the sites is always responsible for the content of the linked sites. The linked sites were checked for possible violations of law at the time of linking. Illegal contents were not detected at the time of linking.",
-                "paragraph2": "However, a permanent monitoring of the content of linked sites cannot be assumed without concrete evidence of a violation of law. If we become aware of such violations, we will remove such links immediately."
-            },
-            "copyright": {
-                "title": "Copyright",
-                "paragraph1": "The contents and works created by the site operators on these pages are subject to German copyright law. Duplication, processing, distribution, and any form of commercialization of such material beyond the scope of the copyright law shall require the prior written consent of its respective author or creator. Downloads and copies of this site are only permitted for private, non-commercial use.",
-                "paragraph2": "Insofar as the content on this site was not created by the operator, the copyrights of third parties are respected. In particular, third-party content is identified as such. Should you nevertheless become aware of a copyright infringement, please inform us accordingly. If we become aware of any infringements, we will remove such content immediately."
-            }
-        }
+    "socialProof": {
+      "betaTesters": "beta testers already signed up",
+      "trustedBy": "Trusted by early adopters"
     }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "description": "Get started with RAMPA in four simple steps and transform the way you send money to your loved ones.",
+    "steps": {
+      "step1": {
+        "title": "Create an account",
+        "description": "Set up your account easily with your phone number."
+      },
+      "step2": {
+        "title": "MPC Wallet created automatically",
+        "description": "Your secure multi-party computation wallet is generated instantly for maximum security and control."
+      },
+      "step3": {
+        "title": "Add a recipient from your contacts",
+        "description": "Choose the recipient and add the amount you want to send."
+      },
+      "step4": {
+        "title": "Confirm and send",
+        "description": "In seconds, your family receives more value with every transfer."
+      }
+    }
+  },
+  "pricing": {
+    "title": "Pricing",
+    "description": "Exchange rate without hidden fees and with low commissions.",
+    "features": {
+      "realTimeRates": {
+        "title": "Real-time rates",
+        "description": "Live market exchange rates updated every minute for maximum transparency.",
+        "badge": "Always up-to-date"
+      },
+      "noHiddenFees": {
+        "title": "No hidden fees",
+        "description": "What you see is what you pay - complete transparency in every transaction.",
+        "badge": "100% Transparent"
+      },
+      "lowCommission": {
+        "title": "Low commission",
+        "description": "Minimal fees to keep more money in your family's pocket where it belongs.",
+        "badge": "Maximum savings"
+      }
+    },
+    "stats": {
+      "commission": "Average commission",
+      "transferTime": "Transfer time",
+      "countries": "Countries supported",
+      "support": "Customer support"
+    }
+  },
+  "aboutUs": {
+    "title": "About Us",
+    "description": "Bringing Web3 and decentralized apps to real people, making it so simple that they don't realize they're using them. Rampa is an On-chain remittance platform that turns stablecoin transfers into shared prosperity, empowering families to thrive through financial education and a tokenized investment portfolio, so the money they send home today grows into collective wealth.",
+    "features": {
+      "web3Simplified": {
+        "title": "Web3 Simplified",
+        "description": "Powerful blockchain technology hidden behind an intuitive interface that anyone can use.",
+        "badge": "Easy to Use"
+      },
+      "forRealPeople": {
+        "title": "For Real People",
+        "description": "Built for everyday users sending money to family and friends across the globe.",
+        "badge": "Family First",
+        "highlight": "Core Mission"
+      },
+      "invisibleInnovation": {
+        "title": "Invisible Innovation",
+        "description": "Advanced security and speed without the complexity or technical jargon.",
+        "badge": "Just Works"
+      }
+    }
+  },
+  "waitlist": {
+    "badge": "⚡ Limited Time • Early Bird Access",
+    "title": "Ready to Transform Money Transfers?",
+    "description": "Be among the first to experience the future of cross-border payments. Join our waitlist and get exclusive early access when we launch.",
+    "cta": {
+      "title": "🎯 Reserve Your Spot",
+      "description": "Get notified the moment RAMPA MVP goes live + exclusive launch bonuses"
+    },
+    "benefits": {
+      "earlyAccess": "Early access",
+      "launchBonuses": "Launch bonuses",
+      "noSpam": "No spam ever"
+    }
+  },
+  "navigation": {
+    "home": "Home",
+    "howItWorks": "How It Works",
+    "pricing": "Pricing",
+    "aboutUs": "About Us",
+    "waitlist": "Waitlist"
+  },
+    "impressum": {
+    "title": "Legal Information",
+    "metaDescription": "Legal information and company details for RAMPA",
+    "sections": {
+      "companyInfo": {
+        "title": "Company Information",
+        "name": "Lafitech UG (limited liability)",
+        "address": "Arnulfstr. 171",
+        "city": "80634 Munich",
+        "country": "Germany"
+      },
+      "contact": {
+        "title": "Contact Information",
+        "phone": "Phone:",
+        "email": "Email:",
+        "website": "Website:"
+      },
+      "editoriallyResponsible": {
+        "title": "Editorially Responsible",
+        "name": "Lafitech UG (limited liability)",
+        "address": "Arnulfstr. 171",
+        "city": "80634 Munich"
+      },
+      "euDispute": {
+        "title": "EU Dispute Resolution",
+        "text": "The European Commission provides a platform for online dispute resolution (ODR):",
+        "link": "https://ec.europa.eu/consumers/odr/",
+        "emailNote": "Our email address can be found above in the impressum."
+      },
+      "consumerDispute": {
+        "title": "Consumer Dispute Resolution",
+        "text": "We are not willing or obliged to participate in dispute resolution proceedings before a consumer arbitration board."
+      },
+      "contentLiability": {
+        "title": "Liability for Content",
+        "paragraph1": "As service providers, we are liable for our own content of these websites according to Sec. 7, Para. 1 German Telemedia Act (TMG). However, pursuant to Secs. 8 to 10 German Telemedia Act (TMG), we as service providers are under no obligation to monitor submitted or stored information or to investigate circumstances pointing to illegal activity.",
+        "paragraph2": "Legal obligations to removing information or to blocking the use of information remain unchallenged. In this case, liability is only possible at the time of knowledge about a specific violation of law. Illegal content will be removed immediately at the time we get knowledge of it."
+      },
+      "linkLiability": {
+        "title": "Liability for Links",
+        "paragraph1": "Our offer includes links to external third party websites. We have no influence on the contents of those websites, therefore we cannot guarantee for those contents. Providers or administrators of linked websites are always responsible for the contents of the linked websites.",
+        "paragraph2": "All linked websites have been checked for possible violations of law at the time of the establishment of the link. Illegal contents were not detected at the time of the linking. A permanent monitoring of the contents of linked websites cannot be imposed without reasonable indications that there has been a violation of law. Illegal links will be removed immediately at the time we get knowledge of it."
+      },
+      "copyright": {
+        "title": "Copyright",
+        "paragraph1": "Contents and compilations published on these websites by the providers are subject to German copyright laws. Reproduction, editing, distribution as well as the use of any kind outside the scope of the copyright law require a written permission of the author or originator.",
+        "paragraph2": "Downloads and copies of these websites are permitted for private use only. The commercial use of our contents without permission of the originator is prohibited."
+      }
+    }
+  },
+  "cookies": {
+    "title": "We use cookies to enhance your experience",
+    "description": "We use essential cookies to make our website work properly and functional cookies to improve your experience. We don't use any tracking or advertising cookies.",
+    "acceptAll": "Accept All",
+    "essentialOnly": "Essential Only", 
+    "learnMore": "Learn More"
+  },
+  "cookiePolicy": {
+    "title": "Cookie Policy",
+    "lastUpdated": "Last updated",
+    "whatAreCookies": {
+      "title": "What are cookies?",
+      "description": "Cookies are small text files that are stored on your device when you visit our website. They help us provide you with a better experience by remembering your preferences and settings."
+    },
+    "howWeUseCookies": {
+      "title": "How we use cookies",
+      "description": "We use cookies to ensure our website functions properly, remember your language preferences, and provide essential security features. We do not use cookies for tracking, advertising, or sharing your data with third parties."
+    },
+    "typesOfCookies": {
+      "title": "Types of cookies we use",
+      "essential": {
+        "title": "Essential Cookies (Required)",
+        "description": "These cookies are necessary for our website to function properly. They enable basic features like page navigation, language settings, and security. You cannot opt out of these cookies."
+      },
+      "functional": {
+        "title": "Functional Cookies (Optional)",
+        "description": "These cookies enhance your experience by remembering your preferences such as language selection and other settings. You can choose to disable these cookies."
+      }
+    },
+    "yourChoices": {
+      "title": "Your choices",
+      "description": "You can manage your cookie preferences at any time by clearing your browser cookies or adjusting your browser settings. Note that disabling essential cookies may affect website functionality."
+    },
+    "contact": {
+      "title": "Contact us",
+      "description": "If you have any questions about our cookie policy, please contact us at:"
+    }
+  }
 }

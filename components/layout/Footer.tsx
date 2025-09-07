@@ -19,12 +19,19 @@ const Footer = (): JSX.Element => (
                         <span className="ml-1 text-sm md:text-base">@rampa_cash</span>
                     </a>
                 </div>
-                <div className="flex items-center justify-center">
+                <div className="flex items-center justify-center space-x-4">
                     <Link
                         href="/impressum"
                         className="text-sm md:text-base text-gray-600 hover:text-indigo-600 transition-colors"
                     >
                         Impressum
+                    </Link>
+                    <span className="text-gray-400">•</span>
+                    <Link
+                        href="/cookie-policy"
+                        className="text-sm md:text-base text-gray-600 hover:text-indigo-600 transition-colors"
+                    >
+                        Cookie Policy
                     </Link>
                 </div>
             </div>
