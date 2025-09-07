@@ -35,7 +35,22 @@ export const serverRequest = async <T>(
     data?: unknown
 ): Promise<T> => {
     try {
-        const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:3001';
+        let baseURL = process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:3001';
+        
+        // Ensure the baseURL has a protocol
+        if (!baseURL.startsWith('http://') && !baseURL.startsWith('https://')) {
+            baseURL = `https://${baseURL}`;
+        }
+
+        // Debug logging for URL construction
+        if (process.env.NODE_ENV === 'development') {
+            console.log('🔍 API URL Debug:', {
+                originalEnv: process.env.NEXT_PUBLIC_BACKEND_URL,
+                baseURL,
+                url,
+                finalURL: `${baseURL}${url}`
+            });
+        }
 
         const axiosConfig = {
             method,
