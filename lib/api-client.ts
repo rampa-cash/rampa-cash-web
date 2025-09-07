@@ -35,12 +35,7 @@ export const serverRequest = async <T>(
     data?: unknown
 ): Promise<T> => {
     try {
-        const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001';
-        const fullUrl = `${baseURL}${url}`;
-        
-        if (process.env.NODE_ENV === 'development') {
-            console.log(`🚀 API Request: ${method.toUpperCase()} ${fullUrl}`);
-        }
+        const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:3001';
 
         const axiosConfig = {
             method,
@@ -55,24 +50,12 @@ export const serverRequest = async <T>(
 
         const response = await axios.request(axiosConfig);
         
-        if (process.env.NODE_ENV === 'development') {
-            console.log(`✅ API Response: ${response.status} ${response.config.url}`, response.data);
-        }
-        
         return response.data as T;
-    } catch (error: any) {
-        if (process.env.NODE_ENV === 'development') {
-            console.error('❌ API Error Details:', {
-                message: error.message,
-                response: error.response?.data,
-                status: error.response?.status,
-                config: error.config?.url
-            });
-        }
-        
-        if (error.response) {
-            const errMsg = error.response?.data || error.message;
-            const errCode = error.response?.status || 500;
+    } catch (error: unknown) {
+        if (error && typeof error === 'object' && 'response' in error) {
+            const axiosError = error as { response?: { data?: unknown; status?: number }; message?: string };
+            const errMsg = axiosError.response?.data ?? axiosError.message ?? 'Unknown error';
+            const errCode = axiosError.response?.status ?? 500;
             throw new APIException(errMsg, errCode);
         } else {
             throw new APIException('An unknown error occurred', 500);
