@@ -8,8 +8,8 @@ export const APP_CONFIG = {
 
 // API endpoints
 export const API_ENDPOINTS = {
-    waitlist: '/api/waitlist',
-    waitlistCount: '/api/waitlist/count',
+    waitlist: '/contact/waitlist',
+    waitlistCount: '/contact/waitlist/count',
 } as const;
 
 // Rate limiting configuration
@@ -30,5 +30,4 @@ export const VALIDATION_LIMITS = {
 export const ENV = {
     isDevelopment: process.env.NODE_ENV === 'development',
     isProduction: process.env.NODE_ENV === 'production',
-    backendApiUrl: process.env.BACKEND_API_URL ?? 'http://localhost:3001',
 } as const;

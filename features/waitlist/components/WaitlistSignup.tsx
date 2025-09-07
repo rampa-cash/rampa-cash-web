@@ -1,33 +1,24 @@
+"use client";
 import { useState } from 'react';
-
-interface WaitlistSignupProps {
-    title?: string;
-    description?: string;
-    className?: string;
-}
+import { WaitlistApiClient } from '../api-client';
+import type { WaitlistSignupProps } from '../types';
 
 const WaitlistSignup = ({
-    title = "Join the Waitlist",
-    description = "Be the first to know when RAMPA MVP launches",
+    title = "🚀 Get Early Access",
+    description = "Be among the first to experience the future of remittances",
     className = ""
 }: WaitlistSignupProps): JSX.Element => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [message, setMessage] = useState('');
+    const [status, setStatus] = useState<'idle' | 'success' | 'error' | 'loading'>('idle');
 
-    const handleSubmit = async (e: React.FormEvent): Promise<void> => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
-        if (!name.trim()) {
+        
+        if (!name.trim() || !email.trim()) {
             setStatus('error');
-            setMessage('Please enter your name');
-            return;
-        }
-
-        if (!email) {
-            setStatus('error');
-            setMessage('Please enter your email address');
+            setMessage('Please fill in all fields');
             return;
         }
 
@@ -35,40 +26,26 @@ const WaitlistSignup = ({
         setMessage('');
 
         try {
-            const response = await fetch('/api/waitlist', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ name: name.trim(), email }),
+            const result = await WaitlistApiClient.addToWaitlist({
+                name: name.trim(),
+                email: email.trim(),
             });
 
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.error || 'Something went wrong');
+            // Check if the API call was successful
+            if (result.success) {
+                setStatus('success');
+                setMessage(result.message || 'Successfully joined the waitlist!');
+                setName('');
+                setEmail('');
+            } else {
+                setStatus('error');
+                setMessage(result.error || 'An error occurred. Please try again.');
             }
-
-            setStatus('success');
-            setMessage('🎉 You\'re on the list! We\'ll notify you when we launch.');
-            setName('');
-            setEmail('');
-
-            // Reset after 5 seconds
-            setTimeout(() => {
-                setStatus('idle');
-                setMessage('');
-            }, 5000);
-
         } catch (error) {
             setStatus('error');
-            setMessage(error instanceof Error ? error.message : 'Failed to join waitlist');
-
-            // Reset error after 3 seconds
-            setTimeout(() => {
-                setStatus('idle');
-                setMessage('');
-            }, 3000);
+            setMessage('Something went wrong. Please try again.');
+        } finally {
+            // Status is already set in the try/catch blocks
         }
     };
 
@@ -79,13 +56,13 @@ const WaitlistSignup = ({
                 <p className="text-indigo-100 mb-6">{description}</p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    <div className="flex flex-col gap-3">
+                    <div className="space-y-3">
                         <input
                             type="text"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             placeholder="Enter your name"
-                            className="px-4 py-3 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+                            className="w-full px-4 py-3 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
                             disabled={status === 'loading'}
                         />
                         <input
@@ -93,13 +70,13 @@ const WaitlistSignup = ({
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="Enter your email"
-                            className="px-4 py-3 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+                            className="w-full px-4 py-3 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
                             disabled={status === 'loading'}
                         />
                         <button
                             type="submit"
                             disabled={status === 'loading' || status === 'success'}
-                            className="bg-white text-indigo-600 px-6 py-3 rounded-md font-medium hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="w-full bg-white text-indigo-600 px-6 py-3 rounded-md font-medium hover:bg-gray-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             {status === 'loading' ? 'Joining...' : 'Join Waitlist'}
                         </button>
@@ -113,7 +90,7 @@ const WaitlistSignup = ({
                     )}
                 </form>
 
-                <p className="text-xs text-indigo-200 mt-4">
+                <p className="text-xs text-indigo-200 mt-6">
                     We'll only email you about the launch. No spam, ever.
                 </p>
             </div>

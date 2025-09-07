@@ -142,14 +142,12 @@ rampa-cash-web/
 ├── data/               # Static data files
 │   └── waitlist.json   # Waitlist data storage
 ├── lib/                # Utility libraries
+│   ├── api-client.ts   # Centralized API client
+│   ├── api-utils.ts    # API utilities & error handling
+│   ├── constants.ts    # Application constants
 │   ├── utils.ts        # General utilities
-│   └── waitlist-storage-production.ts # Backend API integration
+│   └── validators.ts   # Zod validation schemas
 ├── pages/              # Next.js pages and API routes
-│   ├── api/            # API endpoints
-│   │   ├── waitlist.ts # Waitlist management API
-
-
-│   │   └── ...         # Other API routes
 │   ├── admin/          # Admin pages
 │   └── index.tsx       # Home page
 ├── public/             # Static assets

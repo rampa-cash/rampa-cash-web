@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
-import WaitlistSignup from '../components/WaitlistSignup'
+import { WaitlistSignup } from '../features/waitlist'
 
 const Home: NextPage = () => {
     const { t } = useTranslation('common')
@@ -10,7 +10,6 @@ const Home: NextPage = () => {
     return (
         <>
             <section id="home" className="relative py-20 md:py-32 text-center px-4 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 overflow-hidden">
-                {/* Enhanced background decorative elements */}
                 <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/8 to-purple-600/8"></div>
                 <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-r from-indigo-400/25 to-purple-500/25 rounded-full blur-3xl animate-pulse"></div>
                 <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-r from-purple-400/25 to-pink-500/25 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
