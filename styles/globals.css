@@ -4,21 +4,21 @@
 
 /* Additional custom styles can go here */
 .logo {
-  height: 40px;
-  width: auto;
+    height: 40px;
+    width: auto;
 }
 
 @media (min-width: 768px) {
-  .logo {
-    height: 50px;
-  }
+    .logo {
+        height: 50px;
+    }
 }
 
 body {
-  font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
+    max-width: 1200px;
+    margin: 0 auto;
 }
