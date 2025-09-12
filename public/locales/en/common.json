@@ -195,5 +195,38 @@
       "title": "Contact us",
       "description": "If you have any questions about our cookie policy, please contact us at:"
     }
+  },
+  "login": {
+    "title": "Welcome back",
+    "subtitle": "Sign in to your account to continue",
+    "form": {
+      "email": {
+        "label": "Email address",
+        "placeholder": "Enter your email"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password"
+      },
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign in",
+      "submitting": "Signing in...",
+      "validation": {
+        "emailRequired": "Email is required",
+        "emailInvalid": "Please enter a valid email address",
+        "passwordRequired": "Password is required",
+        "passwordMinLength": "Password must be at least 6 characters"
+      },
+      "error": {
+        "general": "Something went wrong. Please try again."
+      },
+      "success": "Login successful!"
+    },
+    "signup": {
+      "prompt": "Don't have an account?",
+      "link": "Sign up"
+    },
+    "backToHome": "Back to home"
   }
 }

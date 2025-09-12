@@ -195,5 +195,38 @@
       "title": "Contáctanos",
       "description": "Si tienes alguna pregunta sobre nuestra política de cookies, por favor contáctanos en:"
     }
+  },
+  "login": {
+    "title": "Bienvenido de vuelta",
+    "subtitle": "Inicia sesión en tu cuenta para continuar",
+    "form": {
+      "email": {
+        "label": "Dirección de correo electrónico",
+        "placeholder": "Ingresa tu correo electrónico"
+      },
+      "password": {
+        "label": "Contraseña",
+        "placeholder": "Ingresa tu contraseña"
+      },
+      "rememberMe": "Recordarme",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "submit": "Iniciar sesión",
+      "submitting": "Iniciando sesión...",
+      "validation": {
+        "emailRequired": "El correo electrónico es requerido",
+        "emailInvalid": "Por favor ingresa una dirección de correo electrónico válida",
+        "passwordRequired": "La contraseña es requerida",
+        "passwordMinLength": "La contraseña debe tener al menos 6 caracteres"
+      },
+      "error": {
+        "general": "Algo salió mal. Por favor intenta de nuevo."
+      },
+      "success": "¡Inicio de sesión exitoso!"
+    },
+    "signup": {
+      "prompt": "¿No tienes una cuenta?",
+      "link": "Regístrate"
+    },
+    "backToHome": "Volver al inicio"
   }
 }
