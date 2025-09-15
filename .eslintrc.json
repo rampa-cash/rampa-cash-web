@@ -1,44 +1,57 @@
 {
-  "extends": [
-    "next/core-web-vitals",
-    "next/typescript"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
-  "plugins": [
-    "@typescript-eslint",
-    "react-hooks",
-    "prefer-arrow"
-  ],
-  "rules": {
-    "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/no-explicit-any": "warn",
-    "@typescript-eslint/explicit-function-return-type": "warn",
-    "@typescript-eslint/no-non-null-assertion": "warn",
-    "@typescript-eslint/prefer-nullish-coalescing": "error",
-    "@typescript-eslint/prefer-optional-chain": "error",
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "prefer-arrow/prefer-arrow-functions": "warn",
-    "no-console": "warn",
-    "prefer-const": "error",
-    "no-var": "error",
-    "react/no-unescaped-entities": "off"
-  },
-  "overrides": [
-    {
-      "files": ["pages/api/**/*.ts"],
-      "rules": {
-        "no-console": "off"
-      }
+    "extends": [
+        "next/core-web-vitals",
+        "next/typescript"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json"
     },
-    {
-      "files": ["pages/admin/**/*.tsx", "lib/waitlist-storage-production.ts"],
-      "rules": {
-        "no-console": ["warn", { "allow": ["error", "warn"] }]
-      }
-    }
-  ]
-} 
+    "plugins": [
+        "@typescript-eslint",
+        "react-hooks",
+        "prefer-arrow"
+    ],
+    "rules": {
+        "@typescript-eslint/no-unused-vars": "error",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "@typescript-eslint/no-non-null-assertion": "warn",
+        "@typescript-eslint/prefer-nullish-coalescing": "error",
+        "@typescript-eslint/prefer-optional-chain": "error",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "prefer-arrow/prefer-arrow-functions": "warn",
+        "no-console": "warn",
+        "prefer-const": "error",
+        "no-var": "error",
+        "react/no-unescaped-entities": "off"
+    },
+    "overrides": [
+        {
+            "files": [
+                "pages/api/**/*.ts"
+            ],
+            "rules": {
+                "no-console": "off"
+            }
+        },
+        {
+            "files": [
+                "pages/admin/**/*.tsx",
+                "lib/waitlist-storage-production.ts"
+            ],
+            "rules": {
+                "no-console": [
+                    "warn",
+                    {
+                        "allow": [
+                            "error",
+                            "warn"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
