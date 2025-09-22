@@ -8,8 +8,8 @@ export const APP_CONFIG = {
 
 // API endpoints
 export const API_ENDPOINTS = {
-    waitlist: '/contact/waitlist',
-    waitlistCount: '/contact/waitlist/count',
+    waitlist: '/inquiry/waitlist',
+    waitlistCount: '/inquiry/waitlist/count',
 } as const;
 
 // Rate limiting configuration

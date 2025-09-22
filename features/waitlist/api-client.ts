@@ -10,14 +10,17 @@ export class WaitlistApiClient {
     /**
      * Add a new entry to the waitlist
      */
-    static async addToWaitlist(data: WaitlistRequest): Promise<WaitlistResponse> {
+    static async addToWaitlist(data: Omit<WaitlistRequest, 'type'>): Promise<WaitlistResponse> {
         try {
             // The backend returns the created entry on success (201 status)
             await serverRequest<WaitlistEntry>(
                 'POST',
                 API_ENDPOINTS.waitlist,
                 undefined, // token
-                data
+                {
+                    ...data,
+                    type: 'WAITLIST'
+                }
             );
             
             // Convert the created entry to our expected response format

@@ -8,6 +8,7 @@ export interface WaitlistEntry {
 export interface WaitlistRequest {
     name: string;
     email: string;
+    type: string;
 }
 
 export interface WaitlistResponse {
