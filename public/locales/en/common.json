@@ -108,9 +108,9 @@
     "aboutUs": "About Us",
     "waitlist": "Waitlist"
   },
-    "impressum": {
-    "title": "Legal Information",
-    "metaDescription": "Legal information and company details for RAMPA",
+  "imprint": {
+    "title": "Imprint",
+    "metaDescription": "Legal information and imprint for RAMPA",
     "sections": {
       "companyInfo": {
         "title": "Company Information",
@@ -135,7 +135,7 @@
         "title": "EU Dispute Resolution",
         "text": "The European Commission provides a platform for online dispute resolution (ODR):",
         "link": "https://ec.europa.eu/consumers/odr/",
-        "emailNote": "Our email address can be found above in the impressum."
+        "emailNote": "Our email address can be found above in the imprint."
       },
       "consumerDispute": {
         "title": "Consumer Dispute Resolution",
@@ -228,5 +228,201 @@
       "link": "Sign up"
     },
     "backToHome": "Back to home"
+  },
+  "footer": {
+    "followUs": "Follow us on",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy", 
+    "imprint": "Imprint",
+    "cookiePolicy": "Cookie Policy"
+  },
+  "termsOfService": {
+    "title": "Terms of Service — Rampa (Lafitech UG)",
+    "metaDescription": "Terms of Service for RAMPA - Read our service terms and conditions",
+    "version": "Version:",
+    "effectiveDate": "Effective date:",
+    "date": "September 25, 2025",
+    "company": "Company:",
+    "companyInfo": "Lafitech UG (\"Lafitech\", \"we\", \"us\", \"our\") — operating the Rampa app and website.",
+    "contact": "Contact:",
+    "registeredAddress": "Registered address:",
+    "handelsregister": "Handelsregister (HRB):",
+    "sections": {
+      "whatWeAre": {
+        "title": "What we are",
+        "content": "Rampa is a non-custodial, self-custody wallet application that lets users create and use crypto wallets on supported networks (currently including Solana) using MPC via Web3Auth. Users control their keys; Lafitech cannot move funds or sign on a user's behalf."
+      },
+      "thirdPartyServices": {
+        "title": "Third-party services (not operated by us)",
+        "intro": "Certain features rely on independent providers with their own terms/privacy:",
+        "fiatTitle": "Fiat on/off-ramp:",
+        "fiatContent": "Transak (and its regulated partners) for SEPA and card payments.",
+        "cardTitle": "Card program (planned/optional):",
+        "cardContent": "Issued by a licensed issuer/EMI; funds are held by the issuer, not Lafitech.",
+        "dexTitle": "DEX routing:",
+        "dexContent": "Jupiter for swaps/token purchases.",
+        "mpcTitle": "MPC/key infrastructure:",
+        "mpcContent": "Web3Auth.",
+        "analyticsTitle": "Blockchain analytics:",
+        "analyticsContent": "A third-party provider (e.g., TRM Labs or Chainalysis) for sanctions/exposure screening.",
+        "disclaimer": "When you use these services, their terms and privacy notices apply in addition to these Terms."
+      },
+      "eligibility": {
+        "title": "Eligibility & compliance",
+        "intro": "You may use Rampa only if you:",
+        "age": "Are 18+ and legally able to form a contract;",
+        "sanctions": "Are not subject to sanctions or prohibited by law;",
+        "jurisdiction": "Access the app from a permitted jurisdiction. We may geo-block or restrict features to comply with law and partner requirements."
+      },
+      "responsibilities": {
+        "title": "Your responsibilities (self-custody)",
+        "security": "You are solely responsible for securing your devices, recovery factors, and authorizing transactions.",
+        "transactions": "Transactions are irreversible once signed on-chain. Review carefully before you sign.",
+        "legal": "You must not use the app for illegal activity, sanctions evasion, or rights infringement."
+      },
+      "fees": {
+        "title": "Fees and pricing",
+        "intro": "We aim to disclose fees clearly before you commit:",
+        "transakTitle": "Transak on/off-ramp:",
+        "transakContent": "Transak's base fee applies. We add a transparent 0.30% partner markup on on/off-ramp orders started in the app. Transak collects this at checkout and later settles our share to Lafitech (we never receive consumer fiat).",
+        "dexFeeTitle": "DEX routing fee (Jupiter):",
+        "dexFeeContent": "A transparent on-chain platform fee (currently 0.30%) may apply to swaps. It is delivered on-chain to Lafitech's fee address within the user-signed transaction (non-custodial).",
+        "serviceFeesTitle": "Optional on-chain service fees:",
+        "serviceFeesContent": "For certain value-add features (e.g., additional screening/orchestration), we may present a small on-chain fee for your approval.",
+        "cardFeesTitle": "Card program fees (if you opt in):",
+        "cardFeesContent": "Set and disclosed by the issuer/EMI (e.g., FX, ATM).",
+        "additionalFees": "Network fees (e.g., gas) and third-party spreads/fees may apply independently."
+      },
+      "noCustody": {
+        "title": "No custody; no financial/investment advice",
+        "content": "We do not provide custody, investment advice, portfolio recommendations, tax advice, or legal advice. Any asset listings, prices, yields, or labels are informational and not endorsements."
+      },
+      "riskNotice": {
+        "title": "Risk notice",
+        "content": "Crypto assets are volatile and may lose value. Smart contracts, protocols, bridges, stablecoins, or tokenized assets (including stocks/ETFs-themed tokens) can fail or de-peg. You accept these risks and confirm you have done your own research."
+      },
+      "prohibitedConduct": {
+        "title": "Prohibited conduct",
+        "intro": "You agree not to:",
+        "violate": "Violate laws or sanctions;",
+        "interfere": "Interfere with or misuse the app;",
+        "infringe": "Infringe intellectual property or privacy rights;",
+        "bypass": "Attempt to bypass geo-restrictions or security controls.",
+        "consequence": "We may suspend or terminate access for violations."
+      },
+      "intellectualProperty": {
+        "title": "Intellectual property",
+        "content": "The app, website, logos, and content are owned by Lafitech or our licensors. You receive a limited, revocable license to use the app as provided and per these Terms."
+      },
+      "liability": {
+        "title": "\"As is\" and limitation of liability",
+        "content": "The app is provided \"as is\" without warranties. To the maximum extent permitted by law, Lafitech disclaims all implied warranties and is not liable for indirect, incidental, special, consequential, exemplary, or punitive damages, or lost profits, even if advised of the possibility. Our aggregate liability for direct damages will not exceed €100 or the amount you paid to us in the 3 months preceding the claim, whichever is greater."
+      },
+      "changes": {
+        "title": "Changes to the service or these Terms",
+        "content": "We may update or change features and these Terms. If changes are material, we will provide notice (e.g., in-app or on our website). Your continued use after the effective date constitutes acceptance."
+      },
+      "governingLaw": {
+        "title": "Governing law & venue",
+        "content": "These Terms are governed by German law. Exclusive venue is the courts of Munich, Germany."
+      },
+      "contactSection": {
+        "title": "Contact",
+        "content": "Questions?"
+      }
+    }
+  },
+  "privacyPolicy": {
+    "title": "Privacy Policy — Rampa (Lafitech UG)",
+    "metaDescription": "Privacy Policy for RAMPA - Learn how we protect and handle your personal data",
+    "version": "Version:",
+    "effectiveDate": "Effective date:",
+    "date": "September 25, 2025",
+    "controller": "Controller:",
+    "contact": "Contact:",
+    "registeredAddress": "Registered address:",
+    "supervisoryAuthority": "Supervisory authority:",
+    "supervisoryAuthorityText": "You may lodge complaints with your local authority or the competent authority in Germany.",
+    "sections": {
+      "scope": {
+        "title": "Scope",
+        "content": "This notice covers personal data processed when you use rampa.cash and the Rampa app."
+      },
+      "dataProcessing": {
+        "title": "What data we process",
+        "intro": "We design for data minimization. Depending on your use:",
+        "telemetryTitle": "Account & app telemetry (pseudonymous):",
+        "telemetryContent": "app/device identifiers, IP-derived country (for geo-blocking), session logs, settings, crash logs.",
+        "walletTitle": "Wallet data:",
+        "walletContent": "public keys, transaction metadata (hashes, amounts, token mints), risk screening results (e.g., sanctions exposure scores).",
+        "supportTitle": "Support communications:",
+        "supportContent": "messages and contact details you provide.",
+        "analyticsTitle": "Website analytics (minimal):",
+        "analyticsContent": "aggregated usage; we avoid third-party advertising cookies.",
+        "disclaimer": "We do not store your private keys or seed phrases. We do not retain identity documents collected by on/off-ramp or card issuers."
+      },
+      "processingBasis": {
+        "title": "Why we process data (GDPR Art. 6)",
+        "provideTitle": "Provide and secure the app",
+        "provideContent": "(Art. 6(1)(b) contract; Art. 6(1)(f) legitimate interests for security/fraud prevention).",
+        "complianceTitle": "Compliance and risk controls",
+        "complianceContent": "(Art. 6(1)(c) legal obligation; Art. 6(1)(f) legitimate interests), including geo-blocking, sanctions/PEP screening of wallet addresses, velocity limits, and responding to lawful requests.",
+        "analyticsTitle": "Product analytics & improvement",
+        "analyticsContent": "(Art. 6(1)(f) legitimate interests), using aggregated or pseudonymous data.",
+        "communicationsTitle": "Communications",
+        "communicationsContent": "(Art. 6(1)(b)/(f)) when you contact us.",
+        "consentNote": "Where required (e.g., certain cookies or marketing), we will seek consent (Art. 6(1)(a))."
+      },
+      "dataRecipients": {
+        "title": "Who receives data",
+        "processorsTitle": "Processors (under DPAs):",
+        "processorsContent": "hosting/ops providers, error telemetry, encrypted key-infra provider Web3Auth, analytics tooling, and security vendors.",
+        "controllersTitle": "Independent controllers (separate policies):",
+        "transak": "Transak (fiat on/off-ramp KYC/AML and payments),",
+        "issuer": "Issuer/EMI (if you opt into the card program),",
+        "jupiter": "Jupiter / DEXes (when you execute swaps),",
+        "analytics": "Blockchain analytics provider (sanctions/exposure screening),",
+        "lawEnforcement": "Law enforcement or competent authorities where legally required."
+      },
+      "internationalTransfers": {
+        "title": "International transfers",
+        "content": "Where data is transferred outside the EEA/UK, we use appropriate safeguards such as Standard Contractual Clauses (SCCs) and risk assessments."
+      },
+      "retention": {
+        "title": "Retention",
+        "operationalTitle": "Operational logs:",
+        "operationalContent": "typically 30–90 days.",
+        "riskTitle": "Risk/decision records:",
+        "riskContent": "typically ≥ 5 years or as required by law/partners.",
+        "supportTitle": "Support records:",
+        "supportContent": "for as long as needed to address your request and meet legal obligations."
+      },
+      "userRights": {
+        "title": "Your rights",
+        "intro": "Subject to legal limits, you have the right to access, rectify, erase, restrict, object, and data portability. You can also withdraw consent where processing is based on consent.",
+        "contactInfo": "Contact:",
+        "complaint": "You may also complain to your supervisory authority."
+      },
+      "cookies": {
+        "title": "Cookies & tracking",
+        "content": "We aim to use essential cookies only on the website (e.g., to serve pages securely). No third-party advertising cookies. If we introduce optional analytics cookies, we will present a consent banner."
+      },
+      "security": {
+        "title": "Security",
+        "content": "Encryption in transit/at rest, role-based access, least-privilege, and audit logging. We do not hold users' private keys. We promptly investigate and remediate incidents and will notify authorities/users where legally required."
+      },
+      "children": {
+        "title": "Children",
+        "content": "Rampa is for adults (18+) and is not intended for children."
+      },
+      "changes": {
+        "title": "Changes to this notice",
+        "content": "We may update this privacy notice and will post the updated version with a new effective date. Material changes will be highlighted in-app or on our site."
+      },
+      "contactSection": {
+        "title": "Contact",
+        "content": "Questions or requests:"
+      }
+    }
   }
 }
