@@ -108,9 +108,9 @@
     "aboutUs": "Acerca de nosotros",
     "waitlist": "Lista de espera"
   },
-  "impressum": {
-    "title": "Información legal",
-    "metaDescription": "Información legal y detalles de la empresa para RAMPA",
+  "imprint": {
+    "title": "Aviso Legal",
+    "metaDescription": "Información legal y aviso legal para RAMPA",
     "sections": {
       "companyInfo": {
         "title": "Información de la empresa",
@@ -228,5 +228,201 @@
       "link": "Regístrate"
     },
     "backToHome": "Volver al inicio"
+  },
+  "footer": {
+    "followUs": "Síguenos en",
+    "termsOfService": "Términos de Servicio",
+    "privacyPolicy": "Política de Privacidad",
+    "imprint": "Aviso Legal", 
+    "cookiePolicy": "Política de Cookies"
+  },
+  "termsOfService": {
+    "title": "Términos de Servicio — Rampa (Lafitech UG)",
+    "metaDescription": "Términos de Servicio de RAMPA - Lee nuestros términos y condiciones de servicio",
+    "version": "Versión:",
+    "effectiveDate": "Fecha de vigencia:",
+    "date": "25 de septiembre de 2025",
+    "company": "Empresa:",
+    "companyInfo": "Lafitech UG (\"Lafitech\", \"nosotros\", \"nos\", \"nuestro\") — operando la aplicación y sitio web de Rampa.",
+    "contact": "Contacto:",
+    "registeredAddress": "Dirección registrada:",
+    "handelsregister": "Handelsregister (HRB):",
+    "sections": {
+      "whatWeAre": {
+        "title": "Quiénes somos",
+        "content": "Rampa es una aplicación de billetera sin custodia y de auto-custodia que permite a los usuarios crear y usar billeteras de criptomonedas en redes compatibles (actualmente incluyendo Solana) usando MPC a través de Web3Auth. Los usuarios controlan sus claves; Lafitech no puede mover fondos o firmar en nombre de un usuario."
+      },
+      "thirdPartyServices": {
+        "title": "Servicios de terceros (no operados por nosotros)",
+        "intro": "Ciertas características dependen de proveedores independientes con sus propios términos/privacidad:",
+        "fiatTitle": "Entrada/salida de moneda fiduciaria:",
+        "fiatContent": "Transak (y sus socios regulados) para pagos SEPA y con tarjeta.",
+        "cardTitle": "Programa de tarjetas (planificado/opcional):",
+        "cardContent": "Emitido por un emisor/EMI licenciado; los fondos son mantenidos por el emisor, no por Lafitech.",
+        "dexTitle": "Enrutamiento DEX:",
+        "dexContent": "Jupiter para intercambios/compras de tokens.",
+        "mpcTitle": "Infraestructura MPC/claves:",
+        "mpcContent": "Web3Auth.",
+        "analyticsTitle": "Análisis de blockchain:",
+        "analyticsContent": "Un proveedor tercero (ej., TRM Labs o Chainalysis) para detección de sanciones/exposición.",
+        "disclaimer": "Cuando uses estos servicios, sus términos y avisos de privacidad aplican además de estos Términos."
+      },
+      "eligibility": {
+        "title": "Elegibilidad y cumplimiento",
+        "intro": "Puedes usar Rampa solo si:",
+        "age": "Tienes 18+ años y eres legalmente capaz de formar un contrato;",
+        "sanctions": "No estás sujeto a sanciones o prohibido por la ley;",
+        "jurisdiction": "Accedes a la aplicación desde una jurisdicción permitida. Podemos geo-bloquear o restringir características para cumplir con la ley y requisitos de socios."
+      },
+      "responsibilities": {
+        "title": "Tus responsabilidades (auto-custodia)",
+        "security": "Eres el único responsable de asegurar tus dispositivos, factores de recuperación y autorizar transacciones.",
+        "transactions": "Las transacciones son irreversibles una vez firmadas en cadena. Revisa cuidadosamente antes de firmar.",
+        "legal": "No debes usar la aplicación para actividad ilegal, evasión de sanciones, o violación de derechos."
+      },
+      "fees": {
+        "title": "Tarifas y precios",
+        "intro": "Nuestro objetivo es divulgar las tarifas claramente antes de que te comprometas:",
+        "transakTitle": "Entrada/salida de Transak:",
+        "transakContent": "Se aplica la tarifa base de Transak. Agregamos un margen transparente de socio del 0.30% en órdenes de entrada/salida iniciadas en la aplicación. Transak recolecta esto en el pago y luego liquida nuestra parte a Lafitech (nunca recibimos moneda fiduciaria del consumidor).",
+        "dexFeeTitle": "Tarifa de enrutamiento DEX (Jupiter):",
+        "dexFeeContent": "Una tarifa de plataforma en cadena transparente (actualmente 0.30%) puede aplicar a intercambios. Se entrega en cadena a la dirección de tarifas de Lafitech dentro de la transacción firmada por el usuario (sin custodia).",
+        "serviceFeesTitle": "Tarifas opcionales de servicio en cadena:",
+        "serviceFeesContent": "Para ciertas características de valor agregado (ej., detección/orquestación adicional), podemos presentar una pequeña tarifa en cadena para tu aprobación.",
+        "cardFeesTitle": "Tarifas del programa de tarjetas (si participas):",
+        "cardFeesContent": "Establecidas y divulgadas por el emisor/EMI (ej., FX, ATM).",
+        "additionalFees": "Las tarifas de red (ej., gas) y spreads/tarifas de terceros pueden aplicar independientemente."
+      },
+      "noCustody": {
+        "title": "Sin custodia; sin asesoría financiera/de inversión",
+        "content": "No proporcionamos custodia, asesoría de inversión, recomendaciones de portafolio, asesoría fiscal, o asesoría legal. Cualquier listado de activos, precios, rendimientos, o etiquetas son informativos y no constituyen endosos."
+      },
+      "riskNotice": {
+        "title": "Aviso de riesgo",
+        "content": "Los activos cripto son volátiles y pueden perder valor. Los contratos inteligentes, protocolos, puentes, stablecoins, o activos tokenizados (incluyendo tokens temáticos de acciones/ETFs) pueden fallar o des-vincularse. Aceptas estos riesgos y confirmas que has hecho tu propia investigación."
+      },
+      "prohibitedConduct": {
+        "title": "Conducta prohibida",
+        "intro": "Aceptas no:",
+        "violate": "Violar leyes o sanciones;",
+        "interfere": "Interferir con o mal usar la aplicación;",
+        "infringe": "Infringir derechos de propiedad intelectual o privacidad;",
+        "bypass": "Intentar eludir geo-restricciones o controles de seguridad.",
+        "consequence": "Podemos suspender o terminar el acceso por violaciones."
+      },
+      "intellectualProperty": {
+        "title": "Propiedad intelectual",
+        "content": "La aplicación, sitio web, logos, y contenido son propiedad de Lafitech o nuestros licenciantes. Recibes una licencia limitada y revocable para usar la aplicación como se proporciona y según estos Términos."
+      },
+      "liability": {
+        "title": "\"Como está\" y limitación de responsabilidad",
+        "content": "La aplicación se proporciona \"como está\" sin garantías. En la máxima medida permitida por la ley, Lafitech renuncia a todas las garantías implícitas y no es responsable por daños indirectos, incidentales, especiales, consecuenciales, ejemplares, o punitivos, o pérdida de ganancias, incluso si se advirtió de la posibilidad. Nuestra responsabilidad agregada por daños directos no excederá €100 o la cantidad que nos pagaste en los 3 meses anteriores a la reclamación, lo que sea mayor."
+      },
+      "changes": {
+        "title": "Cambios al servicio o estos Términos",
+        "content": "Podemos actualizar o cambiar características y estos Términos. Si los cambios son materiales, proporcionaremos aviso (ej., en la aplicación o en nuestro sitio web). Tu uso continuado después de la fecha efectiva constituye aceptación."
+      },
+      "governingLaw": {
+        "title": "Ley aplicable y jurisdicción",
+        "content": "Estos Términos se rigen por la ley alemana. La jurisdicción exclusiva son los tribunales de Munich, Alemania."
+      },
+      "contactSection": {
+        "title": "Contacto",
+        "content": "¿Preguntas?"
+      }
+    }
+  },
+  "privacyPolicy": {
+    "title": "Política de Privacidad — Rampa (Lafitech UG)",
+    "metaDescription": "Política de Privacidad de RAMPA - Conoce cómo protegemos y manejamos tus datos personales",
+    "version": "Versión:",
+    "effectiveDate": "Fecha de vigencia:",
+    "date": "25 de septiembre de 2025",
+    "controller": "Controlador:",
+    "contact": "Contacto:",
+    "registeredAddress": "Dirección registrada:",
+    "supervisoryAuthority": "Autoridad supervisora:",
+    "supervisoryAuthorityText": "Puedes presentar quejas ante tu autoridad local o la autoridad competente en Alemania.",
+    "sections": {
+      "scope": {
+        "title": "Alcance",
+        "content": "Este aviso cubre los datos personales procesados cuando usas rampa.cash y la aplicación Rampa."
+      },
+      "dataProcessing": {
+        "title": "Qué datos procesamos",
+        "intro": "Diseñamos para la minimización de datos. Dependiendo de tu uso:",
+        "telemetryTitle": "Telemetría de cuenta y aplicación (seudónima):",
+        "telemetryContent": "identificadores de aplicación/dispositivo, país derivado de IP (para geo-bloqueo), registros de sesión, configuraciones, registros de errores.",
+        "walletTitle": "Datos de billetera:",
+        "walletContent": "claves públicas, metadatos de transacción (hashes, cantidades, mints de tokens), resultados de detección de riesgo (ej., puntuaciones de exposición a sanciones).",
+        "supportTitle": "Comunicaciones de soporte:",
+        "supportContent": "mensajes y detalles de contacto que proporciones.",
+        "analyticsTitle": "Análisis web (mínimo):",
+        "analyticsContent": "uso agregado; evitamos cookies publicitarias de terceros.",
+        "disclaimer": "No almacenamos tus claves privadas o frases semilla. No retenemos documentos de identidad recopilados por emisores de entrada/salida o tarjetas."
+      },
+      "processingBasis": {
+        "title": "Por qué procesamos datos (GDPR Art. 6)",
+        "provideTitle": "Proporcionar y asegurar la aplicación",
+        "provideContent": "(Art. 6(1)(b) contrato; Art. 6(1)(f) intereses legítimos para seguridad/prevención de fraude).",
+        "complianceTitle": "Cumplimiento y controles de riesgo",
+        "complianceContent": "(Art. 6(1)(c) obligación legal; Art. 6(1)(f) intereses legítimos), incluyendo geo-bloqueo, detección de sanciones/PEP de direcciones de billetera, límites de velocidad, y responder a solicitudes legales.",
+        "analyticsTitle": "Análisis y mejora de producto",
+        "analyticsContent": "(Art. 6(1)(f) intereses legítimos), usando datos agregados o seudónimos.",
+        "communicationsTitle": "Comunicaciones",
+        "communicationsContent": "(Art. 6(1)(b)/(f)) cuando nos contactas.",
+        "consentNote": "Cuando se requiera (ej., ciertas cookies o marketing), buscaremos consentimiento (Art. 6(1)(a))."
+      },
+      "dataRecipients": {
+        "title": "Quién recibe datos",
+        "processorsTitle": "Procesadores (bajo DPAs):",
+        "processorsContent": "proveedores de hosting/ops, telemetría de errores, proveedor de infraestructura de claves encriptadas Web3Auth, herramientas de análisis, y proveedores de seguridad.",
+        "controllersTitle": "Controladores independientes (políticas separadas):",
+        "transak": "Transak (KYC/AML de entrada/salida de moneda fiduciaria y pagos),",
+        "issuer": "Emisor/EMI (si participas en el programa de tarjetas),",
+        "jupiter": "Jupiter / DEXes (cuando ejecutas intercambios),",
+        "analytics": "Proveedor de análisis de blockchain (detección de sanciones/exposición),",
+        "lawEnforcement": "Autoridades policiales o competentes donde sea legalmente requerido."
+      },
+      "internationalTransfers": {
+        "title": "Transferencias internacionales",
+        "content": "Donde los datos se transfieren fuera del EEE/Reino Unido, usamos salvaguardas apropiadas como Cláusulas Contractuales Estándar (SCCs) y evaluaciones de riesgo."
+      },
+      "retention": {
+        "title": "Retención",
+        "operationalTitle": "Registros operacionales:",
+        "operationalContent": "típicamente 30–90 días.",
+        "riskTitle": "Registros de riesgo/decisión:",
+        "riskContent": "típicamente ≥ 5 años o según lo requerido por la ley/socios.",
+        "supportTitle": "Registros de soporte:",
+        "supportContent": "por el tiempo necesario para abordar tu solicitud y cumplir obligaciones legales."
+      },
+      "userRights": {
+        "title": "Tus derechos",
+        "intro": "Sujeto a límites legales, tienes derecho a acceder, rectificar, borrar, restringir, objetar, y portabilidad de datos. También puedes retirar el consentimiento donde el procesamiento se base en consentimiento.",
+        "contactInfo": "Contacto:",
+        "complaint": "También puedes quejarte ante tu autoridad supervisora."
+      },
+      "cookies": {
+        "title": "Cookies y seguimiento",
+        "content": "Nuestro objetivo es usar solo cookies esenciales en el sitio web (ej., para servir páginas de forma segura). Sin cookies publicitarias de terceros. Si introducimos cookies de análisis opcionales, presentaremos un banner de consentimiento."
+      },
+      "security": {
+        "title": "Seguridad",
+        "content": "Encriptación en tránsito/reposo, acceso basado en roles, menor privilegio, y registro de auditoría. No mantenemos las claves privadas de los usuarios. Investigamos y remediamos incidentes prontamente y notificaremos a autoridades/usuarios donde sea legalmente requerido."
+      },
+      "children": {
+        "title": "Menores",
+        "content": "Rampa es para adultos (18+) y no está destinado para menores."
+      },
+      "changes": {
+        "title": "Cambios a este aviso",
+        "content": "Podemos actualizar este aviso de privacidad y publicaremos la versión actualizada con una nueva fecha efectiva. Los cambios materiales serán destacados en la aplicación o en nuestro sitio."
+      },
+      "contactSection": {
+        "title": "Contacto",
+        "content": "¿Preguntas o solicitudes?"
+      }
+    }
   }
 }
