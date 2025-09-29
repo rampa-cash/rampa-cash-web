@@ -103,10 +103,11 @@
   },
   "navigation": {
     "home": "Inicio",
-    "howItWorks": "Cómo funciona",
+    "howItWorks": "Cómo Funciona", 
     "pricing": "Precios",
-    "aboutUs": "Acerca de nosotros",
-    "waitlist": "Lista de espera"
+    "aboutUs": "Acerca de",
+    "blog": "Blog",
+    "menu": "Menú"
   },
   "imprint": {
     "title": "Aviso Legal",
@@ -424,5 +425,25 @@
         "content": "¿Preguntas o solicitudes?"
       }
     }
+  },
+  "blog": {
+    "title": "Blog",
+    "metaDescription": "Aprende sobre remesas, stablecoins, educación financiera y cómo Rampa está revolucionando los pagos transfronterizos.",
+    "hero": {
+      "title": "Centro de Conocimiento",
+      "subtitle": "Aprende sobre remesas, stablecoins, educación financiera y cómo Rampa está haciendo de los pagos transfronterizos un motor de prosperidad."
+    },
+    "categories": {
+      "all": "Todos los Artículos",
+      "remittances": "Remesas",
+      "stablecoins": "Stablecoins",
+      "financialEducation": "Educación Financiera",
+      "rampaGuides": "Guías de Rampa"
+    },
+    "minRead": "min de lectura",
+    "noPosts": "No se encontraron artículos en esta categoría.",
+    "readMore": "Leer Más",
+    "backToBlog": "← Volver al Blog",
+    "tags": "Etiquetas"
   }
 }
