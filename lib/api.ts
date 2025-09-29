@@ -1,4 +1,4 @@
-interface BlogPost {
+export interface BlogPost {
   slug: string
   title: {
     en: string
