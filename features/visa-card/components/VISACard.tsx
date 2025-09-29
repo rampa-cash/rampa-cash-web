@@ -141,9 +141,6 @@ export const VISACard = (): JSX.Element => {
         }).format(amount)
     }
 
-    const formatCardNumber = (number: string) => {
-        return number.replace(/(\d{4})(?=\d)/g, '$1 ')
-    }
 
     const getStatusColor = (status: string) => {
         switch (status) {

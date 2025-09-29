@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import LanguageSwitcher from '../LanguageSwitcher';
+import ThemeToggle from '../ThemeToggle';
 
 const Header = (): JSX.Element => {
     const { t } = useTranslation('common');
@@ -68,12 +69,12 @@ const Header = (): JSX.Element => {
     }, [menuItems, isHomePage]);
 
     return (
-        <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
+        <header className="fixed top-0 w-full bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm shadow-sm z-50">
             <nav className="container mx-auto flex items-center justify-between py-3 px-4 md:py-4 md:px-6">
                 <Link href="/">
                     <div className="flex items-center cursor-pointer">
                         <Image src="/logo.png" alt="RAMPA logo" width={40} height={40} className="w-8 h-8 md:w-10 md:h-10" />
-                        <span className="font-bold text-lg md:text-xl ml-2">rampa</span>
+                        <span className="font-bold text-lg md:text-xl ml-2 text-gray-900 dark:text-white">rampa</span>
                     </div>
                 </Link>
 
@@ -87,7 +88,7 @@ const Header = (): JSX.Element => {
                             className={`font-medium transition-colors hover:text-indigo-600 ${
                                 isHomePage && activeSection === item.id
                                     ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1'
-                                    : 'text-gray-800'
+                                    : 'text-gray-800 dark:text-gray-200'
                             }`}
                         >
                             {item.label}
@@ -102,7 +103,7 @@ const Header = (): JSX.Element => {
                             className={`font-medium transition-colors hover:text-indigo-600 ${
                                 router.pathname === item.href
                                     ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1'
-                                    : 'text-gray-800'
+                                    : 'text-gray-800 dark:text-gray-200'
                             }`}
                         >
                             {item.label}
@@ -110,13 +111,15 @@ const Header = (): JSX.Element => {
                     ))}
 
                     <LanguageSwitcher />
+                    <ThemeToggle />
                 </div>
 
                 {/* Mobile Menu Button and Language Switcher */}
-                <div className="flex items-center md:hidden">
+                <div className="flex items-center md:hidden space-x-2">
                     <LanguageSwitcher />
+                    <ThemeToggle />
                     <button
-                        className="bg-indigo-600 text-white px-2 py-1 text-xs rounded-md font-medium hover:bg-indigo-700 transition ml-2"
+                        className="bg-indigo-600 text-white px-2 py-1 text-xs rounded-md font-medium hover:bg-indigo-700 transition"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     >
                         {t('navigation.menu')}
@@ -126,7 +129,7 @@ const Header = (): JSX.Element => {
 
             {/* Mobile Menu */}
             {mobileMenuOpen && (
-                <div className="md:hidden bg-white py-3 px-4 border-t">
+                <div className="md:hidden bg-white dark:bg-gray-900 py-3 px-4 border-t border-gray-200 dark:border-gray-700">
                     <div className="flex flex-col space-y-3">
                         {/* Section navigation items */}
                         {menuItems.map((item) => (
@@ -137,7 +140,7 @@ const Header = (): JSX.Element => {
                                     setMobileMenuOpen(false);
                                 }}
                                 className={`text-left font-medium transition-colors hover:text-indigo-600 ${
-                                    isHomePage && activeSection === item.id ? 'text-indigo-600' : 'text-gray-800'
+                                    isHomePage && activeSection === item.id ? 'text-indigo-600' : 'text-gray-800 dark:text-gray-200'
                                 }`}
                             >
                                 {item.label}
@@ -151,7 +154,7 @@ const Header = (): JSX.Element => {
                                 href={item.href}
                                 onClick={() => setMobileMenuOpen(false)}
                                 className={`text-left font-medium transition-colors hover:text-indigo-600 ${
-                                    router.pathname === item.href ? 'text-indigo-600' : 'text-gray-800'
+                                    router.pathname === item.href ? 'text-indigo-600' : 'text-gray-800 dark:text-gray-200'
                                 }`}
                             >
                                 {item.label}

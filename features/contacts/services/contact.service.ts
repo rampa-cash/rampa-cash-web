@@ -14,7 +14,7 @@ export class ContactService {
     /**
      * Get contacts for a user
      */
-    static async getContacts(userId: string, _filters?: any): Promise<Contact[]> {
+    static async getContacts(_userId: string, _filters?: any): Promise<Contact[]> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
@@ -25,7 +25,7 @@ export class ContactService {
             
             return response.map(contact => ({
                 id: contact.id,
-                ownerId: userId,
+                ownerId: _userId,
                 contactUserId: contact.contactUserId || undefined,
                 email: contact.email || undefined,
                 phone: contact.phone || undefined,
@@ -44,7 +44,7 @@ export class ContactService {
     /**
      * Add a new contact
      */
-    static async addContact(userId: string, contactData: AddContactRequest): Promise<Contact> {
+    static async addContact(_userId: string, contactData: AddContactRequest): Promise<Contact> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
@@ -55,7 +55,7 @@ export class ContactService {
             
             return {
                 id: response.id,
-                ownerId: userId,
+                ownerId: _userId,
                 contactUserId: response.contactUserId,
                 email: response.email,
                 phone: response.phone,
@@ -74,7 +74,7 @@ export class ContactService {
     /**
      * Update a contact
      */
-    static async updateContact(userId: string, contactId: string, contactData: UpdateContactRequest): Promise<Contact> {
+    static async updateContact(_userId: string, contactId: string, contactData: UpdateContactRequest): Promise<Contact> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
@@ -85,7 +85,7 @@ export class ContactService {
             
             return {
                 id: response.id,
-                ownerId: userId,
+                ownerId: _userId,
                 contactUserId: response.contactUserId,
                 email: response.email,
                 phone: response.phone,
@@ -104,7 +104,7 @@ export class ContactService {
     /**
      * Delete a contact
      */
-    static async deleteContact(userId: string, contactId: string): Promise<void> {
+    static async deleteContact(_userId: string, contactId: string): Promise<void> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
@@ -149,7 +149,7 @@ export class ContactService {
             
             return response.map(contact => ({
                 id: contact.id,
-                ownerId: userId,
+                ownerId: _userId,
                 contactUserId: contact.contactUserId || undefined,
                 email: contact.email || undefined,
                 phone: contact.phone || undefined,
@@ -196,7 +196,7 @@ export class ContactService {
             
             const syncedContacts: Contact[] = response.syncedContacts.map(contact => ({
                 id: contact.id,
-                ownerId: userId,
+                ownerId: _userId,
                 contactUserId: undefined, // Not available in sync response
                 email: undefined, // Not available in sync response
                 phone: undefined, // Not available in sync response

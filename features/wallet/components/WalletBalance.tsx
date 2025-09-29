@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'next-i18next'
 
 interface WalletBalanceProps {
@@ -66,15 +66,6 @@ export const WalletBalance = ({
         }
     }
 
-    const getCurrencySymbol = (currency: string) => {
-        switch (currency.toLowerCase()) {
-            case 'usd': return '$'
-            case 'eur': return '€'
-            case 'btc': return '₿'
-            case 'sol': return '◎'
-            default: return '$'
-        }
-    }
 
     const getBalanceValue = (currency: string) => {
         switch (currency.toLowerCase()) {

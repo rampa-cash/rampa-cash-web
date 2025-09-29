@@ -7,7 +7,7 @@ import { LoginForm } from './LoginForm'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 export const LoginPage = (): JSX.Element => {
-    const { t, i18n } = useTranslation('common')
+    const { t } = useTranslation('common')
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)

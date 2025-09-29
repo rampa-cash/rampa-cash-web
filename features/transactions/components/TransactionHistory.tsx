@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 interface Transaction {
@@ -73,13 +72,13 @@ export const TransactionHistory = (): JSX.Element => {
     const router = useRouter()
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
-    const [transactions, setTransactions] = useState<Transaction[]>(mockTransactions)
+    const [transactions] = useState<Transaction[]>(mockTransactions)
     const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>(mockTransactions)
     const [searchTerm, setSearchTerm] = useState('')
     const [typeFilter, setTypeFilter] = useState<string>('all')
     const [statusFilter, setStatusFilter] = useState<string>('all')
     const [sortBy, setSortBy] = useState<string>('date')
-    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
+    const [sortOrder] = useState<'asc' | 'desc'>('desc')
     const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
 
     useEffect(() => {

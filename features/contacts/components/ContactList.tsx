@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 
 interface Contact {

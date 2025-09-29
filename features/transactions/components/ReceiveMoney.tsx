@@ -6,9 +6,6 @@ import LanguageSwitcher from '@/components/LanguageSwitcher'
 export const ReceiveMoney = (): JSX.Element => {
     const { t } = useTranslation('common')
     const router = useRouter()
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState<string | null>(null)
-    const [qrCode, setQrCode] = useState<string>('')
     const [walletAddress, setWalletAddress] = useState<string>('')
     const [amount, setAmount] = useState<string>('')
     const [memo, setMemo] = useState<string>('')
@@ -18,15 +15,7 @@ export const ReceiveMoney = (): JSX.Element => {
 
     useEffect(() => {
         setWalletAddress(mockWalletAddress)
-        // Generate QR code data
-        const qrData = JSON.stringify({
-            address: mockWalletAddress,
-            amount: amount || undefined,
-            memo: memo || undefined,
-            network: 'solana'
-        })
-        setQrCode(qrData)
-    }, [amount, memo])
+    }, [])
 
     const handleCopyAddress = async () => {
         try {

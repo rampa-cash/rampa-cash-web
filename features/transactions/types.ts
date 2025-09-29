@@ -60,6 +60,12 @@ export interface SendMoneyRequest {
     description?: string;
 }
 
+export interface SendMoneyResponse {
+    transactionId: string;
+    status: 'pending' | 'confirmed' | 'failed';
+    message: string;
+}
+
 export interface TransactionFilters {
     status?: 'pending' | 'confirmed' | 'failed' | 'cancelled';
     tokenType?: 'USDC' | 'EURC' | 'SOL';
@@ -67,6 +73,11 @@ export interface TransactionFilters {
     offset?: number;
     startDate?: string;
     endDate?: string;
+}
+
+export interface TransactionSort {
+    key: 'date' | 'amount' | 'status';
+    order: 'asc' | 'desc';
 }
 
 export interface TransactionStats {
