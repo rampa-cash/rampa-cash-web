@@ -10,6 +10,7 @@ const WaitlistSignup = ({
 }: WaitlistSignupProps): JSX.Element => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [inquiry, setInquiry] = useState('');
     const [message, setMessage] = useState('');
     const [status, setStatus] = useState<'idle' | 'success' | 'error' | 'loading'>('idle');
 
@@ -26,21 +27,18 @@ const WaitlistSignup = ({
         setMessage('');
 
         try {
-            const result = await WaitlistApiClient.addToWaitlist({
+            await WaitlistApiClient.addToWaitlist({
                 name: name.trim(),
                 email: email.trim(),
+                inquiry: inquiry.trim() || undefined,
             });
 
-            // Check if the API call was successful
-            if (result.success) {
-                setStatus('success');
-                setMessage(result.message || 'Successfully joined the waitlist!');
-                setName('');
-                setEmail('');
-            } else {
-                setStatus('error');
-                setMessage(result.error || 'An error occurred. Please try again.');
-            }
+            // API now returns InquiryResponse directly
+            setStatus('success');
+            setMessage('Successfully joined the waitlist!');
+            setName('');
+            setEmail('');
+            setInquiry('');
         } catch (error) {
             setStatus('error');
             setMessage('Something went wrong. Please try again.');
@@ -71,6 +69,14 @@ const WaitlistSignup = ({
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="Enter your email"
                             className="w-full px-4 py-3 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+                            disabled={status === 'loading'}
+                        />
+                        <textarea
+                            value={inquiry}
+                            onChange={(e) => setInquiry(e.target.value)}
+                            placeholder="Optional: Tell us what you're most excited about"
+                            rows={3}
+                            className="w-full px-4 py-3 rounded-md text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white resize-none"
                             disabled={status === 'loading'}
                         />
                         <button

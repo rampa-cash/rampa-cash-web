@@ -8,7 +8,6 @@ export { WaitlistApiClient } from './api-client';
 // Hooks
 export {
     useWaitlistEntries,
-    useWaitlistCount,
     useCreateWaitlistEntry,
 } from './hooks/useWaitlist';
 
@@ -17,5 +16,6 @@ export type {
     WaitlistEntry,
     WaitlistRequest,
     WaitlistResponse,
+    InquiryResponse,
     WaitlistSignupProps,
 } from './types';
