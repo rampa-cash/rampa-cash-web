@@ -5,6 +5,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { getBlogPosts } from '@/lib/api'
+import Image from 'next/image'
 
 interface BlogPost {
   slug: string
@@ -48,7 +49,7 @@ const BlogPost: NextPage<{ post: BlogPost }> = ({ post }) => {
   const tags = post.tags[currentLocale]
 
   // Helper function to get category translation
-  const getCategoryTranslation = (category: string) => {
+  const getCategoryTranslation = (category: string): string => {
     switch (category) {
       case 'financial-education':
         return t('blog.categories.financialEducation')
@@ -64,7 +65,7 @@ const BlogPost: NextPage<{ post: BlogPost }> = ({ post }) => {
   }
 
   // Helper function to format date consistently
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string): string => {
     const date = new Date(dateString)
     return date.toLocaleDateString(currentLocale === 'es' ? 'es-ES' : 'en-US', {
       year: 'numeric',
@@ -74,7 +75,7 @@ const BlogPost: NextPage<{ post: BlogPost }> = ({ post }) => {
   }
 
   // Simple markdown-to-HTML converter for basic formatting
-  const formatContent = (content: string) => {
+  const formatContent = (content: string): string => {
     return content
       // Headers
       .replace(/^### (.*$)/gim, '<h3 class="text-xl font-semibold mb-4 mt-8 text-gray-800">$1</h3>')
@@ -117,10 +118,12 @@ const BlogPost: NextPage<{ post: BlogPost }> = ({ post }) => {
           {/* Background Image */}
           {post.featuredImage && (
             <div className="absolute inset-0">
-              <img 
+              <Image 
                 src={post.featuredImage} 
                 alt={title}
-                className="w-full h-full object-cover opacity-20"
+                fill
+                className="object-cover opacity-20"
+                priority
               />
               <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/80 via-purple-600/80 to-indigo-800/80"></div>
             </div>
@@ -171,11 +174,12 @@ const BlogPost: NextPage<{ post: BlogPost }> = ({ post }) => {
               <div className="bg-white rounded-lg shadow-sm overflow-hidden">
                 {/* Featured Image at Top of Article - ONLY ONE IMAGE */}
                 {post.featuredImage && (
-                  <div className="w-full h-64 md:h-80 lg:h-96 overflow-hidden">
-                    <img 
+                  <div className="w-full h-64 md:h-80 lg:h-96 relative overflow-hidden">
+                    <Image 
                       src={post.featuredImage} 
                       alt={title}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                   </div>
                 )}

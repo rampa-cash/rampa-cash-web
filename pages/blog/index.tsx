@@ -5,26 +5,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
-import { getBlogPosts } from '@/lib/api' // Adjust the import based on your project structure
-
-interface BlogPost {
-  slug: string
-  title: {
-    [key: string]: string
-  }
-  excerpt: {
-    [key: string]: string
-  }
-  content: string
-  author: string
-  publishedAt: string
-  readTime: number
-  category: 'remittances' | 'stablecoins' | 'financial-education' | 'rampa-guides'
-  tags: {
-    [key: string]: string[]
-  }
-  featuredImage?: string
-}
+import { getBlogPosts, BlogPost } from '@/lib/api' // Adjust the import based on your project structure
+import Image from 'next/image'
 
 const Blog: NextPage = () => {
   const { t } = useTranslation('common')
@@ -54,6 +36,22 @@ const Blog: NextPage = () => {
       month: 'short',
       day: 'numeric'
     })
+  }
+
+  // Find this function and add return type:
+  const getCategoryTranslation = (category: string): string => {
+    switch (category) {
+      case 'financial-education':
+        return t('blog.categories.financialEducation')
+      case 'rampa-guides':
+        return t('blog.categories.rampaGuides')
+      case 'remittances':
+        return t('blog.categories.remittances')
+      case 'stablecoins':
+        return t('blog.categories.stablecoins')
+      default:
+        return category
+    }
   }
 
   return (
@@ -105,12 +103,13 @@ const Blog: NextPage = () => {
                   className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden"
                 >
                   {/* Featured Image */}
-                  <div className="h-48 overflow-hidden">
+                  <div className="h-48 relative overflow-hidden">
                     {post.featuredImage ? (
-                      <img 
+                      <Image 
                         src={post.featuredImage} 
                         alt={post.title[currentLocale]}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                        fill
+                        className="object-cover hover:scale-105 transition-transform duration-300"
                       />
                     ) : (
                       <div className="h-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center">
