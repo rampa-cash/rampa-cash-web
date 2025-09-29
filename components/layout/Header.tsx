@@ -2,22 +2,38 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect, useMemo } from 'react';
 import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
 import LanguageSwitcher from '../LanguageSwitcher';
 
 const Header = (): JSX.Element => {
     const { t } = useTranslation('common');
+    const router = useRouter();
     const [activeSection, setActiveSection] = useState('home');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+    // Check if we're on the home page
+    const isHomePage = router.pathname === '/';
+
     // Match your actual sections - wrapped in useMemo to prevent re-creation
     const menuItems = useMemo(() => [
-        { id: 'home', label: t('navigation.home') },
-        { id: 'how-it-works', label: t('navigation.howItWorks') },
-        { id: 'pricing', label: t('navigation.pricing') },
-        { id: 'about-us', label: t('navigation.aboutUs') },
+        { id: 'home', label: t('navigation.home'), type: 'section' },
+        { id: 'how-it-works', label: t('navigation.howItWorks'), type: 'section' },
+        { id: 'pricing', label: t('navigation.pricing'), type: 'section' },
+        { id: 'about-us', label: t('navigation.aboutUs'), type: 'section' },
+    ], [t]);
+
+    // External navigation items (different pages)
+    const externalItems = useMemo(() => [
+        { id: 'blog', label: t('navigation.blog'), href: '/blog', type: 'link' },
     ], [t]);
 
     const scrollToSection = (sectionId: string): void => {
+        // If not on home page, navigate to home first
+        if (!isHomePage) {
+            router.push(`/#${sectionId}`);
+            return;
+        }
+
         const element = document.getElementById(sectionId);
         if (element) {
             element.scrollIntoView({
@@ -27,8 +43,10 @@ const Header = (): JSX.Element => {
         }
     };
 
-    // Update active section based on scroll position
+    // Update active section based on scroll position (only on home page)
     useEffect(() => {
+        if (!isHomePage) return;
+
         const handleScroll = (): void => {
             const sections = menuItems.map(item => item.id);
             const scrollPosition = window.scrollY + 100; // Offset for header height
@@ -47,7 +65,7 @@ const Header = (): JSX.Element => {
 
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
-    }, [menuItems]);
+    }, [menuItems, isHomePage]);
 
     return (
         <header className="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-sm z-50">
@@ -58,30 +76,50 @@ const Header = (): JSX.Element => {
                         <span className="font-bold text-lg md:text-xl ml-2">rampa</span>
                     </div>
                 </Link>
+
                 {/* Desktop Navigation */}
                 <div className="hidden md:flex items-center space-x-8">
+                    {/* Section navigation (for home page) */}
                     {menuItems.map((item) => (
                         <button
                             key={item.id}
                             onClick={() => scrollToSection(item.id)}
-                            className={`font-medium transition-colors hover:text-indigo-600 ${activeSection === item.id
+                            className={`font-medium transition-colors hover:text-indigo-600 ${
+                                isHomePage && activeSection === item.id
                                     ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1'
                                     : 'text-gray-800'
-                                }`}
+                            }`}
                         >
                             {item.label}
                         </button>
                     ))}
+                    
+                    {/* External links */}
+                    {externalItems.map((item) => (
+                        <Link
+                            key={item.id}
+                            href={item.href}
+                            className={`font-medium transition-colors hover:text-indigo-600 ${
+                                router.pathname === item.href
+                                    ? 'text-indigo-600 border-b-2 border-indigo-600 pb-1'
+                                    : 'text-gray-800'
+                            }`}
+                        >
+                            {item.label}
+                        </Link>
+                    ))}
+
                     <LanguageSwitcher />
                 </div>
-                {/* Mobile Menu Button and CTA */}
+
+                {/* Mobile Menu Button and Language Switcher */}
                 <div className="flex items-center md:hidden">
                     <LanguageSwitcher />
                     <button
                         className="bg-indigo-600 text-white px-2 py-1 text-xs rounded-md font-medium hover:bg-indigo-700 transition ml-2"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     >
-                        Menu
+                        {t('navigation.menu')}
                     </button>
                 </div>
             </nav>
@@ -90,6 +128,7 @@ const Header = (): JSX.Element => {
             {mobileMenuOpen && (
                 <div className="md:hidden bg-white py-3 px-4 border-t">
                     <div className="flex flex-col space-y-3">
+                        {/* Section navigation items */}
                         {menuItems.map((item) => (
                             <button
                                 key={item.id}
@@ -97,11 +136,26 @@ const Header = (): JSX.Element => {
                                     scrollToSection(item.id);
                                     setMobileMenuOpen(false);
                                 }}
-                                className={`text-left font-medium transition-colors hover:text-indigo-600 ${activeSection === item.id ? 'text-indigo-600' : 'text-gray-800'
-                                    }`}
+                                className={`text-left font-medium transition-colors hover:text-indigo-600 ${
+                                    isHomePage && activeSection === item.id ? 'text-indigo-600' : 'text-gray-800'
+                                }`}
                             >
                                 {item.label}
                             </button>
+                        ))}
+                        
+                        {/* External link items */}
+                        {externalItems.map((item) => (
+                            <Link
+                                key={item.id}
+                                href={item.href}
+                                onClick={() => setMobileMenuOpen(false)}
+                                className={`text-left font-medium transition-colors hover:text-indigo-600 ${
+                                    router.pathname === item.href ? 'text-indigo-600' : 'text-gray-800'
+                                }`}
+                            >
+                                {item.label}
+                            </Link>
                         ))}
                     </div>
                 </div>
