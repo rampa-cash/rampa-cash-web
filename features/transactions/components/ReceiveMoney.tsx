@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
+import { isBrowser, copyToClipboard, shareContent } from '@/lib/browser-utils'
 
 export const ReceiveMoney = (): JSX.Element => {
     const { t } = useTranslation('common')
@@ -18,32 +19,30 @@ export const ReceiveMoney = (): JSX.Element => {
     }, [])
 
     const handleCopyAddress = async () => {
-        try {
-            await navigator.clipboard.writeText(walletAddress)
+        const success = await copyToClipboard(walletAddress)
+        if (success) {
             // TODO: Show success toast
-        } catch (error) {
-            console.error('Failed to copy address:', error)
         }
     }
 
     const handleShare = async () => {
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: t('receiveMoney.share.title'),
-                    text: t('receiveMoney.share.text', { address: walletAddress }),
-                    url: window.location.href
-                })
-            } catch (error) {
-                console.error('Failed to share:', error)
-            }
-        } else {
+        const success = await shareContent({
+            title: t('receiveMoney.share.title'),
+            text: t('receiveMoney.share.text', { address: walletAddress }),
+            url: isBrowser() ? window.location.href : ''
+        })
+        
+        if (!success) {
             // Fallback to copying to clipboard
             await handleCopyAddress()
         }
     }
 
     const generatePaymentLink = () => {
+        if (!isBrowser()) {
+            return ''
+        }
+        
         const params = new URLSearchParams()
         if (amount) params.set('amount', amount)
         if (memo) params.set('memo', memo)
@@ -189,7 +188,7 @@ export const ReceiveMoney = (): JSX.Element => {
                     </div>
 
                     <button
-                        onClick={() => navigator.clipboard.writeText(generatePaymentLink())}
+                        onClick={() => copyToClipboard(generatePaymentLink())}
                         className="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-sm font-medium hover:bg-gray-200 transition-colors"
                     >
                         {t('receiveMoney.actions.copyLink')}
