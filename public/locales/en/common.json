@@ -104,9 +104,10 @@
   "navigation": {
     "home": "Home",
     "howItWorks": "How It Works",
-    "pricing": "Pricing",
+    "pricing": "Pricing", 
     "aboutUs": "About Us",
-    "waitlist": "Waitlist"
+    "blog": "Blog",
+    "menu": "Menu"
   },
   "imprint": {
     "title": "Imprint",
@@ -424,5 +425,25 @@
         "content": "Questions or requests:"
       }
     }
+  },
+  "blog": {
+    "title": "Blog",
+    "metaDescription": "Learn about remittances, stablecoins, financial education, and how Rampa is turning everyday remittances into engines of shared prosperity.",
+    "hero": {
+      "title": "Knowledge Hub",
+      "subtitle": "Learn about remittances, stablecoins, financial education, and how Rampa is turning everyday remittances into engines of shared prosperity.."
+    },
+    "categories": {
+      "all": "All Articles",
+      "remittances": "Remittances",
+      "stablecoins": "Stablecoins",
+      "financialEducation": "Financial Education",
+      "rampaGuides": "Rampa Guides"
+    },
+    "minRead": "min read",
+    "noPosts": "No articles found in this category.",
+    "readMore": "Read More",
+    "backToBlog": "← Back to Blog",
+    "tags": "Tags"
   }
 }
