@@ -5,8 +5,8 @@ const Footer = (): JSX.Element => {
     const { t } = useTranslation('common')
     
     return (
-        <footer className="py-6 md:py-8 border-t">
-            <div className="container mx-auto px-4 text-center text-gray-600">
+        <footer className="py-6 md:py-8 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
+            <div className="container mx-auto px-4 text-center text-gray-600 dark:text-gray-300">
                 <div className="flex flex-col items-center justify-center">
                     <p className="mb-3 md:mb-4 text-sm md:text-base">© {new Date().getFullYear()} Rampa.cash</p>
                     <div className="flex flex-wrap items-center justify-center mb-4 space-x-4">
@@ -17,7 +17,7 @@ const Footer = (): JSX.Element => {
                                 href="https://x.com/rampa_cash"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center text-gray-700 hover:text-indigo-600 transition-colors"
+                                className="inline-flex items-center text-gray-700 dark:text-gray-300 hover:text-indigo-600 transition-colors"
                                 aria-label="Follow us on X (Twitter)"
                             >
                                 <svg className="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -31,7 +31,7 @@ const Footer = (): JSX.Element => {
                                 href="https://www.linkedin.com/company/rampa-cash/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center text-gray-700 hover:text-indigo-600 transition-colors"
+                                className="inline-flex items-center text-gray-700 dark:text-gray-300 hover:text-indigo-600 transition-colors"
                                 aria-label="Follow us on LinkedIn"
                             >
                                 <svg className="w-4 h-4 md:w-5 md:h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -44,28 +44,28 @@ const Footer = (): JSX.Element => {
                     <div className="flex flex-wrap items-center justify-center space-x-2 md:space-x-4 text-xs md:text-sm">
                         <Link
                             href="/terms-of-service"
-                            className="text-gray-600 hover:text-indigo-600 transition-colors"
+                            className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors"
                         >
                             {t('footer.termsOfService')}
                         </Link>
-                        <span className="text-gray-400">•</span>
+                        <span className="text-gray-400 dark:text-gray-500">•</span>
                         <Link
                             href="/privacy-policy"
-                            className="text-gray-600 hover:text-indigo-600 transition-colors"
+                            className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors"
                         >
                             {t('footer.privacyPolicy')}
                         </Link>
-                        <span className="text-gray-400">•</span>
+                        <span className="text-gray-400 dark:text-gray-500">•</span>
                         <Link
                             href="/imprint"
-                            className="text-gray-600 hover:text-indigo-600 transition-colors"
+                            className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors"
                         >
                             {t('footer.imprint')}
                         </Link>
-                        <span className="text-gray-400">•</span>
+                        <span className="text-gray-400 dark:text-gray-500">•</span>
                         <Link
                             href="/cookie-policy"
-                            className="text-gray-600 hover:text-indigo-600 transition-colors"
+                            className="text-gray-600 dark:text-gray-300 hover:text-indigo-600 transition-colors"
                         >
                             {t('footer.cookiePolicy')}
                         </Link>

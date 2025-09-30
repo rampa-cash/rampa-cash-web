@@ -8,8 +8,8 @@ type LayoutProps = {
 };
 
 const Layout = ({ children }: LayoutProps): JSX.Element => (
-    <div className="min-h-screen bg-white flex flex-col">
-        <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col">
+        <div className="min-h-screen bg-white dark:bg-gray-900">
             <Head>
                 <title>rampa - Empowering families with Web3 finance</title>
                 <meta name="description" content="Solana-based remittance and financial empowerment platform" />

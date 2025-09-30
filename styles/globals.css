@@ -22,3 +22,13 @@ body {
     max-width: 1200px;
     margin: 0 auto;
 }
+
+/* Dark mode styles */
+.dark {
+    color-scheme: dark;
+}
+
+/* Smooth transitions for theme changes */
+* {
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
