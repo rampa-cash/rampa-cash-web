@@ -1,5 +1,6 @@
 "use client";
 import { useWaitlistEntries } from '../hooks/useWaitlist';
+import type { InquiryResponse } from '../types';
 
 const WaitlistAdmin = (): JSX.Element => {
     const { data: entries = [], isLoading, error } = useWaitlistEntries();
@@ -27,16 +28,26 @@ const WaitlistAdmin = (): JSX.Element => {
                         <p className="text-gray-500 text-center py-8">No signups yet.</p>
                     ) : (
                         <div className="space-y-2">
-                            {entries.map((entry, index) => (
-                                <div key={entry.id} className="p-3 bg-gray-50 rounded flex justify-between items-center">
-                                    <div>
-                                        <span className="font-medium">{entry.name}</span>
-                                        <span className="ml-2 text-gray-600">{entry.email}</span>
-                                        <div className="text-xs text-gray-500 mt-1">
-                                            Joined: {new Date(entry.createdAt).toLocaleDateString()}
+                            {entries.map((entry: InquiryResponse, index) => (
+                                <div key={entry.id} className="p-3 bg-gray-50 rounded">
+                                    <div className="flex justify-between items-start mb-2">
+                                        <div>
+                                            <span className="font-medium">{entry.name}</span>
+                                            <span className="ml-2 text-gray-600">{entry.email}</span>
                                         </div>
+                                        <span className="text-sm text-gray-500">#{index + 1}</span>
                                     </div>
-                                    <span className="text-sm text-gray-500">#{index + 1}</span>
+                                    {entry.inquiry && (
+                                        <div className="text-sm text-gray-700 mb-2 p-2 bg-white rounded border-l-2 border-indigo-200">
+                                            <strong>Message:</strong> {entry.inquiry}
+                                        </div>
+                                    )}
+                                    <div className="flex justify-between items-center text-xs text-gray-500">
+                                        <span>Joined: {new Date(entry.createdAt).toLocaleDateString()}</span>
+                                        <span className="px-2 py-1 bg-gray-200 rounded-full text-xs">
+                                            {entry.status}
+                                        </span>
+                                    </div>
                                 </div>
                             ))}
                         </div>

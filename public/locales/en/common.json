@@ -1,449 +1,885 @@
 {
-  "hero": {
-    "badge": "✨ Now in Beta • Join the Movement",
-    "title": {
-      "part1": "Turning everyday remittances into engines of",
-      "part2": "shared prosperity",
-      "part3": "Empowering families with Web3 finance"
+    "hero": {
+        "badge": "✨ Now in Beta • Join the Movement",
+        "title": {
+            "part1": "Turning everyday remittances into engines of",
+            "part2": "shared prosperity",
+            "part3": "Empowering families with Web3 finance"
+        },
+        "description": "Send money globally with zero hidden fees, lightning-fast transactions, and effortlessly grow your family’s wealth through our tokenized investment platform designed to make every transfer work harder for you.",
+        "cta": {
+            "title": "🚀 Get Early Access",
+            "description": "Be among the first to experience the future of remittances"
+        },
+        "socialProof": {
+            "betaTesters": "beta testers already signed up",
+            "trustedBy": "Trusted by early adopters"
+        }
     },
-    "description": "Send money globally with zero hidden fees, lightning-fast transactions, and effortlessly grow your family’s wealth through our tokenized investment platform designed to make every transfer work harder for you.",
-    "cta": {
-      "title": "🚀 Get Early Access",
-      "description": "Be among the first to experience the future of remittances"
+    "howItWorks": {
+        "title": "How It Works",
+        "description": "Get started with RAMPA in four simple steps and transform the way you send money to your loved ones.",
+        "steps": {
+            "step1": {
+                "title": "Create an account",
+                "description": "Set up your account easily with your phone number."
+            },
+            "step2": {
+                "title": "MPC Wallet created automatically",
+                "description": "Your secure multi-party computation wallet is generated instantly for maximum security and control."
+            },
+            "step3": {
+                "title": "Add a recipient from your contacts",
+                "description": "Choose the recipient and add the amount you want to send."
+            },
+            "step4": {
+                "title": "Confirm and send",
+                "description": "In seconds, your family receives more value with every transfer."
+            }
+        }
     },
-    "socialProof": {
-      "betaTesters": "beta testers already signed up",
-      "trustedBy": "Trusted by early adopters"
-    }
-  },
-  "howItWorks": {
-    "title": "How It Works",
-    "description": "Get started with RAMPA in four simple steps and transform the way you send money to your loved ones.",
-    "steps": {
-      "step1": {
-        "title": "Create an account",
-        "description": "Set up your account easily with your phone number."
-      },
-      "step2": {
-        "title": "MPC Wallet created automatically",
-        "description": "Your secure multi-party computation wallet is generated instantly for maximum security and control."
-      },
-      "step3": {
-        "title": "Add a recipient from your contacts",
-        "description": "Choose the recipient and add the amount you want to send."
-      },
-      "step4": {
-        "title": "Confirm and send",
-        "description": "In seconds, your family receives more value with every transfer."
-      }
-    }
-  },
-  "pricing": {
-    "title": "Pricing",
-    "description": "Exchange rate without hidden fees and with low commissions.",
-    "features": {
-      "realTimeRates": {
-        "title": "Real-time rates",
-        "description": "Live market exchange rates updated every minute for maximum transparency.",
-        "badge": "Always up-to-date"
-      },
-      "noHiddenFees": {
-        "title": "No hidden fees",
-        "description": "What you see is what you pay - complete transparency in every transaction.",
-        "badge": "100% Transparent"
-      },
-      "lowCommission": {
-        "title": "Low commission",
-        "description": "Minimal fees to keep more money in your family's pocket where it belongs.",
-        "badge": "Maximum savings"
-      }
+    "pricing": {
+        "title": "Pricing",
+        "description": "Exchange rate without hidden fees and with low commissions.",
+        "features": {
+            "realTimeRates": {
+                "title": "Real-time rates",
+                "description": "Live market exchange rates updated every minute for maximum transparency.",
+                "badge": "Always up-to-date"
+            },
+            "noHiddenFees": {
+                "title": "No hidden fees",
+                "description": "What you see is what you pay - complete transparency in every transaction.",
+                "badge": "100% Transparent"
+            },
+            "lowCommission": {
+                "title": "Low commission",
+                "description": "Minimal fees to keep more money in your family's pocket where it belongs.",
+                "badge": "Maximum savings"
+            }
+        },
+        "stats": {
+            "commission": "Average commission",
+            "transferTime": "Transfer time",
+            "countries": "Countries supported",
+            "support": "Customer support"
+        }
     },
-    "stats": {
-      "commission": "Average commission",
-      "transferTime": "Transfer time",
-      "countries": "Countries supported",
-      "support": "Customer support"
-    }
-  },
-  "aboutUs": {
-    "title": "About Us",
-    "description": "Bringing Web3 and decentralized apps to real people, making it so simple that they don't realize they're using them. Rampa is an On-chain remittance platform that turns stablecoin transfers into shared prosperity, empowering families to thrive through financial education and a tokenized investment portfolio, so the money they send home today grows into collective wealth.",
-    "features": {
-      "web3Simplified": {
-        "title": "Web3 Simplified",
-        "description": "Powerful blockchain technology hidden behind an intuitive interface that anyone can use.",
-        "badge": "Easy to Use"
-      },
-      "forRealPeople": {
-        "title": "For Real People",
-        "description": "Built for everyday users sending money to family and friends across the globe.",
-        "badge": "Family First",
-        "highlight": "Core Mission"
-      },
-      "invisibleInnovation": {
-        "title": "Invisible Innovation",
-        "description": "Advanced security and speed without the complexity or technical jargon.",
-        "badge": "Just Works"
-      }
-    }
-  },
-  "waitlist": {
-    "badge": "⚡ Limited Time • Early Bird Access",
-    "title": "Ready to Transform Money Transfers?",
-    "description": "Be among the first to experience the future of cross-border payments. Join our waitlist and get exclusive early access when we launch.",
-    "cta": {
-      "title": "🎯 Reserve Your Spot",
-      "description": "Get notified the moment RAMPA MVP goes live + exclusive launch bonuses"
+    "aboutUs": {
+        "title": "About Us",
+        "description": "Bringing Web3 and decentralized apps to real people, making it so simple that they don't realize they're using them. Rampa is an On-chain remittance platform that turns stablecoin transfers into shared prosperity, empowering families to thrive through financial education and a tokenized investment portfolio, so the money they send home today grows into collective wealth.",
+        "features": {
+            "web3Simplified": {
+                "title": "Web3 Simplified",
+                "description": "Powerful blockchain technology hidden behind an intuitive interface that anyone can use.",
+                "badge": "Easy to Use"
+            },
+            "forRealPeople": {
+                "title": "For Real People",
+                "description": "Built for everyday users sending money to family and friends across the globe.",
+                "badge": "Family First",
+                "highlight": "Core Mission"
+            },
+            "invisibleInnovation": {
+                "title": "Invisible Innovation",
+                "description": "Advanced security and speed without the complexity or technical jargon.",
+                "badge": "Just Works"
+            }
+        }
     },
-    "benefits": {
-      "earlyAccess": "Early access",
-      "launchBonuses": "Launch bonuses",
-      "noSpam": "No spam ever"
-    }
-  },
-  "navigation": {
-    "home": "Home",
-    "howItWorks": "How It Works",
-    "pricing": "Pricing", 
-    "aboutUs": "About Us",
-    "blog": "Blog",
-    "menu": "Menu"
-  },
-  "imprint": {
-    "title": "Imprint",
-    "metaDescription": "Legal information and imprint for RAMPA",
-    "sections": {
-      "companyInfo": {
-        "title": "Company Information",
-        "name": "Lafitech UG (limited liability)",
-        "address": "Arnulfstr. 171",
-        "city": "80634 Munich",
-        "country": "Germany"
-      },
-      "contact": {
-        "title": "Contact Information",
-        "phone": "Phone:",
-        "email": "Email:",
-        "website": "Website:"
-      },
-      "editoriallyResponsible": {
-        "title": "Editorially Responsible",
-        "name": "Lafitech UG (limited liability)",
-        "address": "Arnulfstr. 171",
-        "city": "80634 Munich"
-      },
-      "euDispute": {
-        "title": "EU Dispute Resolution",
-        "text": "The European Commission provides a platform for online dispute resolution (ODR):",
-        "link": "https://ec.europa.eu/consumers/odr/",
-        "emailNote": "Our email address can be found above in the imprint."
-      },
-      "consumerDispute": {
-        "title": "Consumer Dispute Resolution",
-        "text": "We are not willing or obliged to participate in dispute resolution proceedings before a consumer arbitration board."
-      },
-      "contentLiability": {
-        "title": "Liability for Content",
-        "paragraph1": "As service providers, we are liable for our own content of these websites according to Sec. 7, Para. 1 German Telemedia Act (TMG). However, pursuant to Secs. 8 to 10 German Telemedia Act (TMG), we as service providers are under no obligation to monitor submitted or stored information or to investigate circumstances pointing to illegal activity.",
-        "paragraph2": "Legal obligations to removing information or to blocking the use of information remain unchallenged. In this case, liability is only possible at the time of knowledge about a specific violation of law. Illegal content will be removed immediately at the time we get knowledge of it."
-      },
-      "linkLiability": {
-        "title": "Liability for Links",
-        "paragraph1": "Our offer includes links to external third party websites. We have no influence on the contents of those websites, therefore we cannot guarantee for those contents. Providers or administrators of linked websites are always responsible for the contents of the linked websites.",
-        "paragraph2": "All linked websites have been checked for possible violations of law at the time of the establishment of the link. Illegal contents were not detected at the time of the linking. A permanent monitoring of the contents of linked websites cannot be imposed without reasonable indications that there has been a violation of law. Illegal links will be removed immediately at the time we get knowledge of it."
-      },
-      "copyright": {
-        "title": "Copyright",
-        "paragraph1": "Contents and compilations published on these websites by the providers are subject to German copyright laws. Reproduction, editing, distribution as well as the use of any kind outside the scope of the copyright law require a written permission of the author or originator.",
-        "paragraph2": "Downloads and copies of these websites are permitted for private use only. The commercial use of our contents without permission of the originator is prohibited."
-      }
-    }
-  },
-  "cookies": {
-    "title": "We use cookies to enhance your experience",
-    "description": "We use essential cookies to make our website work properly and functional cookies to improve your experience. We don't use any tracking or advertising cookies.",
-    "acceptAll": "Accept All",
-    "essentialOnly": "Essential Only", 
-    "learnMore": "Learn More"
-  },
-  "cookiePolicy": {
-    "title": "Cookie Policy",
-    "lastUpdated": "Last updated",
-    "whatAreCookies": {
-      "title": "What are cookies?",
-      "description": "Cookies are small text files that are stored on your device when you visit our website. They help us provide you with a better experience by remembering your preferences and settings."
+    "waitlist": {
+        "badge": "⚡ Limited Time • Early Bird Access",
+        "title": "Ready to Transform Money Transfers?",
+        "description": "Be among the first to experience the future of cross-border payments. Join our waitlist and get exclusive early access when we launch.",
+        "cta": {
+            "title": "🎯 Reserve Your Spot",
+            "description": "Get notified the moment RAMPA MVP goes live + exclusive launch bonuses"
+        },
+        "benefits": {
+            "earlyAccess": "Early access",
+            "launchBonuses": "Launch bonuses",
+            "noSpam": "No spam ever"
+        }
     },
-    "howWeUseCookies": {
-      "title": "How we use cookies",
-      "description": "We use cookies to ensure our website functions properly, remember your language preferences, and provide essential security features. We do not use cookies for tracking, advertising, or sharing your data with third parties."
+    "navigation": {
+        "home": "Home",
+        "howItWorks": "How It Works",
+        "pricing": "Pricing",
+        "aboutUs": "About Us",
+        "blog": "Blog",
+        "menu": "Menu"
     },
-    "typesOfCookies": {
-      "title": "Types of cookies we use",
-      "essential": {
-        "title": "Essential Cookies (Required)",
-        "description": "These cookies are necessary for our website to function properly. They enable basic features like page navigation, language settings, and security. You cannot opt out of these cookies."
-      },
-      "functional": {
-        "title": "Functional Cookies (Optional)",
-        "description": "These cookies enhance your experience by remembering your preferences such as language selection and other settings. You can choose to disable these cookies."
-      }
+    "imprint": {
+        "title": "Imprint",
+        "metaDescription": "Legal information and imprint for RAMPA",
+        "sections": {
+            "companyInfo": {
+                "title": "Company Information",
+                "name": "Lafitech UG (limited liability)",
+                "address": "Arnulfstr. 171",
+                "city": "80634 Munich",
+                "country": "Germany"
+            },
+            "contact": {
+                "title": "Contact Information",
+                "phone": "Phone:",
+                "email": "Email:",
+                "website": "Website:"
+            },
+            "editoriallyResponsible": {
+                "title": "Editorially Responsible",
+                "name": "Lafitech UG (limited liability)",
+                "address": "Arnulfstr. 171",
+                "city": "80634 Munich"
+            },
+            "euDispute": {
+                "title": "EU Dispute Resolution",
+                "text": "The European Commission provides a platform for online dispute resolution (ODR):",
+                "link": "https://ec.europa.eu/consumers/odr/",
+                "emailNote": "Our email address can be found above in the imprint."
+            },
+            "consumerDispute": {
+                "title": "Consumer Dispute Resolution",
+                "text": "We are not willing or obliged to participate in dispute resolution proceedings before a consumer arbitration board."
+            },
+            "contentLiability": {
+                "title": "Liability for Content",
+                "paragraph1": "As service providers, we are liable for our own content of these websites according to Sec. 7, Para. 1 German Telemedia Act (TMG). However, pursuant to Secs. 8 to 10 German Telemedia Act (TMG), we as service providers are under no obligation to monitor submitted or stored information or to investigate circumstances pointing to illegal activity.",
+                "paragraph2": "Legal obligations to removing information or to blocking the use of information remain unchallenged. In this case, liability is only possible at the time of knowledge about a specific violation of law. Illegal content will be removed immediately at the time we get knowledge of it."
+            },
+            "linkLiability": {
+                "title": "Liability for Links",
+                "paragraph1": "Our offer includes links to external third party websites. We have no influence on the contents of those websites, therefore we cannot guarantee for those contents. Providers or administrators of linked websites are always responsible for the contents of the linked websites.",
+                "paragraph2": "All linked websites have been checked for possible violations of law at the time of the establishment of the link. Illegal contents were not detected at the time of the linking. A permanent monitoring of the contents of linked websites cannot be imposed without reasonable indications that there has been a violation of law. Illegal links will be removed immediately at the time we get knowledge of it."
+            },
+            "copyright": {
+                "title": "Copyright",
+                "paragraph1": "Contents and compilations published on these websites by the providers are subject to German copyright laws. Reproduction, editing, distribution as well as the use of any kind outside the scope of the copyright law require a written permission of the author or originator.",
+                "paragraph2": "Downloads and copies of these websites are permitted for private use only. The commercial use of our contents without permission of the originator is prohibited."
+            }
+        }
     },
-    "yourChoices": {
-      "title": "Your choices",
-      "description": "You can manage your cookie preferences at any time by clearing your browser cookies or adjusting your browser settings. Note that disabling essential cookies may affect website functionality."
+    "cookies": {
+        "title": "We use cookies to enhance your experience",
+        "description": "We use essential cookies to make our website work properly and functional cookies to improve your experience. We don't use any tracking or advertising cookies.",
+        "acceptAll": "Accept All",
+        "essentialOnly": "Essential Only",
+        "learnMore": "Learn More"
     },
-    "contact": {
-      "title": "Contact us",
-      "description": "If you have any questions about our cookie policy, please contact us at:"
-    }
-  },
-  "login": {
-    "title": "Welcome back",
-    "subtitle": "Sign in to your account to continue",
-    "form": {
-      "email": {
-        "label": "Email address",
-        "placeholder": "Enter your email"
-      },
-      "password": {
-        "label": "Password",
-        "placeholder": "Enter your password"
-      },
-      "rememberMe": "Remember me",
-      "forgotPassword": "Forgot password?",
-      "submit": "Sign in",
-      "submitting": "Signing in...",
-      "validation": {
-        "emailRequired": "Email is required",
-        "emailInvalid": "Please enter a valid email address",
-        "passwordRequired": "Password is required",
-        "passwordMinLength": "Password must be at least 6 characters"
-      },
-      "error": {
-        "general": "Something went wrong. Please try again."
-      },
-      "success": "Login successful!"
+    "cookiePolicy": {
+        "title": "Cookie Policy",
+        "lastUpdated": "Last updated",
+        "whatAreCookies": {
+            "title": "What are cookies?",
+            "description": "Cookies are small text files that are stored on your device when you visit our website. They help us provide you with a better experience by remembering your preferences and settings."
+        },
+        "howWeUseCookies": {
+            "title": "How we use cookies",
+            "description": "We use cookies to ensure our website functions properly, remember your language preferences, and provide essential security features. We do not use cookies for tracking, advertising, or sharing your data with third parties."
+        },
+        "typesOfCookies": {
+            "title": "Types of cookies we use",
+            "essential": {
+                "title": "Essential Cookies (Required)",
+                "description": "These cookies are necessary for our website to function properly. They enable basic features like page navigation, language settings, and security. You cannot opt out of these cookies."
+            },
+            "functional": {
+                "title": "Functional Cookies (Optional)",
+                "description": "These cookies enhance your experience by remembering your preferences such as language selection and other settings. You can choose to disable these cookies."
+            }
+        },
+        "yourChoices": {
+            "title": "Your choices",
+            "description": "You can manage your cookie preferences at any time by clearing your browser cookies or adjusting your browser settings. Note that disabling essential cookies may affect website functionality."
+        },
+        "contact": {
+            "title": "Contact us",
+            "description": "If you have any questions about our cookie policy, please contact us at:"
+        }
+    },
+    "login": {
+        "title": "Welcome back",
+        "subtitle": "Sign in to your account to continue",
+        "form": {
+            "email": {
+                "label": "Email address",
+                "placeholder": "Enter your email"
+            },
+            "password": {
+                "label": "Password",
+                "placeholder": "Enter your password"
+            },
+            "rememberMe": "Remember me",
+            "forgotPassword": "Forgot password?",
+            "submit": "Sign in",
+            "submitting": "Signing in...",
+            "validation": {
+                "emailRequired": "Email is required",
+                "emailInvalid": "Please enter a valid email address",
+                "passwordRequired": "Password is required",
+                "passwordMinLength": "Password must be at least 6 characters"
+            },
+            "error": {
+                "general": "Something went wrong. Please try again."
+            },
+            "success": "Login successful!"
+        },
+        "signup": {
+            "prompt": "Don't have an account?",
+            "link": "Sign up"
+        },
+        "backToHome": "Back to home"
+    },
+    "footer": {
+        "followUs": "Follow us on",
+        "termsOfService": "Terms of Service",
+        "privacyPolicy": "Privacy Policy",
+        "imprint": "Imprint",
+        "cookiePolicy": "Cookie Policy"
+    },
+    "termsOfService": {
+        "title": "Terms of Service — Rampa (Lafitech UG)",
+        "metaDescription": "Terms of Service for RAMPA - Read our service terms and conditions",
+        "version": "Version:",
+        "effectiveDate": "Effective date:",
+        "date": "September 25, 2025",
+        "company": "Company:",
+        "companyInfo": "Lafitech UG (\"Lafitech\", \"we\", \"us\", \"our\") — operating the Rampa app and website.",
+        "contact": "Contact:",
+        "registeredAddress": "Registered address:",
+        "handelsregister": "Handelsregister (HRB):",
+        "sections": {
+            "whatWeAre": {
+                "title": "What we are",
+                "content": "Rampa is a non-custodial, self-custody wallet application that lets users create and use crypto wallets on supported networks (currently including Solana) using MPC via Web3Auth. Users control their keys; Lafitech cannot move funds or sign on a user's behalf."
+            },
+            "thirdPartyServices": {
+                "title": "Third-party services (not operated by us)",
+                "intro": "Certain features rely on independent providers with their own terms/privacy:",
+                "fiatTitle": "Fiat on/off-ramp:",
+                "fiatContent": "Transak (and its regulated partners) for SEPA and card payments.",
+                "cardTitle": "Card program (planned/optional):",
+                "cardContent": "Issued by a licensed issuer/EMI; funds are held by the issuer, not Lafitech.",
+                "dexTitle": "DEX routing:",
+                "dexContent": "Jupiter for swaps/token purchases.",
+                "mpcTitle": "MPC/key infrastructure:",
+                "mpcContent": "Web3Auth.",
+                "analyticsTitle": "Blockchain analytics:",
+                "analyticsContent": "A third-party provider (e.g., TRM Labs or Chainalysis) for sanctions/exposure screening.",
+                "disclaimer": "When you use these services, their terms and privacy notices apply in addition to these Terms."
+            },
+            "eligibility": {
+                "title": "Eligibility & compliance",
+                "intro": "You may use Rampa only if you:",
+                "age": "Are 18+ and legally able to form a contract;",
+                "sanctions": "Are not subject to sanctions or prohibited by law;",
+                "jurisdiction": "Access the app from a permitted jurisdiction. We may geo-block or restrict features to comply with law and partner requirements."
+            },
+            "responsibilities": {
+                "title": "Your responsibilities (self-custody)",
+                "security": "You are solely responsible for securing your devices, recovery factors, and authorizing transactions.",
+                "transactions": "Transactions are irreversible once signed on-chain. Review carefully before you sign.",
+                "legal": "You must not use the app for illegal activity, sanctions evasion, or rights infringement."
+            },
+            "fees": {
+                "title": "Fees and pricing",
+                "intro": "We aim to disclose fees clearly before you commit:",
+                "transakTitle": "Transak on/off-ramp:",
+                "transakContent": "Transak's base fee applies. We add a transparent 0.30% partner markup on on/off-ramp orders started in the app. Transak collects this at checkout and later settles our share to Lafitech (we never receive consumer fiat).",
+                "dexFeeTitle": "DEX routing fee (Jupiter):",
+                "dexFeeContent": "A transparent on-chain platform fee (currently 0.30%) may apply to swaps. It is delivered on-chain to Lafitech's fee address within the user-signed transaction (non-custodial).",
+                "serviceFeesTitle": "Optional on-chain service fees:",
+                "serviceFeesContent": "For certain value-add features (e.g., additional screening/orchestration), we may present a small on-chain fee for your approval.",
+                "cardFeesTitle": "Card program fees (if you opt in):",
+                "cardFeesContent": "Set and disclosed by the issuer/EMI (e.g., FX, ATM).",
+                "additionalFees": "Network fees (e.g., gas) and third-party spreads/fees may apply independently."
+            },
+            "noCustody": {
+                "title": "No custody; no financial/investment advice",
+                "content": "We do not provide custody, investment advice, portfolio recommendations, tax advice, or legal advice. Any asset listings, prices, yields, or labels are informational and not endorsements."
+            },
+            "riskNotice": {
+                "title": "Risk notice",
+                "content": "Crypto assets are volatile and may lose value. Smart contracts, protocols, bridges, stablecoins, or tokenized assets (including stocks/ETFs-themed tokens) can fail or de-peg. You accept these risks and confirm you have done your own research."
+            },
+            "prohibitedConduct": {
+                "title": "Prohibited conduct",
+                "intro": "You agree not to:",
+                "violate": "Violate laws or sanctions;",
+                "interfere": "Interfere with or misuse the app;",
+                "infringe": "Infringe intellectual property or privacy rights;",
+                "bypass": "Attempt to bypass geo-restrictions or security controls.",
+                "consequence": "We may suspend or terminate access for violations."
+            },
+            "intellectualProperty": {
+                "title": "Intellectual property",
+                "content": "The app, website, logos, and content are owned by Lafitech or our licensors. You receive a limited, revocable license to use the app as provided and per these Terms."
+            },
+            "liability": {
+                "title": "\"As is\" and limitation of liability",
+                "content": "The app is provided \"as is\" without warranties. To the maximum extent permitted by law, Lafitech disclaims all implied warranties and is not liable for indirect, incidental, special, consequential, exemplary, or punitive damages, or lost profits, even if advised of the possibility. Our aggregate liability for direct damages will not exceed €100 or the amount you paid to us in the 3 months preceding the claim, whichever is greater."
+            },
+            "changes": {
+                "title": "Changes to the service or these Terms",
+                "content": "We may update or change features and these Terms. If changes are material, we will provide notice (e.g., in-app or on our website). Your continued use after the effective date constitutes acceptance."
+            },
+            "governingLaw": {
+                "title": "Governing law & venue",
+                "content": "These Terms are governed by German law. Exclusive venue is the courts of Munich, Germany."
+            },
+            "contactSection": {
+                "title": "Contact",
+                "content": "Questions?"
+            }
+        }
+    },
+    "privacyPolicy": {
+        "title": "Privacy Policy — Rampa (Lafitech UG)",
+        "metaDescription": "Privacy Policy for RAMPA - Learn how we protect and handle your personal data",
+        "version": "Version:",
+        "effectiveDate": "Effective date:",
+        "date": "September 25, 2025",
+        "controller": "Controller:",
+        "contact": "Contact:",
+        "registeredAddress": "Registered address:",
+        "supervisoryAuthority": "Supervisory authority:",
+        "supervisoryAuthorityText": "You may lodge complaints with your local authority or the competent authority in Germany.",
+        "sections": {
+            "scope": {
+                "title": "Scope",
+                "content": "This notice covers personal data processed when you use rampa.cash and the Rampa app."
+            },
+            "dataProcessing": {
+                "title": "What data we process",
+                "intro": "We design for data minimization. Depending on your use:",
+                "telemetryTitle": "Account & app telemetry (pseudonymous):",
+                "telemetryContent": "app/device identifiers, IP-derived country (for geo-blocking), session logs, settings, crash logs.",
+                "walletTitle": "Wallet data:",
+                "walletContent": "public keys, transaction metadata (hashes, amounts, token mints), risk screening results (e.g., sanctions exposure scores).",
+                "supportTitle": "Support communications:",
+                "supportContent": "messages and contact details you provide.",
+                "analyticsTitle": "Website analytics (minimal):",
+                "analyticsContent": "aggregated usage; we avoid third-party advertising cookies.",
+                "disclaimer": "We do not store your private keys or seed phrases. We do not retain identity documents collected by on/off-ramp or card issuers."
+            },
+            "processingBasis": {
+                "title": "Why we process data (GDPR Art. 6)",
+                "provideTitle": "Provide and secure the app",
+                "provideContent": "(Art. 6(1)(b) contract; Art. 6(1)(f) legitimate interests for security/fraud prevention).",
+                "complianceTitle": "Compliance and risk controls",
+                "complianceContent": "(Art. 6(1)(c) legal obligation; Art. 6(1)(f) legitimate interests), including geo-blocking, sanctions/PEP screening of wallet addresses, velocity limits, and responding to lawful requests.",
+                "analyticsTitle": "Product analytics & improvement",
+                "analyticsContent": "(Art. 6(1)(f) legitimate interests), using aggregated or pseudonymous data.",
+                "communicationsTitle": "Communications",
+                "communicationsContent": "(Art. 6(1)(b)/(f)) when you contact us.",
+                "consentNote": "Where required (e.g., certain cookies or marketing), we will seek consent (Art. 6(1)(a))."
+            },
+            "dataRecipients": {
+                "title": "Who receives data",
+                "processorsTitle": "Processors (under DPAs):",
+                "processorsContent": "hosting/ops providers, error telemetry, encrypted key-infra provider Web3Auth, analytics tooling, and security vendors.",
+                "controllersTitle": "Independent controllers (separate policies):",
+                "transak": "Transak (fiat on/off-ramp KYC/AML and payments),",
+                "issuer": "Issuer/EMI (if you opt into the card program),",
+                "jupiter": "Jupiter / DEXes (when you execute swaps),",
+                "analytics": "Blockchain analytics provider (sanctions/exposure screening),",
+                "lawEnforcement": "Law enforcement or competent authorities where legally required."
+            },
+            "internationalTransfers": {
+                "title": "International transfers",
+                "content": "Where data is transferred outside the EEA/UK, we use appropriate safeguards such as Standard Contractual Clauses (SCCs) and risk assessments."
+            },
+            "retention": {
+                "title": "Retention",
+                "operationalTitle": "Operational logs:",
+                "operationalContent": "typically 30–90 days.",
+                "riskTitle": "Risk/decision records:",
+                "riskContent": "typically ≥ 5 years or as required by law/partners.",
+                "supportTitle": "Support records:",
+                "supportContent": "for as long as needed to address your request and meet legal obligations."
+            },
+            "userRights": {
+                "title": "Your rights",
+                "intro": "Subject to legal limits, you have the right to access, rectify, erase, restrict, object, and data portability. You can also withdraw consent where processing is based on consent.",
+                "contactInfo": "Contact:",
+                "complaint": "You may also complain to your supervisory authority."
+            },
+            "cookies": {
+                "title": "Cookies & tracking",
+                "content": "We aim to use essential cookies only on the website (e.g., to serve pages securely). No third-party advertising cookies. If we introduce optional analytics cookies, we will present a consent banner."
+            },
+            "security": {
+                "title": "Security",
+                "content": "Encryption in transit/at rest, role-based access, least-privilege, and audit logging. We do not hold users' private keys. We promptly investigate and remediate incidents and will notify authorities/users where legally required."
+            },
+            "children": {
+                "title": "Children",
+                "content": "Rampa is for adults (18+) and is not intended for children."
+            },
+            "changes": {
+                "title": "Changes to this notice",
+                "content": "We may update this privacy notice and will post the updated version with a new effective date. Material changes will be highlighted in-app or on our site."
+            },
+            "contactSection": {
+                "title": "Contact",
+                "content": "Questions or requests:"
+            }
+        }
+    },
+    "blog": {
+        "title": "Blog",
+        "metaDescription": "Learn about remittances, stablecoins, financial education, and how Rampa is turning everyday remittances into engines of shared prosperity.",
+        "hero": {
+            "title": "Knowledge Hub",
+            "subtitle": "Learn about remittances, stablecoins, financial education, and how Rampa is turning everyday remittances into engines of shared prosperity.."
+        },
+        "categories": {
+            "all": "All Articles",
+            "remittances": "Remittances",
+            "stablecoins": "Stablecoins",
+            "financialEducation": "Financial Education",
+            "rampaGuides": "Rampa Guides"
+        },
+        "minRead": "min read",
+        "noPosts": "No articles found in this category.",
+        "readMore": "Read More",
+        "backToBlog": "← Back to Blog",
+        "tags": "Tags"
     },
     "signup": {
-      "prompt": "Don't have an account?",
-      "link": "Sign up"
+        "title": "Create your account",
+        "subtitle": "Join the future of remittances and start building wealth with every transfer",
+        "form": {
+            "firstName": {
+                "label": "First name",
+                "placeholder": "Enter your first name"
+            },
+            "lastName": {
+                "label": "Last name",
+                "placeholder": "Enter your last name"
+            },
+            "email": {
+                "label": "Email address",
+                "placeholder": "Enter your email"
+            },
+            "password": {
+                "label": "Password",
+                "placeholder": "Create a password"
+            },
+            "confirmPassword": {
+                "label": "Confirm password",
+                "placeholder": "Confirm your password"
+            },
+            "acceptTerms": {
+                "text": "I agree to the",
+                "terms": "Terms of Service",
+                "and": "and",
+                "privacy": "Privacy Policy"
+            },
+            "submit": "Create account",
+            "creating": "Creating account...",
+            "validation": {
+                "firstNameRequired": "First name is required",
+                "lastNameRequired": "Last name is required",
+                "emailRequired": "Email is required",
+                "emailInvalid": "Please enter a valid email address",
+                "passwordRequired": "Password is required",
+                "passwordMinLength": "Password must be at least 8 characters",
+                "confirmPasswordRequired": "Please confirm your password",
+                "passwordsDoNotMatch": "Passwords do not match",
+                "acceptTermsRequired": "You must accept the terms and conditions"
+            },
+            "error": {
+                "general": "Something went wrong. Please try again.",
+                "walletConnection": "Failed to connect wallet. Please try again."
+            }
+        },
+        "verification": {
+            "title": "Verify your email",
+            "verifying": "Verifying...",
+            "verifyButton": "Verify email",
+            "resendButton": "Resend verification",
+            "resendSuccess": "Verification email sent!",
+            "resendError": "Failed to send verification email",
+            "error": {
+                "general": "Verification failed. Please try again."
+            }
+        },
+        "or": "Or",
+        "connectingWallet": "Connecting wallet...",
+        "connectWallet": "Connect wallet",
+        "login": {
+            "prompt": "Already have an account?",
+            "link": "Sign in"
+        }
     },
-    "backToHome": "Back to home"
-  },
-  "footer": {
-    "followUs": "Follow us on",
-    "termsOfService": "Terms of Service",
-    "privacyPolicy": "Privacy Policy", 
-    "imprint": "Imprint",
-    "cookiePolicy": "Cookie Policy"
-  },
-  "termsOfService": {
-    "title": "Terms of Service — Rampa (Lafitech UG)",
-    "metaDescription": "Terms of Service for RAMPA - Read our service terms and conditions",
-    "version": "Version:",
-    "effectiveDate": "Effective date:",
-    "date": "September 25, 2025",
-    "company": "Company:",
-    "companyInfo": "Lafitech UG (\"Lafitech\", \"we\", \"us\", \"our\") — operating the Rampa app and website.",
-    "contact": "Contact:",
-    "registeredAddress": "Registered address:",
-    "handelsregister": "Handelsregister (HRB):",
-    "sections": {
-      "whatWeAre": {
-        "title": "What we are",
-        "content": "Rampa is a non-custodial, self-custody wallet application that lets users create and use crypto wallets on supported networks (currently including Solana) using MPC via Web3Auth. Users control their keys; Lafitech cannot move funds or sign on a user's behalf."
-      },
-      "thirdPartyServices": {
-        "title": "Third-party services (not operated by us)",
-        "intro": "Certain features rely on independent providers with their own terms/privacy:",
-        "fiatTitle": "Fiat on/off-ramp:",
-        "fiatContent": "Transak (and its regulated partners) for SEPA and card payments.",
-        "cardTitle": "Card program (planned/optional):",
-        "cardContent": "Issued by a licensed issuer/EMI; funds are held by the issuer, not Lafitech.",
-        "dexTitle": "DEX routing:",
-        "dexContent": "Jupiter for swaps/token purchases.",
-        "mpcTitle": "MPC/key infrastructure:",
-        "mpcContent": "Web3Auth.",
-        "analyticsTitle": "Blockchain analytics:",
-        "analyticsContent": "A third-party provider (e.g., TRM Labs or Chainalysis) for sanctions/exposure screening.",
-        "disclaimer": "When you use these services, their terms and privacy notices apply in addition to these Terms."
-      },
-      "eligibility": {
-        "title": "Eligibility & compliance",
-        "intro": "You may use Rampa only if you:",
-        "age": "Are 18+ and legally able to form a contract;",
-        "sanctions": "Are not subject to sanctions or prohibited by law;",
-        "jurisdiction": "Access the app from a permitted jurisdiction. We may geo-block or restrict features to comply with law and partner requirements."
-      },
-      "responsibilities": {
-        "title": "Your responsibilities (self-custody)",
-        "security": "You are solely responsible for securing your devices, recovery factors, and authorizing transactions.",
-        "transactions": "Transactions are irreversible once signed on-chain. Review carefully before you sign.",
-        "legal": "You must not use the app for illegal activity, sanctions evasion, or rights infringement."
-      },
-      "fees": {
-        "title": "Fees and pricing",
-        "intro": "We aim to disclose fees clearly before you commit:",
-        "transakTitle": "Transak on/off-ramp:",
-        "transakContent": "Transak's base fee applies. We add a transparent 0.30% partner markup on on/off-ramp orders started in the app. Transak collects this at checkout and later settles our share to Lafitech (we never receive consumer fiat).",
-        "dexFeeTitle": "DEX routing fee (Jupiter):",
-        "dexFeeContent": "A transparent on-chain platform fee (currently 0.30%) may apply to swaps. It is delivered on-chain to Lafitech's fee address within the user-signed transaction (non-custodial).",
-        "serviceFeesTitle": "Optional on-chain service fees:",
-        "serviceFeesContent": "For certain value-add features (e.g., additional screening/orchestration), we may present a small on-chain fee for your approval.",
-        "cardFeesTitle": "Card program fees (if you opt in):",
-        "cardFeesContent": "Set and disclosed by the issuer/EMI (e.g., FX, ATM).",
-        "additionalFees": "Network fees (e.g., gas) and third-party spreads/fees may apply independently."
-      },
-      "noCustody": {
-        "title": "No custody; no financial/investment advice",
-        "content": "We do not provide custody, investment advice, portfolio recommendations, tax advice, or legal advice. Any asset listings, prices, yields, or labels are informational and not endorsements."
-      },
-      "riskNotice": {
-        "title": "Risk notice",
-        "content": "Crypto assets are volatile and may lose value. Smart contracts, protocols, bridges, stablecoins, or tokenized assets (including stocks/ETFs-themed tokens) can fail or de-peg. You accept these risks and confirm you have done your own research."
-      },
-      "prohibitedConduct": {
-        "title": "Prohibited conduct",
-        "intro": "You agree not to:",
-        "violate": "Violate laws or sanctions;",
-        "interfere": "Interfere with or misuse the app;",
-        "infringe": "Infringe intellectual property or privacy rights;",
-        "bypass": "Attempt to bypass geo-restrictions or security controls.",
-        "consequence": "We may suspend or terminate access for violations."
-      },
-      "intellectualProperty": {
-        "title": "Intellectual property",
-        "content": "The app, website, logos, and content are owned by Lafitech or our licensors. You receive a limited, revocable license to use the app as provided and per these Terms."
-      },
-      "liability": {
-        "title": "\"As is\" and limitation of liability",
-        "content": "The app is provided \"as is\" without warranties. To the maximum extent permitted by law, Lafitech disclaims all implied warranties and is not liable for indirect, incidental, special, consequential, exemplary, or punitive damages, or lost profits, even if advised of the possibility. Our aggregate liability for direct damages will not exceed €100 or the amount you paid to us in the 3 months preceding the claim, whichever is greater."
-      },
-      "changes": {
-        "title": "Changes to the service or these Terms",
-        "content": "We may update or change features and these Terms. If changes are material, we will provide notice (e.g., in-app or on our website). Your continued use after the effective date constitutes acceptance."
-      },
-      "governingLaw": {
-        "title": "Governing law & venue",
-        "content": "These Terms are governed by German law. Exclusive venue is the courts of Munich, Germany."
-      },
-      "contactSection": {
-        "title": "Contact",
-        "content": "Questions?"
-      }
+    "transactions": {
+        "title": "Transactions",
+        "loading": "Loading transactions...",
+        "refreshing": "Refreshing...",
+        "refresh": "Refresh",
+        "export": "Export",
+        "noTransactions": "No transactions found",
+        "search": {
+            "label": "Search",
+            "placeholder": "Search transactions..."
+        },
+        "filters": {
+            "all": "All",
+            "sent": "Sent",
+            "received": "Received",
+            "pending": "Pending",
+            "completed": "Completed",
+            "failed": "Failed",
+            "onramp": "Add Funds",
+            "offramp": "Withdraw",
+            "allTypes": "All Types",
+            "allStatuses": "All Statuses",
+            "type": "Type",
+            "status": "Status"
+        },
+        "sort": {
+            "label": "Sort by",
+            "date": "Date",
+            "amount": "Amount",
+            "recipient": "Recipient"
+        },
+        "details": {
+            "title": "Transaction Details",
+            "id": "Transaction ID",
+            "amount": "Amount",
+            "date": "Date",
+            "status": "Status",
+            "memo": "Memo"
+        },
+        "error": {
+            "refresh": "Failed to refresh transactions"
+        }
+    },
+    "wallet": {
+        "title": "Wallet",
+        "balance": {
+            "title": "Wallet Balance",
+            "subtitle": "Your digital assets",
+            "available": "Available",
+            "loading": "Loading balance...",
+            "refreshing": "Refreshing...",
+            "refresh": "Refresh",
+            "usd": "USD",
+            "sol": "SOL"
+        },
+        "currencies": {
+            "usd": "US Dollar",
+            "eur": "Euro",
+            "gbp": "British Pound",
+            "sol": "Solana"
+        },
+        "actions": {
+            "addFunds": "Add Funds",
+            "withdraw": "Withdraw",
+            "swap": "Swap",
+            "history": "Transaction History",
+            "addMoney": "Add Money",
+            "sendMoney": "Send Money"
+        },
+        "error": {
+            "refresh": "Failed to refresh balance"
+        }
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "subtitle": "Manage your finances",
+        "welcome": "Welcome back, {{name}}",
+        "balance": {
+            "title": "Total Balance",
+            "subtitle": "Available funds",
+            "loading": "Loading balance...",
+            "refreshing": "Refreshing...",
+            "refresh": "Refresh",
+            "usd": "USD",
+            "sol": "SOL"
+        },
+        "quickActions": {
+            "title": "Quick Actions",
+            "sendMoney": "Send Money",
+            "receiveMoney": "Receive Money",
+            "addFunds": "Add Funds",
+            "viewHistory": "View History"
+        },
+        "recentTransactions": {
+            "title": "Recent Transactions",
+            "viewAll": "View All",
+            "noTransactions": "No recent transactions"
+        },
+        "transactions": {
+            "title": "Recent Transactions",
+            "viewAll": "View All",
+            "noTransactions": "No recent transactions"
+        },
+        "visaCard": {
+            "title": "VISA Card",
+            "active": "Active",
+            "noCard": "No VISA Card",
+            "getCard": "Get VISA Card",
+            "cardNumber": "Card Number",
+            "status": "Status"
+        },
+        "actions": {
+            "refresh": "Refresh",
+            "logout": "Logout",
+            "sendMoney": "Send Money",
+            "receiveMoney": "Receive Money",
+            "addMoney": "Add Money",
+            "cashOut": "Cash Out"
+        }
+    },
+    "sendMoney": {
+        "title": "Send Money",
+        "balance": {
+            "title": "Available Balance",
+            "usd": "USD",
+            "sol": "SOL"
+        },
+        "form": {
+            "recipient": {
+                "label": "Recipient",
+                "placeholder": "Select or add recipient",
+                "placeholder.email": "Enter email address",
+                "placeholder.phone": "Enter phone number",
+                "placeholder.wallet": "Enter wallet address"
+            },
+            "recipientType": {
+                "label": "Recipient Type",
+                "email": "Email",
+                "phone": "Phone",
+                "wallet": "Wallet Address"
+            },
+            "amount": {
+                "label": "Amount",
+                "placeholder": "Enter amount"
+            },
+            "currency": {
+                "label": "Currency"
+            },
+            "memo": {
+                "label": "Memo",
+                "placeholder": "Add a note",
+                "optional": "optional"
+            },
+            "saveToContacts": "Save to Contacts",
+            "send": "Send",
+            "sending": "Sending...",
+            "cancel": "Cancel",
+            "fee": {
+                "amount": "Amount",
+                "fee": "Fee",
+                "total": "Total"
+            },
+            "validation": {
+                "recipientRequired": "Please select a recipient",
+                "amountRequired": "Amount is required",
+                "amountPositive": "Amount must be positive",
+                "amountMinimum": "Minimum amount is $1",
+                "amountExceedsBalance": "Amount exceeds available balance",
+                "emailInvalid": "Invalid email address",
+                "phoneInvalid": "Invalid phone number"
+            },
+            "error": {
+                "general": "Failed to send money. Please try again."
+            }
+        },
+        "success": {
+            "title": "Money sent successfully!",
+            "transactionId": "Transaction ID",
+            "viewDetails": "View Details"
+        }
+    },
+    "onramp": {
+        "title": "Add Funds",
+        "info": {
+            "title": "Add Funds to Your Wallet",
+            "description": "Add money to your wallet using bank transfer or card"
+        },
+        "form": {
+            "amount": {
+                "label": "Amount",
+                "placeholder": "Enter amount to add"
+            },
+            "currency": {
+                "label": "Currency"
+            },
+            "paymentMethod": {
+                "label": "Payment Method",
+                "bank": "Bank Transfer",
+                "card": "Credit/Debit Card"
+            },
+            "bankAccount": {
+                "label": "Bank Account",
+                "placeholder": "Enter bank account details"
+            },
+            "cardNumber": {
+                "label": "Card Number",
+                "placeholder": "Enter card number"
+            },
+            "expiryDate": {
+                "label": "Expiry Date",
+                "placeholder": "MM/YY"
+            },
+            "cvv": {
+                "label": "CVV",
+                "placeholder": "Enter CVV"
+            },
+            "submit": "Add Funds",
+            "adding": "Adding funds...",
+            "processing": "Processing...",
+            "cancel": "Cancel",
+            "fee": {
+                "amount": "Amount",
+                "fee": "Fee",
+                "total": "Total"
+            },
+            "validation": {
+                "amountRequired": "Amount is required",
+                "amountPositive": "Amount must be positive",
+                "amountMinimum": "Minimum amount is $10",
+                "bankAccountRequired": "Bank account is required",
+                "cardNumberRequired": "Card number is required",
+                "cardNumberInvalid": "Invalid card number",
+                "expiryDateRequired": "Expiry date is required",
+                "expiryDateInvalid": "Invalid expiry date",
+                "cvvRequired": "CVV is required",
+                "cvvInvalid": "Invalid CVV"
+            },
+            "error": {
+                "general": "Failed to add funds. Please try again."
+            }
+        },
+        "success": {
+            "title": "Funds added successfully!",
+            "transactionId": "Transaction ID",
+            "viewDetails": "View Details"
+        }
+    },
+    "offramp": {
+        "title": "Withdraw Funds",
+        "info": {
+            "title": "Withdraw Funds from Your Wallet",
+            "description": "Withdraw money from your wallet to your bank account or crypto wallet"
+        },
+        "balance": {
+            "title": "Available Balance"
+        },
+        "form": {
+            "amount": {
+                "label": "Amount",
+                "placeholder": "Enter amount to withdraw"
+            },
+            "currency": {
+                "label": "Currency"
+            },
+            "destination": {
+                "label": "Destination",
+                "bank": "Bank Account",
+                "wallet": "Crypto Wallet"
+            },
+            "paymentMethod": {
+                "label": "Payment Method",
+                "bank": "Bank Transfer",
+                "card": "Credit/Debit Card",
+                "crypto": "Crypto"
+            },
+            "bankAccount": {
+                "label": "Bank Account",
+                "placeholder": "Enter bank account details"
+            },
+            "walletAddress": {
+                "label": "Wallet Address",
+                "placeholder": "Enter wallet address"
+            },
+            "submit": "Withdraw Funds",
+            "withdrawing": "Withdrawing funds...",
+            "processing": "Processing...",
+            "cancel": "Cancel",
+            "fee": {
+                "amount": "Amount",
+                "fee": "Fee",
+                "total": "Total"
+            },
+            "validation": {
+                "amountRequired": "Amount is required",
+                "amountPositive": "Amount must be positive",
+                "amountMinimum": "Minimum amount is $10",
+                "amountExceedsBalance": "Amount exceeds available balance",
+                "bankAccountRequired": "Bank account is required",
+                "walletAddressRequired": "Wallet address is required"
+            },
+            "error": {
+                "general": "Failed to withdraw funds. Please try again."
+            }
+        },
+        "success": {
+            "title": "Withdrawal initiated!",
+            "transactionId": "Transaction ID",
+            "viewDetails": "View Details"
+        }
+    },
+    "contacts": {
+        "title": "Contacts",
+        "loading": "Loading contacts...",
+        "count": "contacts",
+        "addContact": "Add Contact",
+        "addFirstContact": "Add Your First Contact",
+        "editContact": "Edit Contact",
+        "deleteContact": "Delete Contact",
+        "deleteTitle": "Delete Contact",
+        "deleteMessage": "Are you sure you want to delete {{name}}?",
+        "confirmDelete": "Delete",
+        "search": {
+            "label": "Search",
+            "placeholder": "Search contacts..."
+        },
+        "sort": {
+            "label": "Sort by",
+            "name": "Name",
+            "date": "Date Added",
+            "favorite": "Favorites"
+        },
+        "form": {
+            "name": "Name",
+            "email": "Email",
+            "phone": "Phone",
+            "favorite": "Favorite",
+            "namePlaceholder": "Enter contact name",
+            "emailPlaceholder": "Enter email address",
+            "phonePlaceholder": "Enter phone number",
+            "save": "Save Contact",
+            "saving": "Saving...",
+            "deleting": "Deleting...",
+            "cancel": "Cancel",
+            "validation": {
+                "nameRequired": "Name is required",
+                "emailRequired": "Email is required",
+                "emailInvalid": "Please enter a valid email address",
+                "phoneRequired": "Phone is required",
+                "phoneInvalid": "Invalid phone number"
+            },
+            "error": {
+                "general": "Failed to save contact. Please try again."
+            }
+        },
+        "noContacts": "No contacts found",
+        "lastSent": "Last sent",
+        "sendMoney": "Send Money",
+        "actions": {
+            "edit": "Edit",
+            "delete": "Delete",
+            "sendMoney": "Send Money"
+        },
+        "error": {
+            "add": "Failed to add contact",
+            "edit": "Failed to edit contact",
+            "delete": "Failed to delete contact",
+            "toggleFavorite": "Failed to update favorite status"
+        }
     }
-  },
-  "privacyPolicy": {
-    "title": "Privacy Policy — Rampa (Lafitech UG)",
-    "metaDescription": "Privacy Policy for RAMPA - Learn how we protect and handle your personal data",
-    "version": "Version:",
-    "effectiveDate": "Effective date:",
-    "date": "September 25, 2025",
-    "controller": "Controller:",
-    "contact": "Contact:",
-    "registeredAddress": "Registered address:",
-    "supervisoryAuthority": "Supervisory authority:",
-    "supervisoryAuthorityText": "You may lodge complaints with your local authority or the competent authority in Germany.",
-    "sections": {
-      "scope": {
-        "title": "Scope",
-        "content": "This notice covers personal data processed when you use rampa.cash and the Rampa app."
-      },
-      "dataProcessing": {
-        "title": "What data we process",
-        "intro": "We design for data minimization. Depending on your use:",
-        "telemetryTitle": "Account & app telemetry (pseudonymous):",
-        "telemetryContent": "app/device identifiers, IP-derived country (for geo-blocking), session logs, settings, crash logs.",
-        "walletTitle": "Wallet data:",
-        "walletContent": "public keys, transaction metadata (hashes, amounts, token mints), risk screening results (e.g., sanctions exposure scores).",
-        "supportTitle": "Support communications:",
-        "supportContent": "messages and contact details you provide.",
-        "analyticsTitle": "Website analytics (minimal):",
-        "analyticsContent": "aggregated usage; we avoid third-party advertising cookies.",
-        "disclaimer": "We do not store your private keys or seed phrases. We do not retain identity documents collected by on/off-ramp or card issuers."
-      },
-      "processingBasis": {
-        "title": "Why we process data (GDPR Art. 6)",
-        "provideTitle": "Provide and secure the app",
-        "provideContent": "(Art. 6(1)(b) contract; Art. 6(1)(f) legitimate interests for security/fraud prevention).",
-        "complianceTitle": "Compliance and risk controls",
-        "complianceContent": "(Art. 6(1)(c) legal obligation; Art. 6(1)(f) legitimate interests), including geo-blocking, sanctions/PEP screening of wallet addresses, velocity limits, and responding to lawful requests.",
-        "analyticsTitle": "Product analytics & improvement",
-        "analyticsContent": "(Art. 6(1)(f) legitimate interests), using aggregated or pseudonymous data.",
-        "communicationsTitle": "Communications",
-        "communicationsContent": "(Art. 6(1)(b)/(f)) when you contact us.",
-        "consentNote": "Where required (e.g., certain cookies or marketing), we will seek consent (Art. 6(1)(a))."
-      },
-      "dataRecipients": {
-        "title": "Who receives data",
-        "processorsTitle": "Processors (under DPAs):",
-        "processorsContent": "hosting/ops providers, error telemetry, encrypted key-infra provider Web3Auth, analytics tooling, and security vendors.",
-        "controllersTitle": "Independent controllers (separate policies):",
-        "transak": "Transak (fiat on/off-ramp KYC/AML and payments),",
-        "issuer": "Issuer/EMI (if you opt into the card program),",
-        "jupiter": "Jupiter / DEXes (when you execute swaps),",
-        "analytics": "Blockchain analytics provider (sanctions/exposure screening),",
-        "lawEnforcement": "Law enforcement or competent authorities where legally required."
-      },
-      "internationalTransfers": {
-        "title": "International transfers",
-        "content": "Where data is transferred outside the EEA/UK, we use appropriate safeguards such as Standard Contractual Clauses (SCCs) and risk assessments."
-      },
-      "retention": {
-        "title": "Retention",
-        "operationalTitle": "Operational logs:",
-        "operationalContent": "typically 30–90 days.",
-        "riskTitle": "Risk/decision records:",
-        "riskContent": "typically ≥ 5 years or as required by law/partners.",
-        "supportTitle": "Support records:",
-        "supportContent": "for as long as needed to address your request and meet legal obligations."
-      },
-      "userRights": {
-        "title": "Your rights",
-        "intro": "Subject to legal limits, you have the right to access, rectify, erase, restrict, object, and data portability. You can also withdraw consent where processing is based on consent.",
-        "contactInfo": "Contact:",
-        "complaint": "You may also complain to your supervisory authority."
-      },
-      "cookies": {
-        "title": "Cookies & tracking",
-        "content": "We aim to use essential cookies only on the website (e.g., to serve pages securely). No third-party advertising cookies. If we introduce optional analytics cookies, we will present a consent banner."
-      },
-      "security": {
-        "title": "Security",
-        "content": "Encryption in transit/at rest, role-based access, least-privilege, and audit logging. We do not hold users' private keys. We promptly investigate and remediate incidents and will notify authorities/users where legally required."
-      },
-      "children": {
-        "title": "Children",
-        "content": "Rampa is for adults (18+) and is not intended for children."
-      },
-      "changes": {
-        "title": "Changes to this notice",
-        "content": "We may update this privacy notice and will post the updated version with a new effective date. Material changes will be highlighted in-app or on our site."
-      },
-      "contactSection": {
-        "title": "Contact",
-        "content": "Questions or requests:"
-      }
-    }
-  },
-  "blog": {
-    "title": "Blog",
-    "metaDescription": "Learn about remittances, stablecoins, financial education, and how Rampa is turning everyday remittances into engines of shared prosperity.",
-    "hero": {
-      "title": "Knowledge Hub",
-      "subtitle": "Learn about remittances, stablecoins, financial education, and how Rampa is turning everyday remittances into engines of shared prosperity.."
-    },
-    "categories": {
-      "all": "All Articles",
-      "remittances": "Remittances",
-      "stablecoins": "Stablecoins",
-      "financialEducation": "Financial Education",
-      "rampaGuides": "Rampa Guides"
-    },
-    "minRead": "min read",
-    "noPosts": "No articles found in this category.",
-    "readMore": "Read More",
-    "backToBlog": "← Back to Blog",
-    "tags": "Tags"
-  }
 }

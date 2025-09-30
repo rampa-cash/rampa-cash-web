@@ -1,6 +1,6 @@
 import { serverRequest } from '../../lib/api-client';
 import { API_ENDPOINTS } from '../../lib/constants';
-import type { WaitlistEntry, WaitlistRequest, WaitlistResponse } from './types';
+import type { WaitlistRequest, InquiryResponse } from './types';
 
 /**
  * Waitlist feature-specific API client
@@ -10,10 +10,10 @@ export class WaitlistApiClient {
     /**
      * Add a new entry to the waitlist
      */
-    static async addToWaitlist(data: Omit<WaitlistRequest, 'type'>): Promise<WaitlistResponse> {
+    static async addToWaitlist(data: WaitlistRequest): Promise<InquiryResponse> {
         try {
             // The backend returns the created entry on success (201 status)
-            await serverRequest<WaitlistEntry>(
+            const response = await serverRequest<InquiryResponse>(
                 'POST',
                 API_ENDPOINTS.waitlist,
                 undefined, // token
@@ -23,41 +23,22 @@ export class WaitlistApiClient {
                 }
             );
             
-            // Convert the created entry to our expected response format
-            return {
-                success: true,
-                message: 'Successfully joined the waitlist!',
-                count: 1 // We know one entry was created
-            };
+            return response;
         } catch (error) {
-            // If there's an error, return the error response format
-            return {
-                success: false,
-                error: error instanceof Error ? error.message : 'An error occurred'
-            };
+            // Re-throw the error to be handled by the calling code
+            throw error;
         }
     }
 
     /**
      * Get all waitlist entries
      */
-    static async getWaitlistEntries(): Promise<WaitlistEntry[]> {
-        return serverRequest<WaitlistEntry[]>(
+    static async getWaitlistEntries(): Promise<InquiryResponse[]> {
+        return serverRequest<InquiryResponse[]>(
             'GET',
             API_ENDPOINTS.waitlist,
             undefined // token
         );
     }
 
-    /**
-     * Get waitlist count
-     */
-    static async getWaitlistCount(): Promise<number> {
-        const response = await serverRequest<{ count: number }>(
-            'GET',
-            API_ENDPOINTS.waitlistCount,
-            undefined // token
-        );
-        return response.count;
-    }
 }

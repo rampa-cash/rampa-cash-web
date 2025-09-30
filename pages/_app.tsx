@@ -3,6 +3,7 @@ import { appWithTranslation } from 'next-i18next'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useState } from 'react'
 import Layout from '../components/layout/Layout'
+import { ThemeProvider } from '../contexts/ThemeContext'
 import '../styles/globals.css'
 
 const App = ({ Component, pageProps }: AppProps): JSX.Element => {
@@ -17,11 +18,13 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
     }))
 
     return (
-        <QueryClientProvider client={queryClient}>
-            <Layout>
-                <Component {...pageProps} />
-            </Layout>
-        </QueryClientProvider>
+        <ThemeProvider>
+            <QueryClientProvider client={queryClient}>
+                <Layout>
+                    <Component {...pageProps} />
+                </Layout>
+            </QueryClientProvider>
+        </ThemeProvider>
     )
 }
 

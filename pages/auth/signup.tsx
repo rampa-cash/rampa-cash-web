@@ -1,13 +1,13 @@
 import type { NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
-import { LoginPage } from '../features/authentication'
+import { SignupPage } from '../../features/auth'
 
-const Login: NextPage = () => {
-    return <LoginPage />
+const Signup: NextPage = () => {
+    return <SignupPage />
 }
 
-export default Login
+export default Signup
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
