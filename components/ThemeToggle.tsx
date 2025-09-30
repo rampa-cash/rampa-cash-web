@@ -9,13 +9,13 @@ const ThemeToggle: React.FC = () => {
         setMounted(true);
 
         if (typeof window !== 'undefined') {
-            // Load theme from localStorage or system preference
+            // Load theme from localStorage or default to light
             const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
             if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
                 setTheme(savedTheme);
             } else {
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                setTheme(prefersDark ? 'dark' : 'light');
+                // Default to light mode (don't follow system preference)
+                setTheme('light');
             }
         }
     }, []);
