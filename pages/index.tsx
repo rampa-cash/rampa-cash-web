@@ -85,27 +85,27 @@ const Home: NextPage = () => {
                             <p className="text-gray-600 dark:text-gray-300 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">{t('howItWorks.steps.step1.description')}</p>
                         </div>
 
-                        <div className="bg-white dark:bg-gray-800 p-8 md:p-10 rounded-2xl shadow-xl border border-purple-100/50 hover:shadow-2xl hover:border-purple-200 transition-all duration-300 hover:-translate-y-2 group cursor-pointer">
+                        <div className="bg-white dark:bg-gray-800 p-8 md:p-10 rounded-2xl shadow-xl border border-indigo-100/50 dark:border-gray-700/50 hover:shadow-2xl hover:border-indigo-200 dark:hover:border-indigo-400 transition-all duration-300 hover:-translate-y-2 group cursor-pointer">
                             <div className="w-14 h-14 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl flex items-center justify-center font-bold mb-6 text-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
                                 2
                             </div>
-                            <h3 className="text-xl md:text-2xl font-bold mb-4 text-gray-900 leading-tight group-hover:text-purple-700 transition-colors duration-300">{t('howItWorks.steps.step2.title')}</h3>
+                            <h3 className="text-xl md:text-2xl font-bold mb-4 text-gray-900 dark:text-white leading-tight group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition-colors duration-300">{t('howItWorks.steps.step2.title')}</h3>
                             <p className="text-gray-600 dark:text-gray-300 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">{t('howItWorks.steps.step2.description')}</p>
                         </div>
 
-                        <div className="bg-white dark:bg-gray-800 p-8 md:p-10 rounded-2xl shadow-xl border border-pink-100/50 hover:shadow-2xl hover:border-pink-200 transition-all duration-300 hover:-translate-y-2 group cursor-pointer">
+                        <div className="bg-white dark:bg-gray-800 p-8 md:p-10 rounded-2xl shadow-xl border border-indigo-100/50 dark:border-gray-700/50 hover:shadow-2xl hover:border-indigo-200 dark:hover:border-indigo-400 transition-all duration-300 hover:-translate-y-2 group cursor-pointer">
                             <div className="w-14 h-14 bg-gradient-to-r from-pink-600 to-red-500 text-white rounded-2xl flex items-center justify-center font-bold mb-6 text-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
                                 3
                             </div>
-                            <h3 className="text-xl md:text-2xl font-bold mb-4 text-gray-900 leading-tight group-hover:text-pink-700 transition-colors duration-300">{t('howItWorks.steps.step3.title')}</h3>
+                            <h3 className="text-xl md:text-2xl font-bold mb-4 text-gray-900 dark:text-white leading-tight group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition-colors duration-300">{t('howItWorks.steps.step3.title')}</h3>
                             <p className="text-gray-600 dark:text-gray-300 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">{t('howItWorks.steps.step3.description')}</p>
                         </div>
 
-                        <div className="bg-white dark:bg-gray-800 p-8 md:p-10 rounded-2xl shadow-xl border border-blue-100/50 hover:shadow-2xl hover:border-blue-200 transition-all duration-300 hover:-translate-y-2 group cursor-pointer">
+                        <div className="bg-white dark:bg-gray-800 p-8 md:p-10 rounded-2xl shadow-xl border border-indigo-100/50 dark:border-gray-700/50 hover:shadow-2xl hover:border-indigo-200 dark:hover:border-indigo-400 transition-all duration-300 hover:-translate-y-2 group cursor-pointer">
                             <div className="w-14 h-14 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl flex items-center justify-center font-bold mb-6 text-xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
                                 4
                             </div>
-                            <h3 className="text-xl md:text-2xl font-bold mb-4 text-gray-900 leading-tight group-hover:text-blue-700 transition-colors duration-300">{t('howItWorks.steps.step4.title')}</h3>
+                            <h3 className="text-xl md:text-2xl font-bold mb-4 text-gray-900 dark:text-white leading-tight group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition-colors duration-300">{t('howItWorks.steps.step4.title')}</h3>
                             <p className="text-gray-600 dark:text-gray-300 leading-relaxed group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">{t('howItWorks.steps.step4.description')}</p>
                         </div>
                     </div>
@@ -236,7 +236,7 @@ const Home: NextPage = () => {
                             </div>
                         </div>
 
-                        <div className="bg-white/80 backdrop-blur-sm p-10 md:p-12 pt-16 md:pt-18 rounded-3xl shadow-2xl border border-white/50 hover:shadow-3xl transition-all duration-500 hover:-translate-y-3 group relative overflow-hidden lg:scale-105 cursor-pointer">
+                        <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-10 md:p-12 pt-16 md:pt-18 rounded-3xl shadow-2xl border border-white/50 dark:border-gray-700/50 hover:shadow-3xl transition-all duration-500 hover:-translate-y-3 group relative overflow-hidden lg:scale-105 cursor-pointer">
                             <div className="absolute inset-0 bg-gradient-to-br from-green-50/30 to-teal-50/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                             <div className="absolute -top-1 -right-1 bg-gradient-to-r from-green-500 to-teal-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg group-hover:scale-110 transition-transform duration-300">
                                 {t('aboutUs.features.forRealPeople.highlight')}
@@ -247,8 +247,8 @@ const Home: NextPage = () => {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                                     </svg>
                                 </div>
-                                <h3 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900 group-hover:text-green-700 transition-colors duration-300">{t('aboutUs.features.forRealPeople.title')}</h3>
-                                <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg mb-6 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">{t('aboutUs.features.forRealPeople.description')}</p>
+                                <h3 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900 dark:text-white group-hover:text-green-700 dark:group-hover:text-green-400 transition-colors duration-300">{t('aboutUs.features.forRealPeople.title')}</h3>
+                                <p className="text-gray-800 dark:text-gray-300 leading-relaxed text-lg mb-6 group-hover:text-gray-900 dark:group-hover:text-gray-200 transition-colors duration-300">{t('aboutUs.features.forRealPeople.description')}</p>
                                 <div className="flex items-center justify-center">
                                     <div className="px-4 py-2 bg-gradient-to-r from-green-100 to-teal-100 rounded-full group-hover:from-green-200 group-hover:to-teal-200 transition-all duration-300 group-hover:scale-105">
                                         <span className="text-green-700 font-semibold text-sm">{t('aboutUs.features.forRealPeople.badge')}</span>
@@ -265,7 +265,7 @@ const Home: NextPage = () => {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                     </svg>
                                 </div>
-                                <h3 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900 group-hover:text-orange-700 transition-colors duration-300">{t('aboutUs.features.invisibleInnovation.title')}</h3>
+                                <h3 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900 dark:text-white group-hover:text-orange-700 dark:group-hover:text-orange-400 transition-colors duration-300">{t('aboutUs.features.invisibleInnovation.title')}</h3>
                                 <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg mb-6 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">{t('aboutUs.features.invisibleInnovation.description')}</p>
                                 <div className="flex items-center justify-center">
                                     <div className="px-4 py-2 bg-gradient-to-r from-orange-100 to-red-100 rounded-full group-hover:from-orange-200 group-hover:to-red-200 transition-all duration-300 group-hover:scale-105">
