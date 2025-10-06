@@ -1,4 +1,5 @@
 import { AuthApiClient } from '../api-client';
+import { getLocalStorage, setLocalStorage, removeLocalStorage } from '@/lib/browser-utils';
 import type { 
     User, 
     LoginCredentials, 
@@ -58,13 +59,15 @@ export class AuthService {
 
     /**
      * Web3Auth login (wallet connection)
+     * @param authProviderId - The unique identifier from Web3Auth (email, verifierId, or name)
+     * @param _signature - Not used for Web3Auth login (kept for compatibility)
      */
-    static async web3AuthLogin(walletAddress: string, _signature: string): Promise<Web3AuthResponse> {
+    static async web3AuthLogin(authProviderId: string, _signature: string): Promise<Web3AuthResponse> {
         try {
             const response = await AuthApiClient.login({
                 authProvider: 'web3auth',
-                authProviderId: walletAddress,
-                walletAddress,
+                authProviderId: authProviderId,
+                walletAddress: authProviderId, // Using authProviderId as walletAddress for now
             })
 
             // Store tokens in localStorage
@@ -72,11 +75,11 @@ export class AuthService {
 
             return {
                 ...response,
-                walletAddress,
+                walletAddress: authProviderId,
             }
         } catch (error) {
             console.error('Web3Auth login error:', error)
-            throw new Error('Failed to connect wallet. Please try again.')
+            throw new Error('Failed to authenticate with Web3Auth. Please try again.')
         }
     }
 
@@ -223,29 +226,29 @@ export class AuthService {
      * Get access token from localStorage
      */
     static getAccessToken(): string | null {
-        return localStorage.getItem('accessToken')
+        return getLocalStorage('accessToken')
     }
 
     /**
      * Get refresh token from localStorage
      */
     static getRefreshToken(): string | null {
-        return localStorage.getItem('refreshToken')
+        return getLocalStorage('refreshToken')
     }
 
     /**
      * Store tokens in localStorage
      */
     private static storeTokens(accessToken: string, refreshToken: string): void {
-        localStorage.setItem('accessToken', accessToken)
-        localStorage.setItem('refreshToken', refreshToken)
+        setLocalStorage('accessToken', accessToken)
+        setLocalStorage('refreshToken', refreshToken)
     }
 
     /**
      * Clear tokens from localStorage
      */
     private static clearTokens(): void {
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('refreshToken')
+        removeLocalStorage('accessToken')
+        removeLocalStorage('refreshToken')
     }
 }

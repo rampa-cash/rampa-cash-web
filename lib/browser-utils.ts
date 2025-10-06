@@ -24,6 +24,89 @@ export const getWindow = (): Window | null => {
 }
 
 /**
+ * Check if localStorage is available
+ */
+export const isLocalStorageAvailable = (): boolean => {
+    if (!isBrowser()) return false
+    
+    try {
+        const test = '__localStorage_test__'
+        localStorage.setItem(test, test)
+        localStorage.removeItem(test)
+        return true
+    } catch {
+        return false
+    }
+}
+
+/**
+ * Safely get item from localStorage
+ */
+export const getLocalStorage = (key: string): string | null => {
+    if (!isLocalStorageAvailable()) return null
+    
+    try {
+        return localStorage.getItem(key)
+    } catch (error) {
+        if (process.env.NODE_ENV === 'development') {
+            console.error('Failed to get from localStorage:', error)
+        }
+        return null
+    }
+}
+
+/**
+ * Safely set item in localStorage
+ */
+export const setLocalStorage = (key: string, value: string): boolean => {
+    if (!isLocalStorageAvailable()) return false
+    
+    try {
+        localStorage.setItem(key, value)
+        return true
+    } catch (error) {
+        if (process.env.NODE_ENV === 'development') {
+            console.error('Failed to set in localStorage:', error)
+        }
+        return false
+    }
+}
+
+/**
+ * Safely remove item from localStorage
+ */
+export const removeLocalStorage = (key: string): boolean => {
+    if (!isLocalStorageAvailable()) return false
+    
+    try {
+        localStorage.removeItem(key)
+        return true
+    } catch (error) {
+        if (process.env.NODE_ENV === 'development') {
+            console.error('Failed to remove from localStorage:', error)
+        }
+        return false
+    }
+}
+
+/**
+ * Safely clear all localStorage
+ */
+export const clearLocalStorage = (): boolean => {
+    if (!isLocalStorageAvailable()) return false
+    
+    try {
+        localStorage.clear()
+        return true
+    } catch (error) {
+        if (process.env.NODE_ENV === 'development') {
+            console.error('Failed to clear localStorage:', error)
+        }
+        return false
+    }
+}
+
+/**
  * Safely access document object
  */
 export const getDocument = (): Document | null => {

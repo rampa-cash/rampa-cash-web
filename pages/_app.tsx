@@ -4,7 +4,13 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useState } from 'react'
 import Layout from '../components/layout/Layout'
 import { ThemeProvider } from '../contexts/ThemeContext'
+import { Web3AuthProvider, type Web3AuthContextConfig } from '@web3auth/modal/react'
+import { web3AuthConfig } from '../features/auth/config/web3auth.config'
 import '../styles/globals.css'
+
+const web3AuthContextConfig: Web3AuthContextConfig = {
+    web3AuthOptions: web3AuthConfig,
+}
 
 const App = ({ Component, pageProps }: AppProps): JSX.Element => {
     const [queryClient] = useState(() => new QueryClient({
@@ -20,9 +26,11 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
     return (
         <ThemeProvider>
             <QueryClientProvider client={queryClient}>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
+                <Web3AuthProvider config={web3AuthContextConfig}>
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
+                </Web3AuthProvider>
             </QueryClientProvider>
         </ThemeProvider>
     )
