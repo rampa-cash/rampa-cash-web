@@ -1,9 +1,9 @@
 import { WalletApiClient } from '../api-client';
-import type { 
-    Wallet, 
-    WalletBalance, 
+import type {
+    Wallet,
+    WalletBalance,
     SwapResponse,
-    TransactionFee
+    TransactionFee,
 } from '../types';
 
 /**
@@ -14,7 +14,9 @@ export class WalletService {
     /**
      * Get wallet balances for a user
      */
-    static async getBalances(_userId: string): Promise<{ [key: string]: WalletBalance }> {
+    static async getBalances(
+        _userId: string
+    ): Promise<{ [key: string]: WalletBalance }> {
         try {
             // In a real app, you'd get the token from auth context
             const token = localStorage.getItem('accessToken');
@@ -23,7 +25,7 @@ export class WalletService {
             }
 
             const response = await WalletApiClient.getWalletBalances(token);
-            
+
             // Convert API response to internal format
             const balances: { [key: string]: WalletBalance } = {};
             response.balances.forEach(balance => {
@@ -48,18 +50,24 @@ export class WalletService {
     /**
      * Connect wallet
      */
-    static async connectWallet(userId: string, walletAddress: string): Promise<Wallet> {
+    static async connectWallet(
+        userId: string,
+        walletAddress: string
+    ): Promise<Wallet> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
                 throw new Error('No authentication token available');
             }
 
-            const response = await WalletApiClient.connectWallet({
-                walletType: 'phantom', // Default, would be determined by wallet provider
-                address: walletAddress,
-                publicKey: walletAddress, // Would be actual public key
-            }, token);
+            const response = await WalletApiClient.connectWallet(
+                {
+                    walletType: 'phantom', // Default, would be determined by wallet provider
+                    address: walletAddress,
+                    publicKey: walletAddress, // Would be actual public key
+                },
+                token
+            );
 
             return {
                 id: response.id,
@@ -81,7 +89,10 @@ export class WalletService {
     /**
      * Disconnect wallet
      */
-    static async disconnectWallet(_userId: string, _walletAddress: string): Promise<void> {
+    static async disconnectWallet(
+        _userId: string,
+        _walletAddress: string
+    ): Promise<void> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
@@ -98,7 +109,12 @@ export class WalletService {
     /**
      * Swap currencies
      */
-    static async swapCurrencies(_userId: string, _fromCurrency: string, _toCurrency: string, amount: number): Promise<SwapResponse> {
+    static async swapCurrencies(
+        _userId: string,
+        _fromCurrency: string,
+        _toCurrency: string,
+        amount: number
+    ): Promise<SwapResponse> {
         try {
             // This would be implemented based on the actual swap API
             // For now, return a mock response
@@ -119,7 +135,10 @@ export class WalletService {
     /**
      * Get transaction fees
      */
-    static async getTransactionFees(amount: number, currency: string): Promise<TransactionFee> {
+    static async getTransactionFees(
+        amount: number,
+        currency: string
+    ): Promise<TransactionFee> {
         try {
             // Mock implementation - would call actual fee calculation API
             return {
@@ -136,18 +155,24 @@ export class WalletService {
     /**
      * Create new wallet
      */
-    static async createWallet(_userId: string, walletData: {
-        address: string;
-        publicKey: string;
-        walletType: 'web3auth_mpc' | 'phantom' | 'solflare';
-    }): Promise<Wallet> {
+    static async createWallet(
+        _userId: string,
+        walletData: {
+            address: string;
+            publicKey: string;
+            walletType: 'web3auth_mpc' | 'phantom' | 'solflare';
+        }
+    ): Promise<Wallet> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
                 throw new Error('No authentication token available');
             }
 
-            const response = await WalletApiClient.createWallet(walletData, token);
+            const response = await WalletApiClient.createWallet(
+                walletData,
+                token
+            );
 
             return {
                 id: response.id,

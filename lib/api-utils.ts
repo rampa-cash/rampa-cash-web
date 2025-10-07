@@ -13,14 +13,20 @@ export interface RateLimitConfig {
 
 export const rateLimit = (config: RateLimitConfig = RATE_LIMIT_CONFIG) => {
     return (req: NextApiRequest, res: NextApiResponse): boolean => {
-        const ip = req.headers['x-forwarded-for'] ?? req.socket.remoteAddress ?? 'unknown';
+        const ip =
+            req.headers['x-forwarded-for'] ??
+            req.socket.remoteAddress ??
+            'unknown';
         const key = `rate_limit:${ip}`;
 
         const now = Date.now();
         const current = rateLimitStore.get(key);
 
         if (!current || current.resetTime < now) {
-            rateLimitStore.set(key, { count: 1, resetTime: now + config.windowMs });
+            rateLimitStore.set(key, {
+                count: 1,
+                resetTime: now + config.windowMs,
+            });
             return true;
         }
 
@@ -43,7 +49,9 @@ export const validateRequest = <T>(
         return { success: true, data };
     } catch (error) {
         if (error instanceof z.ZodError) {
-            const messages = error.errors.map((e: z.ZodIssue) => e.message).join(', ');
+            const messages = error.errors
+                .map((e: z.ZodIssue) => e.message)
+                .join(', ');
             return { success: false, error: messages };
         }
         return { success: false, error: 'Invalid request data' };
@@ -74,7 +82,7 @@ export const createApiError = (
     return {
         code,
         message,
-        ...(details && { details })
+        ...(details && { details }),
     };
 };
 
@@ -100,10 +108,22 @@ export const sendErrorResponse = (
 };
 
 // CORS middleware
-export const corsMiddleware = (req: NextApiRequest, res: NextApiResponse): void => {
-    res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGINS ?? '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+export const corsMiddleware = (
+    req: NextApiRequest,
+    res: NextApiResponse
+): void => {
+    res.setHeader(
+        'Access-Control-Allow-Origin',
+        process.env.ALLOWED_ORIGINS ?? '*'
+    );
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'GET, POST, PUT, DELETE, OPTIONS'
+    );
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'Content-Type, Authorization'
+    );
 
     // Handle preflight requests
     if (req.method === 'OPTIONS') {
@@ -123,7 +143,10 @@ export const requireAuth = (
         sendErrorResponse(
             res,
             401,
-            createApiError(ApiErrorCode.AUTHENTICATION_ERROR, 'Authentication required')
+            createApiError(
+                ApiErrorCode.AUTHENTICATION_ERROR,
+                'Authentication required'
+            )
         );
         return false;
     }

@@ -10,7 +10,9 @@ export class WaitlistApiClient {
     /**
      * Add a new entry to the waitlist
      */
-    static async addToWaitlist(data: WaitlistRequest): Promise<InquiryResponse> {
+    static async addToWaitlist(
+        data: WaitlistRequest
+    ): Promise<InquiryResponse> {
         try {
             // The backend returns the created entry on success (201 status)
             const response = await serverRequest<InquiryResponse>(
@@ -19,10 +21,10 @@ export class WaitlistApiClient {
                 undefined, // token
                 {
                     ...data,
-                    type: 'WAITLIST'
+                    type: 'WAITLIST',
                 }
             );
-            
+
             return response;
         } catch (error) {
             // Re-throw the error to be handled by the calling code
@@ -40,5 +42,4 @@ export class WaitlistApiClient {
             undefined // token
         );
     }
-
 }

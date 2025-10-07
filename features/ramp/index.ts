@@ -1,12 +1,12 @@
 // Components
-export { OnRamp } from './components/OnRamp'
-export { OffRamp } from './components/OffRamp'
+export { OnRamp } from './components/OnRamp';
+export { OffRamp } from './components/OffRamp';
 
 // API Client
-export { RampApiClient } from './api-client'
+export { RampApiClient } from './api-client';
 
 // Services
-export { RampService } from './services/ramp.service'
+export { RampService } from './services/ramp.service';
 
 // Types
 export type {
@@ -20,4 +20,4 @@ export type {
     RampState,
     OnRampProps,
     OffRampProps,
-} from './types'
+} from './types';

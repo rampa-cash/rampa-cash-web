@@ -65,6 +65,11 @@
             "support": "Customer support"
         }
     },
+    "auth": {
+        "login": "Login",
+        "logout": "Logout",
+        "connecting": "Connecting..."
+    },
     "aboutUs": {
         "title": "About Us",
         "description": "Bringing Web3 and decentralized apps to real people, making it so simple that they don't realize they're using them. Rampa is an On-chain remittance platform that turns stablecoin transfers into shared prosperity, empowering families to thrive through financial education and a tokenized investment portfolio, so the money they send home today grows into collective wealth.",

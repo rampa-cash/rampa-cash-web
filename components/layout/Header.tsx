@@ -5,6 +5,7 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import LanguageSwitcher from '../LanguageSwitcher';
 import ThemeToggle from '../ThemeToggle';
+import AuthButton from '../AuthButton';
 
 const Header = (): JSX.Element => {
     const { t } = useTranslation('common');
@@ -16,17 +17,32 @@ const Header = (): JSX.Element => {
     const isHomePage = router.pathname === '/';
 
     // Match your actual sections - wrapped in useMemo to prevent re-creation
-    const menuItems = useMemo(() => [
-        { id: 'home', label: t('navigation.home'), type: 'section' },
-        { id: 'how-it-works', label: t('navigation.howItWorks'), type: 'section' },
-        { id: 'pricing', label: t('navigation.pricing'), type: 'section' },
-        { id: 'about-us', label: t('navigation.aboutUs'), type: 'section' },
-    ], [t]);
+    const menuItems = useMemo(
+        () => [
+            { id: 'home', label: t('navigation.home'), type: 'section' },
+            {
+                id: 'how-it-works',
+                label: t('navigation.howItWorks'),
+                type: 'section',
+            },
+            { id: 'pricing', label: t('navigation.pricing'), type: 'section' },
+            { id: 'about-us', label: t('navigation.aboutUs'), type: 'section' },
+        ],
+        [t]
+    );
 
     // External navigation items (different pages)
-    const externalItems = useMemo(() => [
-        { id: 'blog', label: t('navigation.blog'), href: '/blog', type: 'link' },
-    ], [t]);
+    const externalItems = useMemo(
+        () => [
+            {
+                id: 'blog',
+                label: t('navigation.blog'),
+                href: '/blog',
+                type: 'link',
+            },
+        ],
+        [t]
+    );
 
     const scrollToSection = (sectionId: string): void => {
         // If not on home page, navigate to home first
@@ -39,7 +55,7 @@ const Header = (): JSX.Element => {
         if (element) {
             element.scrollIntoView({
                 behavior: 'smooth',
-                block: 'start'
+                block: 'start',
             });
         }
     };
@@ -56,7 +72,10 @@ const Header = (): JSX.Element => {
                 const element = document.getElementById(sectionId);
                 if (element) {
                     const { offsetTop, offsetHeight } = element;
-                    if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+                    if (
+                        scrollPosition >= offsetTop &&
+                        scrollPosition < offsetTop + offsetHeight
+                    ) {
                         setActiveSection(sectionId);
                         break;
                     }
@@ -73,15 +92,23 @@ const Header = (): JSX.Element => {
             <nav className="container mx-auto flex items-center justify-between py-3 px-4 md:py-4 md:px-6">
                 <Link href="/">
                     <div className="flex items-center cursor-pointer">
-                        <Image src="/logo.png" alt="RAMPA logo" width={40} height={40} className="w-8 h-8 md:w-10 md:h-10" />
-                        <span className="font-bold text-lg md:text-xl ml-2 text-gray-900 dark:text-white">rampa</span>
+                        <Image
+                            src="/logo.png"
+                            alt="RAMPA logo"
+                            width={40}
+                            height={40}
+                            className="w-8 h-8 md:w-10 md:h-10"
+                        />
+                        <span className="font-bold text-lg md:text-xl ml-2 text-gray-900 dark:text-white">
+                            rampa
+                        </span>
                     </div>
                 </Link>
 
                 {/* Desktop Navigation */}
                 <div className="hidden md:flex items-center space-x-8">
                     {/* Section navigation (for home page) */}
-                    {menuItems.map((item) => (
+                    {menuItems.map(item => (
                         <button
                             key={item.id}
                             onClick={() => scrollToSection(item.id)}
@@ -94,9 +121,9 @@ const Header = (): JSX.Element => {
                             {item.label}
                         </button>
                     ))}
-                    
+
                     {/* External links */}
-                    {externalItems.map((item) => (
+                    {externalItems.map(item => (
                         <Link
                             key={item.id}
                             href={item.href}
@@ -112,12 +139,14 @@ const Header = (): JSX.Element => {
 
                     <LanguageSwitcher />
                     <ThemeToggle />
+                    <AuthButton variant="desktop" />
                 </div>
 
                 {/* Mobile Menu Button and Language Switcher */}
                 <div className="flex items-center md:hidden space-x-2">
                     <LanguageSwitcher />
                     <ThemeToggle />
+                    <AuthButton variant="mobile" />
                     <button
                         className="bg-indigo-600 text-white px-2 py-1 text-xs rounded-md font-medium hover:bg-indigo-700 transition"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -132,7 +161,7 @@ const Header = (): JSX.Element => {
                 <div className="md:hidden bg-white dark:bg-gray-900 py-3 px-4 border-t border-gray-200 dark:border-gray-700">
                     <div className="flex flex-col space-y-3">
                         {/* Section navigation items */}
-                        {menuItems.map((item) => (
+                        {menuItems.map(item => (
                             <button
                                 key={item.id}
                                 onClick={() => {
@@ -140,21 +169,25 @@ const Header = (): JSX.Element => {
                                     setMobileMenuOpen(false);
                                 }}
                                 className={`text-left font-medium transition-colors hover:text-indigo-600 ${
-                                    isHomePage && activeSection === item.id ? 'text-indigo-600' : 'text-gray-800 dark:text-gray-200'
+                                    isHomePage && activeSection === item.id
+                                        ? 'text-indigo-600'
+                                        : 'text-gray-800 dark:text-gray-200'
                                 }`}
                             >
                                 {item.label}
                             </button>
                         ))}
-                        
+
                         {/* External link items */}
-                        {externalItems.map((item) => (
+                        {externalItems.map(item => (
                             <Link
                                 key={item.id}
                                 href={item.href}
                                 onClick={() => setMobileMenuOpen(false)}
                                 className={`text-left font-medium transition-colors hover:text-indigo-600 ${
-                                    router.pathname === item.href ? 'text-indigo-600' : 'text-gray-800 dark:text-gray-200'
+                                    router.pathname === item.href
+                                        ? 'text-indigo-600'
+                                        : 'text-gray-800 dark:text-gray-200'
                                 }`}
                             >
                                 {item.label}

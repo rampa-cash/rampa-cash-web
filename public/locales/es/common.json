@@ -65,6 +65,11 @@
             "support": "Soporte al cliente"
         }
     },
+    "auth": {
+        "login": "Iniciar sesión",
+        "logout": "Cerrar sesión",
+        "connecting": "Conectando..."
+    },
     "aboutUs": {
         "title": "Acerca de nosotros",
         "description": "Rampa lleva el poder de la Web3 y las aplicaciones descentralizadas a la vida diaria, haciéndolas tan simples que ni siquiera notas que las estás usando. Es una plataforma de remesas digitales que transforma el envío de stablecoins en prosperidad compartida, ayudando a las familias a crecer mediante educación financiera y un portafolio de inversión tokenizado, para que el dinero que envías hoy se convierta en riqueza mañana.",

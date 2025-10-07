@@ -1,106 +1,134 @@
-import Head from 'next/head'
-import type { NextPage, GetStaticProps, GetStaticPaths } from 'next'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { getBlogPosts } from '@/lib/api'
-import Image from 'next/image'
+import Head from 'next/head';
+import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { getBlogPosts } from '@/lib/api';
+import Image from 'next/image';
 
 interface BlogPost {
-    slug: string
+    slug: string;
     title: {
-        en: string
-        es: string
-    }
+        en: string;
+        es: string;
+    };
     excerpt: {
-        en: string
-        es: string
-    }
+        en: string;
+        es: string;
+    };
     content: {
-        en: string
-        es: string
-    }
-    author: string
-    publishedAt: string
-    readTime: number
-    category: 'remittances' | 'stablecoins' | 'financial-education' | 'rampa-guides'
+        en: string;
+        es: string;
+    };
+    author: string;
+    publishedAt: string;
+    readTime: number;
+    category:
+        | 'remittances'
+        | 'stablecoins'
+        | 'financial-education'
+        | 'rampa-guides';
     tags: {
-        en: string[]
-        es: string[]
-    }
-    featuredImage?: string
+        en: string[];
+        es: string[];
+    };
+    featuredImage?: string;
 }
 
 const BlogPost: NextPage<{ post: BlogPost }> = ({ post }) => {
-    const { t } = useTranslation('common')
-    const router = useRouter()
-    const { locale } = router
+    const { t } = useTranslation('common');
+    const router = useRouter();
+    const { locale } = router;
 
     if (router.isFallback) {
-        return <div>Loading...</div>
+        return <div>Loading...</div>;
     }
 
     // Get content based on current locale
-    const currentLocale = (locale as 'en' | 'es') || 'en'
-    const title = post.title[currentLocale]
-    const excerpt = post.excerpt[currentLocale]
-    const content = post.content[currentLocale]
-    const tags = post.tags[currentLocale]
+    const currentLocale = (locale as 'en' | 'es') || 'en';
+    const title = post.title[currentLocale];
+    const excerpt = post.excerpt[currentLocale];
+    const content = post.content[currentLocale];
+    const tags = post.tags[currentLocale];
 
     // Helper function to get category translation
     const getCategoryTranslation = (category: string): string => {
         switch (category) {
             case 'financial-education':
-                return t('blog.categories.financialEducation')
+                return t('blog.categories.financialEducation');
             case 'rampa-guides':
-                return t('blog.categories.rampaGuides')
+                return t('blog.categories.rampaGuides');
             case 'remittances':
-                return t('blog.categories.remittances')
+                return t('blog.categories.remittances');
             case 'stablecoins':
-                return t('blog.categories.stablecoins')
+                return t('blog.categories.stablecoins');
             default:
-                return category
+                return category;
         }
-    }
+    };
 
     // Helper function to format date consistently
     const formatDate = (dateString: string): string => {
-        const date = new Date(dateString)
-        return date.toLocaleDateString(currentLocale === 'es' ? 'es-ES' : 'en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        })
-    }
+        const date = new Date(dateString);
+        return date.toLocaleDateString(
+            currentLocale === 'es' ? 'es-ES' : 'en-US',
+            {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            }
+        );
+    };
 
     // Simple markdown-to-HTML converter for basic formatting
     const formatContent = (content: string): string => {
-        return content
-            // Headers
-            .replace(/^### (.*$)/gim, '<h3 class="text-xl font-semibold mb-4 mt-8 text-gray-800">$1</h3>')
-            .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mb-6 mt-10 text-gray-900">$1</h2>')
-            .replace(/^# (.*$)/gim, '<h1 class="text-3xl font-bold mb-8 text-gray-900">$1</h1>')
-            // Bold text
-            .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-gray-900">$1</strong>')
-            // Lists - handle bullet points
-            .replace(/^\- (.*$)/gim, '<li class="mb-2 text-gray-700">$1</li>')
-            // Paragraphs - split by double newlines
-            .split('\n\n')
-            .map(paragraph => {
-                // If it's a list item, don't wrap in <p>
-                if (paragraph.includes('<li')) {
-                    return `<ul class="list-disc list-inside mb-6 space-y-2">${paragraph}</ul>`
-                }
-                // If it's a header, don't wrap in <p>
-                if (paragraph.includes('<h1') || paragraph.includes('<h2') || paragraph.includes('<h3')) {
-                    return paragraph
-                }
-                // Regular paragraph
-                return `<p class="mb-6 text-gray-700 leading-relaxed">${paragraph}</p>`
-            })
-            .join('')
-    }
+        return (
+            content
+                // Headers
+                .replace(
+                    /^### (.*$)/gim,
+                    '<h3 class="text-xl font-semibold mb-4 mt-8 text-gray-800">$1</h3>'
+                )
+                .replace(
+                    /^## (.*$)/gim,
+                    '<h2 class="text-2xl font-bold mb-6 mt-10 text-gray-900">$1</h2>'
+                )
+                .replace(
+                    /^# (.*$)/gim,
+                    '<h1 class="text-3xl font-bold mb-8 text-gray-900">$1</h1>'
+                )
+                // Bold text
+                .replace(
+                    /\*\*(.*?)\*\*/g,
+                    '<strong class="font-semibold text-gray-900">$1</strong>'
+                )
+                // Lists - handle bullet points
+                .replace(
+                    /^\- (.*$)/gim,
+                    '<li class="mb-2 text-gray-700">$1</li>'
+                )
+                // Paragraphs - split by double newlines
+                .split('\n\n')
+                .map(paragraph => {
+                    // If it's a list item, don't wrap in <p>
+                    if (paragraph.includes('<li')) {
+                        return `<ul class="list-disc list-inside mb-6 space-y-2">${paragraph}</ul>`;
+                    }
+                    // If it's a header, don't wrap in <p>
+                    if (
+                        paragraph.includes('<h1') ||
+                        paragraph.includes('<h2') ||
+                        paragraph.includes('<h3')
+                    ) {
+                        return paragraph;
+                    }
+                    // Regular paragraph
+                    return `<p class="mb-6 text-gray-700 leading-relaxed">${paragraph}</p>`;
+                })
+                .join('')
+        );
+    };
 
     return (
         <>
@@ -132,23 +160,36 @@ const BlogPost: NextPage<{ post: BlogPost }> = ({ post }) => {
                     <div className="container mx-auto px-4 md:px-8 relative z-10">
                         <div className="max-w-4xl mx-auto text-center">
                             {/* Category Badge */}
-                            <span className={`inline-block px-4 py-2 rounded-full text-sm font-medium mb-6 ${post.category === 'remittances' ? 'bg-blue-100 text-blue-800' :
-                                    post.category === 'stablecoins' ? 'bg-green-100 text-green-800' :
-                                        post.category === 'financial-education' ? 'bg-purple-100 text-purple-800' :
-                                            'bg-indigo-100 text-indigo-800'
-                                }`}>
+                            <span
+                                className={`inline-block px-4 py-2 rounded-full text-sm font-medium mb-6 ${
+                                    post.category === 'remittances'
+                                        ? 'bg-blue-100 text-blue-800'
+                                        : post.category === 'stablecoins'
+                                          ? 'bg-green-100 text-green-800'
+                                          : post.category ===
+                                              'financial-education'
+                                            ? 'bg-purple-100 text-purple-800'
+                                            : 'bg-indigo-100 text-indigo-800'
+                                }`}
+                            >
                                 {getCategoryTranslation(post.category)}
                             </span>
 
-                            <h1 className="text-3xl md:text-5xl font-bold mb-6 drop-shadow-lg">{title}</h1>
+                            <h1 className="text-3xl md:text-5xl font-bold mb-6 drop-shadow-lg">
+                                {title}
+                            </h1>
 
                             {/* Meta Information */}
                             <div className="flex flex-wrap items-center justify-center gap-6 text-lg opacity-90">
                                 <span>{post.author}</span>
                                 <span>•</span>
-                                <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+                                <time dateTime={post.publishedAt}>
+                                    {formatDate(post.publishedAt)}
+                                </time>
                                 <span>•</span>
-                                <span>{post.readTime} {t('blog.minRead')}</span>
+                                <span>
+                                    {post.readTime} {t('blog.minRead')}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -163,8 +204,18 @@ const BlogPost: NextPage<{ post: BlogPost }> = ({ post }) => {
                                 href="/blog"
                                 className="inline-flex items-center text-indigo-600 hover:text-indigo-800 mb-8 transition-colors"
                             >
-                                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                <svg
+                                    className="w-5 h-5 mr-2"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M15 19l-7-7 7-7"
+                                    />
                                 </svg>
                                 {t('blog.backToBlog')}
                             </Link>
@@ -187,15 +238,19 @@ const BlogPost: NextPage<{ post: BlogPost }> = ({ post }) => {
                                 <div className="p-8 md:p-12">
                                     <div
                                         className="prose prose-lg max-w-none"
-                                        dangerouslySetInnerHTML={{ __html: formatContent(content) }}
+                                        dangerouslySetInnerHTML={{
+                                            __html: formatContent(content),
+                                        }}
                                     />
 
                                     {/* Tags */}
                                     {tags && tags.length > 0 && (
                                         <div className="mt-12 pt-8 border-t">
-                                            <h3 className="text-lg font-semibold mb-4">{t('blog.tags')}</h3>
+                                            <h3 className="text-lg font-semibold mb-4">
+                                                {t('blog.tags')}
+                                            </h3>
                                             <div className="flex flex-wrap gap-2">
-                                                {tags.map((tag) => (
+                                                {tags.map(tag => (
                                                     <span
                                                         key={tag}
                                                         className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
@@ -213,34 +268,34 @@ const BlogPost: NextPage<{ post: BlogPost }> = ({ post }) => {
                 </article>
             </div>
         </>
-    )
-}
+    );
+};
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const posts = getBlogPosts()
-    const locales = ['en', 'es']
+    const posts = getBlogPosts();
+    const locales = ['en', 'es'];
 
-    const paths = posts.flatMap((post) =>
-        locales.map((locale) => ({
+    const paths = posts.flatMap(post =>
+        locales.map(locale => ({
             params: { slug: post.slug },
             locale,
         }))
-    )
+    );
 
     return {
         paths,
         fallback: false,
-    }
-}
+    };
+};
 
 export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
-    const posts = getBlogPosts()
-    const post = posts.find((p) => p.slug === params?.slug)
+    const posts = getBlogPosts();
+    const post = posts.find(p => p.slug === params?.slug);
 
     if (!post) {
         return {
             notFound: true,
-        }
+        };
     }
 
     return {
@@ -248,7 +303,7 @@ export const getStaticProps: GetStaticProps = async ({ params, locale }) => {
             post,
             ...(await serverSideTranslations(locale ?? 'en', ['common'])),
         },
-    }
-}
+    };
+};
 
-export default BlogPost
+export default BlogPost;

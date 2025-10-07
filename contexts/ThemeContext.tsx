@@ -30,7 +30,10 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const savedTheme = localStorage.getItem('theme') as Theme;
-            if (savedTheme && (savedTheme === 'light' || savedTheme === 'dark')) {
+            if (
+                savedTheme &&
+                (savedTheme === 'light' || savedTheme === 'dark')
+            ) {
                 setThemeState(savedTheme);
             } else {
                 // Default to light mode (don't follow system preference)
@@ -50,7 +53,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     }, [theme, mounted]);
 
     const toggleTheme = (): void => {
-        setThemeState(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
+        setThemeState(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
     };
 
     const setTheme = (newTheme: Theme): void => {

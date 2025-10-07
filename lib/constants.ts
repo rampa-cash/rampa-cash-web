@@ -115,3 +115,8 @@ export const ENV = {
     isDevelopment: process.env.NODE_ENV === 'development',
     isProduction: process.env.NODE_ENV === 'production',
 } as const;
+
+// Feature flags
+export const FEATURE_FLAGS = {
+    showLoginButton: process.env.NEXT_PUBLIC_SHOW_LOGIN_BUTTON === 'true',
+} as const;

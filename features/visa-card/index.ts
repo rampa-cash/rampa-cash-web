@@ -1,11 +1,11 @@
 // Components
-export { VISACard } from './components/VISACard'
+export { VISACard } from './components/VISACard';
 
 // API Client
-export { VISACardApiClient } from './api-client'
+export { VISACardApiClient } from './api-client';
 
 // Services
-export { VISACardService } from './services/visa-card.service'
+export { VISACardService } from './services/visa-card.service';
 
 // Types
 export type {
@@ -17,4 +17,4 @@ export type {
     SpendingLimitsCheck,
     VISACardState,
     VISACardProps,
-} from './types'
+} from './types';

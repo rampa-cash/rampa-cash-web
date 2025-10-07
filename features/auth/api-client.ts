@@ -1,10 +1,10 @@
 import { serverRequest } from '../../lib/api-client';
 import { API_ENDPOINTS } from '../../lib/constants';
-import type { 
-    SignupRequest, 
-    LoginRequest, 
-    AuthResponse, 
-    UserProfile 
+import type {
+    SignupRequest,
+    LoginRequest,
+    AuthResponse,
+    UserProfile,
 } from './types';
 
 /**
@@ -43,7 +43,9 @@ export class AuthApiClient {
      * Refresh access token
      * POST /auth/refresh
      */
-    static async refreshToken(refreshToken: string): Promise<{ accessToken: string }> {
+    static async refreshToken(
+        refreshToken: string
+    ): Promise<{ accessToken: string }> {
         return serverRequest<{ accessToken: string }>(
             'POST',
             API_ENDPOINTS.auth.refresh,
@@ -57,11 +59,7 @@ export class AuthApiClient {
      * GET /auth/me
      */
     static async getMe(token: string): Promise<UserProfile> {
-        return serverRequest<UserProfile>(
-            'GET',
-            API_ENDPOINTS.auth.me,
-            token
-        );
+        return serverRequest<UserProfile>('GET', API_ENDPOINTS.auth.me, token);
     }
 
     /**
@@ -81,7 +79,9 @@ export class AuthApiClient {
      * Resend verification email
      * POST /auth/resend-verification
      */
-    static async resendVerification(email: string): Promise<{ message: string }> {
+    static async resendVerification(
+        email: string
+    ): Promise<{ message: string }> {
         return serverRequest<{ message: string }>(
             'POST',
             API_ENDPOINTS.auth.resendVerification,
@@ -107,7 +107,10 @@ export class AuthApiClient {
      * Reset password
      * POST /auth/reset-password
      */
-    static async resetPassword(token: string, newPassword: string): Promise<{ message: string }> {
+    static async resetPassword(
+        token: string,
+        newPassword: string
+    ): Promise<{ message: string }> {
         return serverRequest<{ message: string }>(
             'POST',
             API_ENDPOINTS.auth.resetPassword,

@@ -1,11 +1,11 @@
 import { serverRequest } from '../../lib/api-client';
 import { API_ENDPOINTS } from '../../lib/constants';
-import type { 
+import type {
     AddContactRequest,
     UpdateContactRequest,
     ContactResponse,
     ContactStats,
-    ContactSyncResponse
+    ContactSyncResponse,
 } from './types';
 
 /**
@@ -30,7 +30,10 @@ export class ContactApiClient {
      * Add new contact
      * POST /contacts
      */
-    static async addContact(data: AddContactRequest, token: string): Promise<ContactResponse> {
+    static async addContact(
+        data: AddContactRequest,
+        token: string
+    ): Promise<ContactResponse> {
         return serverRequest<ContactResponse>(
             'POST',
             API_ENDPOINTS.contacts.create,
@@ -55,7 +58,9 @@ export class ContactApiClient {
      * Get non-app user contacts
      * GET /contacts/non-app-users
      */
-    static async getNonAppUserContacts(token: string): Promise<ContactResponse[]> {
+    static async getNonAppUserContacts(
+        token: string
+    ): Promise<ContactResponse[]> {
         return serverRequest<ContactResponse[]>(
             'GET',
             API_ENDPOINTS.contacts.nonAppUsers,
@@ -67,7 +72,10 @@ export class ContactApiClient {
      * Search contacts
      * GET /contacts/search?q={query}
      */
-    static async searchContacts(query: string, token: string): Promise<ContactResponse[]> {
+    static async searchContacts(
+        query: string,
+        token: string
+    ): Promise<ContactResponse[]> {
         return serverRequest<ContactResponse[]>(
             'GET',
             `${API_ENDPOINTS.contacts.search}?q=${encodeURIComponent(query)}`,
@@ -103,7 +111,10 @@ export class ContactApiClient {
      * Get contact by email
      * GET /contacts/by-email/{email}
      */
-    static async getContactByEmail(email: string, token: string): Promise<ContactResponse> {
+    static async getContactByEmail(
+        email: string,
+        token: string
+    ): Promise<ContactResponse> {
         return serverRequest<ContactResponse>(
             'GET',
             `${API_ENDPOINTS.contacts.byEmail}/${encodeURIComponent(email)}`,
@@ -115,7 +126,10 @@ export class ContactApiClient {
      * Get contact by phone
      * GET /contacts/by-phone/{phone}
      */
-    static async getContactByPhone(phone: string, token: string): Promise<ContactResponse> {
+    static async getContactByPhone(
+        phone: string,
+        token: string
+    ): Promise<ContactResponse> {
         return serverRequest<ContactResponse>(
             'GET',
             `${API_ENDPOINTS.contacts.byPhone}/${encodeURIComponent(phone)}`,
@@ -127,7 +141,10 @@ export class ContactApiClient {
      * Get contact by wallet address
      * GET /contacts/by-wallet/{walletAddress}
      */
-    static async getContactByWallet(walletAddress: string, token: string): Promise<ContactResponse> {
+    static async getContactByWallet(
+        walletAddress: string,
+        token: string
+    ): Promise<ContactResponse> {
         return serverRequest<ContactResponse>(
             'GET',
             `${API_ENDPOINTS.contacts.byWallet}/${encodeURIComponent(walletAddress)}`,
@@ -139,7 +156,10 @@ export class ContactApiClient {
      * Get specific contact
      * GET /contacts/{contactId}
      */
-    static async getContact(contactId: string, token: string): Promise<ContactResponse> {
+    static async getContact(
+        contactId: string,
+        token: string
+    ): Promise<ContactResponse> {
         return serverRequest<ContactResponse>(
             'GET',
             `${API_ENDPOINTS.contacts.get}/${contactId}`,
@@ -151,7 +171,11 @@ export class ContactApiClient {
      * Update contact
      * PUT /contacts/{contactId}
      */
-    static async updateContact(contactId: string, data: UpdateContactRequest, token: string): Promise<ContactResponse> {
+    static async updateContact(
+        contactId: string,
+        data: UpdateContactRequest,
+        token: string
+    ): Promise<ContactResponse> {
         return serverRequest<ContactResponse>(
             'PUT',
             `${API_ENDPOINTS.contacts.update}/${contactId}`,
@@ -164,7 +188,10 @@ export class ContactApiClient {
      * Remove contact
      * DELETE /contacts/{contactId}
      */
-    static async deleteContact(contactId: string, token: string): Promise<{ message: string }> {
+    static async deleteContact(
+        contactId: string,
+        token: string
+    ): Promise<{ message: string }> {
         return serverRequest<{ message: string }>(
             'DELETE',
             `${API_ENDPOINTS.contacts.delete}/${contactId}`,

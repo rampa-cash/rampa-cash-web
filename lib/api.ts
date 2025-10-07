@@ -1,41 +1,45 @@
 export interface BlogPost {
-  slug: string
-  title: {
-    en: string
-    es: string
-  }
-  excerpt: {
-    en: string
-    es: string
-  }
-  content: {
-    en: string
-    es: string
-  }
-  author: string
-  publishedAt: string
-  readTime: number
-  category: 'remittances' | 'stablecoins' | 'financial-education' | 'rampa-guides'
-  tags: {
-    en: string[]
-    es: string[]
-  }
-  featuredImage?: string
+    slug: string;
+    title: {
+        en: string;
+        es: string;
+    };
+    excerpt: {
+        en: string;
+        es: string;
+    };
+    content: {
+        en: string;
+        es: string;
+    };
+    author: string;
+    publishedAt: string;
+    readTime: number;
+    category:
+        | 'remittances'
+        | 'stablecoins'
+        | 'financial-education'
+        | 'rampa-guides';
+    tags: {
+        en: string[];
+        es: string[];
+    };
+    featuredImage?: string;
 }
 
 export const getBlogPosts = (): BlogPost[] => [
-  {
-    slug: 'what-are-remittances-2025-guide',
-    title: {
-      en: 'What are Remittances? A Complete Guide for 2025',
-      es: '¿Qué son las remesas? Una guía completa para 2025'
-    },
-    excerpt: {
-      en: 'Learn everything about remittances, how they work, and why they matter for millions of families worldwide.',
-      es: 'Aprende todo sobre las remesas, cómo funcionan y por qué son importantes para millones de familias en todo el mundo.'
-    },
-    content: {
-      en: `# What are Remittances? A Complete Guide for 2025
+    {
+        slug: 'what-are-remittances-2025-guide',
+        title: {
+            en: 'What are Remittances? A Complete Guide for 2025',
+            es: '¿Qué son las remesas? Una guía completa para 2025',
+        },
+        excerpt: {
+            en: 'Learn everything about remittances, how they work, and why they matter for millions of families worldwide.',
+            es: 'Aprende todo sobre las remesas, cómo funcionan y por qué son importantes para millones de familias en todo el mundo.',
+        },
+        content: {
+            en: `# What are Remittances? A Complete Guide for 2025
 
 Every day, millions of people send money to their families in other countries. We call this cross-border money transfer a remittance. If you work in Europe and help your family in Latin America (or vice versa), this guide explains what remittances are, how they work, how much they cost, and how to make them faster and cheaper in 2025.
 
@@ -163,7 +167,7 @@ Remittances are a bridge of love and support between families. In 2025, the comb
 
 **Next step:** Download Rampa and make your first send in minutes.
 Turn your everyday remittances into engines of shared prosperity.`,
-      es: `# ¿Qué son las Remesas? Una Guía Completa para 2025
+            es: `# ¿Qué son las Remesas? Una Guía Completa para 2025
 
 Cada día, millones de personas envían dinero a sus familias en otros países. A ese envío transfronterizo de dinero lo llamamos remesa. Si trabajas en Europa y ayudas a tu familia en Latinoamérica (o viceversa), esta guía te explica qué son las remesas, cómo funcionan, cuánto cuestan y cómo hacerlas más rápidas y económicas en 2025.
 
@@ -290,30 +294,44 @@ Menores que en los métodos tradicionales y visibles antes de enviar. El objetiv
 Las remesas son un puente de amor y apoyo entre familias. En 2025, la combinación de apps móviles + stablecoins hace que ese puente sea más rápido, más económico y más transparente. Si envías dinero a casa, es el momento perfecto para dar el salto a una experiencia moderna.
 
 **Próximo paso:** Descarga Rampa y haz tu primer envío en minutos.
-Convierte tus remesas de siempre en motores de prosperidad compartida.`
+Convierte tus remesas de siempre en motores de prosperidad compartida.`,
+        },
+        author: 'Juan Betancur',
+        publishedAt: '2025-09-28',
+        readTime: 7,
+        category: 'remittances',
+        tags: {
+            en: [
+                'remittances',
+                'cross-border',
+                'money-transfer',
+                'stablecoins',
+                'europe',
+                'latin-america',
+            ],
+            es: [
+                'remesas',
+                'transfronterizo',
+                'transferencia-dinero',
+                'stablecoins',
+                'europa',
+                'latinoamerica',
+            ],
+        },
+        featuredImage: '/images/blog/remittances-hero.png',
     },
-    author: 'Juan Betancur',
-    publishedAt: '2025-09-28',
-    readTime: 7,
-    category: 'remittances',
-    tags: {
-      en: ['remittances', 'cross-border', 'money-transfer', 'stablecoins', 'europe', 'latin-america'],
-      es: ['remesas', 'transfronterizo', 'transferencia-dinero', 'stablecoins', 'europa', 'latinoamerica']
-    },
-    featuredImage: '/images/blog/remittances-hero.png'
-  },
-  {
-    slug: 'stablecoins-explained-beginners',
-    title: {
-      en: 'Stablecoins Explained: A Beginner\'s Guide to Digital Stability',
-      es: 'Stablecoins explicadas: una guía para principiantes sobre estabilidad digital'
-    },
-    excerpt: {
-      en: 'Discover how stablecoins work, their benefits, and why they\'re revolutionizing digital payments.',
-      es: 'Descubre cómo funcionan las stablecoins, sus beneficios y por qué están revolucionando los pagos digitales.'
-    },
-    content: {
-      en: `# Stablecoins Explained: A Beginner's Guide to Digital Stability
+    {
+        slug: 'stablecoins-explained-beginners',
+        title: {
+            en: "Stablecoins Explained: A Beginner's Guide to Digital Stability",
+            es: 'Stablecoins explicadas: una guía para principiantes sobre estabilidad digital',
+        },
+        excerpt: {
+            en: "Discover how stablecoins work, their benefits, and why they're revolutionizing digital payments.",
+            es: 'Descubre cómo funcionan las stablecoins, sus beneficios y por qué están revolucionando los pagos digitales.',
+        },
+        content: {
+            en: `# Stablecoins Explained: A Beginner's Guide to Digital Stability
 
 In recent years, you may have heard the buzz around cryptocurrencies, from Bitcoin to Ethereum and even Solana. While they're exciting, their prices can swing up and down like a rollercoaster. This volatility makes them less practical for everyday payments.
 
@@ -373,7 +391,7 @@ Stablecoins are quietly revolutionizing digital money. They combine the best of 
 Whether you're sending money abroad, exploring Web3, or just curious about the future of finance—stablecoins are the perfect place to start.
 
 At Rampa, we're turning everyday remittances into engines of shared prosperity. Stay tuned for more guides on how blockchain and stablecoins can empower you and your loved ones.`,
-      es: `# Stablecoins explicadas: una guía para principiantes sobre estabilidad digital
+            es: `# Stablecoins explicadas: una guía para principiantes sobre estabilidad digital
 
 En los últimos años, es posible que hayas escuchado el revuelo en torno a las criptomonedas, desde Bitcoin hasta Ethereum e incluso Solana. Aunque son emocionantes, sus precios pueden subir y bajar como una montaña rusa. Esta volatilidad las hace menos prácticas para los pagos cotidianos.
 
@@ -432,30 +450,30 @@ Las stablecoins están revolucionando silenciosamente el dinero digital. Combina
 
 Ya sea que estés enviando dinero al extranjero, explorando Web3, o simplemente tengas curiosidad sobre el futuro de las finanzas, las stablecoins son el lugar perfecto para comenzar.
 
-En Rampa, estamos convirtiendo las remesas cotidianas en motores de prosperidad compartida. Mantente atento a más guías sobre cómo blockchain y las stablecoins pueden empoderarte a ti y a tus seres queridos.`
+En Rampa, estamos convirtiendo las remesas cotidianas en motores de prosperidad compartida. Mantente atento a más guías sobre cómo blockchain y las stablecoins pueden empoderarte a ti y a tus seres queridos.`,
+        },
+        author: 'Juan Betancur',
+        publishedAt: '2025-09-26',
+        readTime: 4,
+        category: 'stablecoins',
+        tags: {
+            en: ['stablecoins', 'cryptocurrency', 'digital-payments'],
+            es: ['stablecoins', 'criptomonedas', 'pagos-digitales'],
+        },
+        featuredImage: '/images/blog/stablecoins-hero.png',
     },
-    author: 'Juan Betancur',
-    publishedAt: '2025-09-26',
-    readTime: 4,
-    category: 'stablecoins',
-    tags: {
-      en: ['stablecoins', 'cryptocurrency', 'digital-payments'],
-      es: ['stablecoins', 'criptomonedas', 'pagos-digitales']
-    },
-    featuredImage: '/images/blog/stablecoins-hero.png'
-  },
-  {
-    slug: 'financial-literacy-basics-young-adults',
-    title: {
-      en: 'Financial Literacy Basics Every Young Adult Should Know (and how to start your tokenized stocks and ETFs portfolio with Rampa)',
-      es: 'Conceptos básicos de educación financiera que todo joven adulto debe conocer (y cómo empezar tu portafolio de acciones y ETFs tokenizados con Rampa)'
-    },
-    excerpt: {
-      en: 'Essential financial skills to build a strong foundation for your financial future, plus how to get started investing in tokenized assets.',
-      es: 'Habilidades financieras esenciales para construir una base sólida para tu futuro financiero, además de cómo empezar a invertir en activos tokenizados.'
-    },
-    content: {
-      en: `# Financial Literacy Basics Every Young Adult Should Know
+    {
+        slug: 'financial-literacy-basics-young-adults',
+        title: {
+            en: 'Financial Literacy Basics Every Young Adult Should Know (and how to start your tokenized stocks and ETFs portfolio with Rampa)',
+            es: 'Conceptos básicos de educación financiera que todo joven adulto debe conocer (y cómo empezar tu portafolio de acciones y ETFs tokenizados con Rampa)',
+        },
+        excerpt: {
+            en: 'Essential financial skills to build a strong foundation for your financial future, plus how to get started investing in tokenized assets.',
+            es: 'Habilidades financieras esenciales para construir una base sólida para tu futuro financiero, además de cómo empezar a invertir en activos tokenizados.',
+        },
+        content: {
+            en: `# Financial Literacy Basics Every Young Adult Should Know
 ## (and how to start your tokenized stocks and ETFs portfolio with Rampa)
 
 Taking your first steps in personal finance doesn't have to be complicated. With a few smart decisions—and consistency—you can build a solid financial future. Here's a clear and practical guide oriented to Rampa users.
@@ -562,7 +580,7 @@ Your best advantage is time. Build habits today: budgeting, saving, DCA and cont
 - Analyze which specific stocks resonate with your interests and investment strategy
 
 *This content is educational and does not constitute financial advice. Invest according to your objectives and risk profile.*`,
-      es: `# Conceptos básicos de educación financiera que todo joven adulto debe conocer
+            es: `# Conceptos básicos de educación financiera que todo joven adulto debe conocer
 ## (y cómo empezar tu portafolio de acciones y ETFs tokenizados con Rampa)
 
 Dar tus primeros pasos en finanzas personales no tiene por qué ser complicado. Con unas cuantas decisiones inteligentes —y constancia— puedes construir un futuro financiero sólido. Aquí tienes una guía clara y práctica orientada a usuarios de Rampa.
@@ -669,15 +687,33 @@ Tu mejor ventaja es el tiempo. Construye hábitos hoy: presupuesto, ahorro, DCA 
 - Analiza qué acciones puntuales resuenan con tus intereses y estrategia de inversión
 
 *Este contenido es educativo y no constituye asesoramiento financiero. Invierte según tus objetivos y perfil de riesgo.*`,
+        },
+        author: 'Juan Betancur',
+        publishedAt: '2025-09-29',
+        readTime: 7,
+        category: 'financial-education',
+        tags: {
+            en: [
+                'financial-literacy',
+                'budgeting',
+                'savings',
+                'investment',
+                'etfs',
+                'tokenized-assets',
+                'dca',
+                'education',
+            ],
+            es: [
+                'educación-financiera',
+                'presupuesto',
+                'ahorros',
+                'inversión',
+                'etfs',
+                'activos-tokenizados',
+                'dca',
+                'educación',
+            ],
+        },
+        featuredImage: '/images/blog/financial-education-hero.png',
     },
-    author: 'Juan Betancur',
-    publishedAt: '2025-09-29',
-    readTime: 7,
-    category: 'financial-education',
-    tags: {
-      en: ['financial-literacy', 'budgeting', 'savings', 'investment', 'etfs', 'tokenized-assets', 'dca', 'education'],
-      es: ['educación-financiera', 'presupuesto', 'ahorros', 'inversión', 'etfs', 'activos-tokenizados', 'dca', 'educación']
-    },
-    featuredImage: '/images/blog/financial-education-hero.png'
-  }
-]
+];

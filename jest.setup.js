@@ -1,4 +1,4 @@
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom';
 
 // Mock Next.js router
 jest.mock('next/router', () => ({
@@ -20,22 +20,22 @@ jest.mock('next/router', () => ({
                 emit: jest.fn(),
             },
             isFallback: false,
-        }
+        };
     },
-}))
+}));
 
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
     __esModule: true,
-    default: (props) => {
+    default: props => {
         // eslint-disable-next-line @next/next/no-img-element
-        return <img {...props} />
+        return <img {...props} />;
     },
-}))
+}));
 
 // Global test utilities
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
     observe: jest.fn(),
     unobserve: jest.fn(),
     disconnect: jest.fn(),
-})) 
+}));
