@@ -1,9 +1,9 @@
 import { ContactApiClient } from '../api-client';
-import type { 
-    Contact, 
+import type {
+    Contact,
     AddContactRequest,
     UpdateContactRequest,
-    ContactStats
+    ContactStats,
 } from '../types';
 
 /**
@@ -14,7 +14,10 @@ export class ContactService {
     /**
      * Get contacts for a user
      */
-    static async getContacts(_userId: string, _filters?: any): Promise<Contact[]> {
+    static async getContacts(
+        _userId: string,
+        _filters?: any
+    ): Promise<Contact[]> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
@@ -22,7 +25,7 @@ export class ContactService {
             }
 
             const response = await ContactApiClient.getContacts(token);
-            
+
             return response.map(contact => ({
                 id: contact.id,
                 ownerId: _userId,
@@ -44,15 +47,21 @@ export class ContactService {
     /**
      * Add a new contact
      */
-    static async addContact(_userId: string, contactData: AddContactRequest): Promise<Contact> {
+    static async addContact(
+        _userId: string,
+        contactData: AddContactRequest
+    ): Promise<Contact> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
                 throw new Error('No authentication token available');
             }
 
-            const response = await ContactApiClient.addContact(contactData, token);
-            
+            const response = await ContactApiClient.addContact(
+                contactData,
+                token
+            );
+
             return {
                 id: response.id,
                 ownerId: _userId,
@@ -74,15 +83,23 @@ export class ContactService {
     /**
      * Update a contact
      */
-    static async updateContact(_userId: string, contactId: string, contactData: UpdateContactRequest): Promise<Contact> {
+    static async updateContact(
+        _userId: string,
+        contactId: string,
+        contactData: UpdateContactRequest
+    ): Promise<Contact> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
                 throw new Error('No authentication token available');
             }
 
-            const response = await ContactApiClient.updateContact(contactId, contactData, token);
-            
+            const response = await ContactApiClient.updateContact(
+                contactId,
+                contactData,
+                token
+            );
+
             return {
                 id: response.id,
                 ownerId: _userId,
@@ -104,7 +121,10 @@ export class ContactService {
     /**
      * Delete a contact
      */
-    static async deleteContact(_userId: string, contactId: string): Promise<void> {
+    static async deleteContact(
+        _userId: string,
+        contactId: string
+    ): Promise<void> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
@@ -121,7 +141,11 @@ export class ContactService {
     /**
      * Toggle favorite status
      */
-    static async toggleFavorite(_userId: string, contactId: string, isFavorite: boolean): Promise<{ id: string; isFavorite: boolean }> {
+    static async toggleFavorite(
+        _userId: string,
+        contactId: string,
+        isFavorite: boolean
+    ): Promise<{ id: string; isFavorite: boolean }> {
         try {
             // This would be implemented based on the actual API
             // For now, return a mock response
@@ -138,15 +162,21 @@ export class ContactService {
     /**
      * Search contacts
      */
-    static async searchContacts(_userId: string, query: string): Promise<Contact[]> {
+    static async searchContacts(
+        _userId: string,
+        query: string
+    ): Promise<Contact[]> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
                 throw new Error('No authentication token available');
             }
 
-            const response = await ContactApiClient.searchContacts(query, token);
-            
+            const response = await ContactApiClient.searchContacts(
+                query,
+                token
+            );
+
             return response.map(contact => ({
                 id: contact.id,
                 ownerId: _userId,
@@ -185,7 +215,9 @@ export class ContactService {
     /**
      * Sync contacts with app users
      */
-    static async syncContacts(_userId: string): Promise<{ syncedCount: number; syncedContacts: Contact[] }> {
+    static async syncContacts(
+        _userId: string
+    ): Promise<{ syncedCount: number; syncedContacts: Contact[] }> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
@@ -193,19 +225,21 @@ export class ContactService {
             }
 
             const response = await ContactApiClient.syncContacts(token);
-            
-            const syncedContacts: Contact[] = response.syncedContacts.map(contact => ({
-                id: contact.id,
-                ownerId: _userId,
-                contactUserId: undefined, // Not available in sync response
-                email: undefined, // Not available in sync response
-                phone: undefined, // Not available in sync response
-                displayName: contact.displayName,
-                walletAddress: contact.walletAddress || undefined,
-                isAppUser: contact.isAppUser,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-            }));
+
+            const syncedContacts: Contact[] = response.syncedContacts.map(
+                contact => ({
+                    id: contact.id,
+                    ownerId: _userId,
+                    contactUserId: undefined, // Not available in sync response
+                    email: undefined, // Not available in sync response
+                    phone: undefined, // Not available in sync response
+                    displayName: contact.displayName,
+                    walletAddress: contact.walletAddress || undefined,
+                    isAppUser: contact.isAppUser,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                })
+            );
 
             return {
                 syncedCount: response.syncedCount,

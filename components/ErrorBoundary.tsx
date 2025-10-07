@@ -1,30 +1,30 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react'
+import React, { Component, ErrorInfo, ReactNode } from 'react';
 
 interface Props {
-    children: ReactNode
-    fallback?: ReactNode
-    onError?: (error: Error, errorInfo: ErrorInfo) => void
+    children: ReactNode;
+    fallback?: ReactNode;
+    onError?: (error: Error, errorInfo: ErrorInfo) => void;
 }
 
 interface State {
-    hasError: boolean
-    error?: Error
+    hasError: boolean;
+    error?: Error;
 }
 
 class ErrorBoundary extends Component<Props, State> {
     constructor(props: Props) {
-        super(props)
-        this.state = { hasError: false }
+        super(props);
+        this.state = { hasError: false };
     }
 
     static getDerivedStateFromError(error: Error): State {
         // Update state so the next render will show the fallback UI
-        return { hasError: true, error }
+        return { hasError: true, error };
     }
 
     componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
         // Call the onError callback if provided
-        this.props.onError?.(error, errorInfo)
+        this.props.onError?.(error, errorInfo);
 
         // In production, you might want to send this to an error reporting service
         // Example: Sentry.captureException(error, { extra: errorInfo })
@@ -34,7 +34,7 @@ class ErrorBoundary extends Component<Props, State> {
         if (this.state.hasError) {
             // Custom fallback UI
             if (this.props.fallback) {
-                return this.props.fallback
+                return this.props.fallback;
             }
 
             // Default fallback UI
@@ -62,7 +62,8 @@ class ErrorBoundary extends Component<Props, State> {
                         </h2>
 
                         <p className="text-gray-600 mb-4">
-                            We&apos;re sorry, but something unexpected happened. Please try refreshing the page.
+                            We&apos;re sorry, but something unexpected happened.
+                            Please try refreshing the page.
                         </p>
 
                         <button
@@ -72,23 +73,24 @@ class ErrorBoundary extends Component<Props, State> {
                             Refresh Page
                         </button>
 
-                        {process.env.NODE_ENV === 'development' && this.state.error && (
-                            <details className="mt-4 text-left">
-                                <summary className="cursor-pointer text-sm text-gray-500 hover:text-gray-700">
-                                    Error Details (Development)
-                                </summary>
-                                <pre className="mt-2 text-xs text-red-600 bg-red-50 p-2 rounded overflow-auto">
-                                    {this.state.error.stack}
-                                </pre>
-                            </details>
-                        )}
+                        {process.env.NODE_ENV === 'development' &&
+                            this.state.error && (
+                                <details className="mt-4 text-left">
+                                    <summary className="cursor-pointer text-sm text-gray-500 hover:text-gray-700">
+                                        Error Details (Development)
+                                    </summary>
+                                    <pre className="mt-2 text-xs text-red-600 bg-red-50 p-2 rounded overflow-auto">
+                                        {this.state.error.stack}
+                                    </pre>
+                                </details>
+                            )}
                     </div>
                 </div>
-            )
+            );
         }
 
-        return this.props.children
+        return this.props.children;
     }
 }
 
-export default ErrorBoundary 
+export default ErrorBoundary;

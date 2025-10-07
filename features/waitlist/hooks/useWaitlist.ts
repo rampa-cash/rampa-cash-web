@@ -14,7 +14,6 @@ export const useWaitlistEntries = () => {
     });
 };
 
-
 /**
  * Hook to create a new waitlist entry
  */
@@ -28,7 +27,7 @@ export const useCreateWaitlistEntry = () => {
             // Invalidate and refetch waitlist data
             queryClient.invalidateQueries({ queryKey: ['waitlist'] });
         },
-        onError: (error) => {
+        onError: error => {
             console.error('Failed to create waitlist entry:', error);
         },
     });

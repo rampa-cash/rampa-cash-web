@@ -1,17 +1,17 @@
-import type { NextPage } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-import { useEffect } from 'react'
-import { useRouter } from 'next/router'
+import type { NextPage } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { GetStaticProps } from 'next';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const Login: NextPage = () => {
-    const router = useRouter()
-    
+    const router = useRouter();
+
     useEffect(() => {
         // Redirect to home page since login is now handled in the header
-        router.push('/')
-    }, [router])
-    
+        router.push('/');
+    }, [router]);
+
     return (
         <div className="min-h-screen flex items-center justify-center">
             <div className="text-center">
@@ -19,15 +19,15 @@ const Login: NextPage = () => {
                 <p className="mt-2 text-gray-600">Redirecting...</p>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
         props: {
             ...(await serverSideTranslations(locale ?? 'en', ['common'])),
         },
-    }
-}
+    };
+};

@@ -13,10 +13,10 @@ const nextConfig = {
                 ...config.resolve.fallback,
                 '@react-native-async-storage/async-storage': false,
                 'react-native': false,
-            }
+            };
         }
-        return config
+        return config;
     },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

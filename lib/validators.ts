@@ -14,7 +14,7 @@ export const nameSchema = z
 
 export const sanitizedStringSchema = z
     .string()
-    .transform((str) => str.trim().replace(/[<>]/g, '').slice(0, 1000));
+    .transform(str => str.trim().replace(/[<>]/g, '').slice(0, 1000));
 
 export const waitlistRequestSchema = z.object({
     name: nameSchema,

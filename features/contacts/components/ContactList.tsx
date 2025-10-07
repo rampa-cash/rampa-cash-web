@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react'
-import { useTranslation } from 'next-i18next'
-import { useRouter } from 'next/router'
-import LanguageSwitcher from '@/components/LanguageSwitcher'
+import { useState, useEffect } from 'react';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 interface Contact {
-    id: string
-    name: string
-    email: string
-    phone: string
-    isFavorite: boolean
-    lastTransaction?: string
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    isFavorite: boolean;
+    lastTransaction?: string;
 }
 
 // Mock contacts data - in real app this would come from contacts hook
@@ -38,119 +38,131 @@ const mockContacts: Contact[] = [
         isFavorite: true,
         lastTransaction: '2024-01-13T09:15:00Z',
     },
-]
+];
 
 export const ContactList = (): JSX.Element => {
-    const { t } = useTranslation('common')
-    const router = useRouter()
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState<string | null>(null)
-    const [contacts, setContacts] = useState<Contact[]>(mockContacts)
-    const [filteredContacts, setFilteredContacts] = useState<Contact[]>(mockContacts)
-    const [searchTerm, setSearchTerm] = useState('')
-    const [sortBy, setSortBy] = useState<string>('favorite')
-    const [showAddModal, setShowAddModal] = useState(false)
-    const [showEditModal, setShowEditModal] = useState(false)
-    const [showDeleteModal, setShowDeleteModal] = useState(false)
-    const [selectedContact, setSelectedContact] = useState<Contact | null>(null)
+    const { t } = useTranslation('common');
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [contacts, setContacts] = useState<Contact[]>(mockContacts);
+    const [filteredContacts, setFilteredContacts] =
+        useState<Contact[]>(mockContacts);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [sortBy, setSortBy] = useState<string>('favorite');
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [selectedContact, setSelectedContact] = useState<Contact | null>(
+        null
+    );
     const [formData, setFormData] = useState<Partial<Contact>>({
         name: '',
         email: '',
         phone: '',
-        isFavorite: false
-    })
-    const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({})
+        isFavorite: false,
+    });
+    const [formErrors, setFormErrors] = useState<{ [key: string]: string }>({});
 
     useEffect(() => {
-        let filtered = [...contacts]
+        let filtered = [...contacts];
 
         // Filter by search term
         if (searchTerm) {
-            filtered = filtered.filter(contact =>
-                contact.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                contact.phone.includes(searchTerm)
-            )
+            filtered = filtered.filter(
+                contact =>
+                    contact.name
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase()) ||
+                    contact.email
+                        .toLowerCase()
+                        .includes(searchTerm.toLowerCase()) ||
+                    contact.phone.includes(searchTerm)
+            );
         }
 
         // Sort contacts
         filtered.sort((a, b) => {
             switch (sortBy) {
                 case 'favorite':
-                    if (a.isFavorite && !b.isFavorite) return -1
-                    if (!a.isFavorite && b.isFavorite) return 1
-                    return a.name.localeCompare(b.name)
+                    if (a.isFavorite && !b.isFavorite) return -1;
+                    if (!a.isFavorite && b.isFavorite) return 1;
+                    return a.name.localeCompare(b.name);
                 case 'name':
-                    return a.name.localeCompare(b.name)
+                    return a.name.localeCompare(b.name);
                 case 'date':
-                    const aDate = a.lastTransaction ? new Date(a.lastTransaction).getTime() : 0
-                    const bDate = b.lastTransaction ? new Date(b.lastTransaction).getTime() : 0
-                    return bDate - aDate
+                    const aDate = a.lastTransaction
+                        ? new Date(a.lastTransaction).getTime()
+                        : 0;
+                    const bDate = b.lastTransaction
+                        ? new Date(b.lastTransaction).getTime()
+                        : 0;
+                    return bDate - aDate;
                 default:
-                    return 0
+                    return 0;
             }
-        })
+        });
 
-        setFilteredContacts(filtered)
-    }, [contacts, searchTerm, sortBy])
+        setFilteredContacts(filtered);
+    }, [contacts, searchTerm, sortBy]);
 
     const formatDate = (timestamp: string) => {
         return new Date(timestamp).toLocaleDateString('en-US', {
             month: 'short',
             day: 'numeric',
             year: 'numeric',
-        })
-    }
+        });
+    };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, type, checked } = e.target
+        const { name, value, type, checked } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: type === 'checkbox' ? checked : value
-        }))
-        
+            [name]: type === 'checkbox' ? checked : value,
+        }));
+
         // Clear error when user starts typing
         if (formErrors[name]) {
             setFormErrors(prev => ({
                 ...prev,
-                [name]: ''
-            }))
+                [name]: '',
+            }));
         }
-    }
+    };
 
     const validateForm = () => {
-        const newErrors: { [key: string]: string } = {}
-        
+        const newErrors: { [key: string]: string } = {};
+
         if (!formData.name) {
-            newErrors.name = t('contacts.form.validation.nameRequired')
+            newErrors.name = t('contacts.form.validation.nameRequired');
         }
-        
+
         if (!formData.email) {
-            newErrors.email = t('contacts.form.validation.emailRequired')
+            newErrors.email = t('contacts.form.validation.emailRequired');
         } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-            newErrors.email = t('contacts.form.validation.emailInvalid')
+            newErrors.email = t('contacts.form.validation.emailInvalid');
         }
-        
+
         if (!formData.phone) {
-            newErrors.phone = t('contacts.form.validation.phoneRequired')
+            newErrors.phone = t('contacts.form.validation.phoneRequired');
         } else if (!/^\+?[\d\s-()]+$/.test(formData.phone)) {
-            newErrors.phone = t('contacts.form.validation.phoneInvalid')
+            newErrors.phone = t('contacts.form.validation.phoneInvalid');
         }
-        
-        setFormErrors(newErrors)
-        return Object.keys(newErrors).length === 0
-    }
+
+        setFormErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const handleAddContact = async (e: React.FormEvent) => {
-        e.preventDefault()
-        
+        e.preventDefault();
+
         if (!validateForm()) {
-            return
+            return;
         }
-        
-        setIsLoading(true)
-        setError(null)
-        
+
+        setIsLoading(true);
+        setError(null);
+
         try {
             // TODO: Implement actual add contact logic
             const newContact: Contact = {
@@ -159,29 +171,29 @@ export const ContactList = (): JSX.Element => {
                 email: formData.email!,
                 phone: formData.phone!,
                 isFavorite: formData.isFavorite || false,
-            }
-            
-            setContacts(prev => [...prev, newContact])
-            setShowAddModal(false)
-            setFormData({ name: '', email: '', phone: '', isFavorite: false })
+            };
+
+            setContacts(prev => [...prev, newContact]);
+            setShowAddModal(false);
+            setFormData({ name: '', email: '', phone: '', isFavorite: false });
         } catch (error) {
-            console.error('Add contact error:', error)
-            setError(t('contacts.error.add'))
+            console.error('Add contact error:', error);
+            setError(t('contacts.error.add'));
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-    }
+    };
 
     const handleEditContact = async (e: React.FormEvent) => {
-        e.preventDefault()
-        
+        e.preventDefault();
+
         if (!validateForm() || !selectedContact) {
-            return
+            return;
         }
-        
-        setIsLoading(true)
-        setError(null)
-        
+
+        setIsLoading(true);
+        setError(null);
+
         try {
             // TODO: Implement actual edit contact logic
             const updatedContact: Contact = {
@@ -190,77 +202,85 @@ export const ContactList = (): JSX.Element => {
                 email: formData.email!,
                 phone: formData.phone!,
                 isFavorite: formData.isFavorite || false,
-            }
-            
-            setContacts(prev => prev.map(contact => 
-                contact.id === selectedContact.id ? updatedContact : contact
-            ))
-            setShowEditModal(false)
-            setSelectedContact(null)
-            setFormData({ name: '', email: '', phone: '', isFavorite: false })
+            };
+
+            setContacts(prev =>
+                prev.map(contact =>
+                    contact.id === selectedContact.id ? updatedContact : contact
+                )
+            );
+            setShowEditModal(false);
+            setSelectedContact(null);
+            setFormData({ name: '', email: '', phone: '', isFavorite: false });
         } catch (error) {
-            console.error('Edit contact error:', error)
-            setError(t('contacts.error.edit'))
+            console.error('Edit contact error:', error);
+            setError(t('contacts.error.edit'));
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-    }
+    };
 
     const handleDeleteContact = async () => {
-        if (!selectedContact) return
-        
-        setIsLoading(true)
-        setError(null)
-        
+        if (!selectedContact) return;
+
+        setIsLoading(true);
+        setError(null);
+
         try {
             // TODO: Implement actual delete contact logic
-            setContacts(prev => prev.filter(contact => contact.id !== selectedContact.id))
-            setShowDeleteModal(false)
-            setSelectedContact(null)
+            setContacts(prev =>
+                prev.filter(contact => contact.id !== selectedContact.id)
+            );
+            setShowDeleteModal(false);
+            setSelectedContact(null);
         } catch (error) {
-            console.error('Delete contact error:', error)
-            setError(t('contacts.error.delete'))
+            console.error('Delete contact error:', error);
+            setError(t('contacts.error.delete'));
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-    }
+    };
 
     const handleToggleFavorite = async (contact: Contact) => {
-        setIsLoading(true)
-        setError(null)
-        
+        setIsLoading(true);
+        setError(null);
+
         try {
             // TODO: Implement actual toggle favorite logic
-            setContacts(prev => prev.map(c => 
-                c.id === contact.id ? { ...c, isFavorite: !c.isFavorite } : c
-            ))
+            setContacts(prev =>
+                prev.map(c =>
+                    c.id === contact.id
+                        ? { ...c, isFavorite: !c.isFavorite }
+                        : c
+                )
+            );
         } catch (error) {
-            console.error('Toggle favorite error:', error)
-            setError(t('contacts.error.toggleFavorite'))
+            console.error('Toggle favorite error:', error);
+            setError(t('contacts.error.toggleFavorite'));
         } finally {
-            setIsLoading(false)
+            setIsLoading(false);
         }
-    }
+    };
 
     const handleSendMoney = (contact: Contact) => {
-        router.push(`/transactions/send?recipient=${contact.email}`)
-    }
+        router.push(`/transactions/send?recipient=${contact.email}`);
+    };
 
     const openEditModal = (contact: Contact) => {
-        setSelectedContact(contact)
+        setSelectedContact(contact);
         setFormData({
             name: contact.name,
             email: contact.email,
             phone: contact.phone,
-            isFavorite: contact.isFavorite
-        })
-        setShowEditModal(true)
-    }
+            isFavorite: contact.isFavorite,
+        });
+        setShowEditModal(true);
+    };
 
     const openDeleteModal = (contact: Contact) => {
-        setSelectedContact(contact)
-        setShowDeleteModal(true)
-    }
+        setSelectedContact(contact);
+        setShowDeleteModal(true);
+    };
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -273,8 +293,18 @@ export const ContactList = (): JSX.Element => {
                                 onClick={() => router.back()}
                                 className="mr-4 text-gray-500 hover:text-gray-700"
                             >
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                                <svg
+                                    className="w-6 h-6"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M15 19l-7-7 7-7"
+                                    />
                                 </svg>
                             </button>
                             <h1 className="text-xl font-semibold text-gray-900">
@@ -300,14 +330,17 @@ export const ContactList = (): JSX.Element => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         {/* Search */}
                         <div>
-                            <label htmlFor="search" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label
+                                htmlFor="search"
+                                className="block text-sm font-medium text-gray-700 mb-2"
+                            >
                                 {t('contacts.search.label')}
                             </label>
                             <input
                                 id="search"
                                 type="text"
                                 value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                onChange={e => setSearchTerm(e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                                 placeholder={t('contacts.search.placeholder')}
                             />
@@ -315,18 +348,27 @@ export const ContactList = (): JSX.Element => {
 
                         {/* Sort */}
                         <div>
-                            <label htmlFor="sortBy" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label
+                                htmlFor="sortBy"
+                                className="block text-sm font-medium text-gray-700 mb-2"
+                            >
                                 {t('contacts.sort.label')}
                             </label>
                             <select
                                 id="sortBy"
                                 value={sortBy}
-                                onChange={(e) => setSortBy(e.target.value)}
+                                onChange={e => setSortBy(e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                             >
-                                <option value="favorite">{t('contacts.sort.favorite')}</option>
-                                <option value="name">{t('contacts.sort.name')}</option>
-                                <option value="date">{t('contacts.sort.date')}</option>
+                                <option value="favorite">
+                                    {t('contacts.sort.favorite')}
+                                </option>
+                                <option value="name">
+                                    {t('contacts.sort.name')}
+                                </option>
+                                <option value="date">
+                                    {t('contacts.sort.date')}
+                                </option>
                             </select>
                         </div>
 
@@ -351,16 +393,30 @@ export const ContactList = (): JSX.Element => {
                     {isLoading ? (
                         <div className="text-center py-12">
                             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto"></div>
-                            <p className="mt-2 text-sm text-gray-500">{t('contacts.loading')}</p>
+                            <p className="mt-2 text-sm text-gray-500">
+                                {t('contacts.loading')}
+                            </p>
                         </div>
                     ) : filteredContacts.length === 0 ? (
                         <div className="text-center py-12">
                             <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                <svg
+                                    className="w-8 h-8 text-gray-400"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                                    />
                                 </svg>
                             </div>
-                            <p className="text-gray-500 mb-4">{t('contacts.noContacts')}</p>
+                            <p className="text-gray-500 mb-4">
+                                {t('contacts.noContacts')}
+                            </p>
                             <button
                                 onClick={() => setShowAddModal(true)}
                                 className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700"
@@ -370,13 +426,19 @@ export const ContactList = (): JSX.Element => {
                         </div>
                     ) : (
                         <div className="divide-y divide-gray-200">
-                            {filteredContacts.map((contact) => (
-                                <div key={contact.id} data-testid="contact-item" className="p-6 hover:bg-gray-50">
+                            {filteredContacts.map(contact => (
+                                <div
+                                    key={contact.id}
+                                    data-testid="contact-item"
+                                    className="p-6 hover:bg-gray-50"
+                                >
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center space-x-4">
                                             <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
                                                 <span className="text-indigo-600 font-medium text-lg">
-                                                    {contact.name.charAt(0).toUpperCase()}
+                                                    {contact.name
+                                                        .charAt(0)
+                                                        .toUpperCase()}
                                                 </span>
                                             </div>
                                             <div>
@@ -385,54 +447,106 @@ export const ContactList = (): JSX.Element => {
                                                         {contact.name}
                                                     </p>
                                                     {contact.isFavorite && (
-                                                        <svg 
+                                                        <svg
                                                             data-testid="favorite-star"
-                                                            className="w-4 h-4 text-yellow-400" 
-                                                            fill="currentColor" 
+                                                            className="w-4 h-4 text-yellow-400"
+                                                            fill="currentColor"
                                                             viewBox="0 0 20 20"
                                                         >
                                                             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                                                         </svg>
                                                     )}
                                                 </div>
-                                                <p className="text-sm text-gray-500">{contact.email}</p>
-                                                <p className="text-sm text-gray-500">{contact.phone}</p>
+                                                <p className="text-sm text-gray-500">
+                                                    {contact.email}
+                                                </p>
+                                                <p className="text-sm text-gray-500">
+                                                    {contact.phone}
+                                                </p>
                                                 {contact.lastTransaction && (
                                                     <p className="text-xs text-gray-400 mt-1">
-                                                        {t('contacts.lastSent')}: {formatDate(contact.lastTransaction)}
+                                                        {t('contacts.lastSent')}
+                                                        :{' '}
+                                                        {formatDate(
+                                                            contact.lastTransaction
+                                                        )}
                                                     </p>
                                                 )}
                                             </div>
                                         </div>
                                         <div className="flex items-center space-x-2">
                                             <button
-                                                onClick={() => handleSendMoney(contact)}
+                                                onClick={() =>
+                                                    handleSendMoney(contact)
+                                                }
                                                 className="text-indigo-600 hover:text-indigo-500 text-sm font-medium"
                                             >
                                                 {t('contacts.sendMoney')}
                                             </button>
                                             <button
-                                                onClick={() => handleToggleFavorite(contact)}
+                                                onClick={() =>
+                                                    handleToggleFavorite(
+                                                        contact
+                                                    )
+                                                }
                                                 className="text-gray-400 hover:text-yellow-500"
                                             >
-                                                <svg className="w-5 h-5" fill={contact.isFavorite ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                                <svg
+                                                    className="w-5 h-5"
+                                                    fill={
+                                                        contact.isFavorite
+                                                            ? 'currentColor'
+                                                            : 'none'
+                                                    }
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                                                    />
                                                 </svg>
                                             </button>
                                             <button
-                                                onClick={() => openEditModal(contact)}
+                                                onClick={() =>
+                                                    openEditModal(contact)
+                                                }
                                                 className="text-gray-400 hover:text-indigo-500"
                                             >
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                <svg
+                                                    className="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                                                    />
                                                 </svg>
                                             </button>
                                             <button
-                                                onClick={() => openDeleteModal(contact)}
+                                                onClick={() =>
+                                                    openDeleteModal(contact)
+                                                }
                                                 className="text-gray-400 hover:text-red-500"
                                             >
-                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                <svg
+                                                    className="w-5 h-5"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth={2}
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                                    />
                                                 </svg>
                                             </button>
                                         </div>
@@ -452,10 +566,16 @@ export const ContactList = (): JSX.Element => {
                             <h3 className="text-lg font-medium text-gray-900 mb-4">
                                 {t('contacts.addContact')}
                             </h3>
-                            
-                            <form onSubmit={handleAddContact} className="space-y-4">
+
+                            <form
+                                onSubmit={handleAddContact}
+                                className="space-y-4"
+                            >
                                 <div>
-                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label
+                                        htmlFor="name"
+                                        className="block text-sm font-medium text-gray-700 mb-1"
+                                    >
                                         {t('contacts.form.name')}
                                     </label>
                                     <input
@@ -465,17 +585,26 @@ export const ContactList = (): JSX.Element => {
                                         value={formData.name || ''}
                                         onChange={handleInputChange}
                                         className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ${
-                                            formErrors.name ? 'border-red-300' : 'border-gray-300'
+                                            formErrors.name
+                                                ? 'border-red-300'
+                                                : 'border-gray-300'
                                         }`}
-                                        placeholder={t('contacts.form.namePlaceholder')}
+                                        placeholder={t(
+                                            'contacts.form.namePlaceholder'
+                                        )}
                                     />
                                     {formErrors.name && (
-                                        <p className="mt-1 text-sm text-red-600">{formErrors.name}</p>
+                                        <p className="mt-1 text-sm text-red-600">
+                                            {formErrors.name}
+                                        </p>
                                     )}
                                 </div>
 
                                 <div>
-                                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label
+                                        htmlFor="email"
+                                        className="block text-sm font-medium text-gray-700 mb-1"
+                                    >
                                         {t('contacts.form.email')}
                                     </label>
                                     <input
@@ -485,17 +614,26 @@ export const ContactList = (): JSX.Element => {
                                         value={formData.email || ''}
                                         onChange={handleInputChange}
                                         className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ${
-                                            formErrors.email ? 'border-red-300' : 'border-gray-300'
+                                            formErrors.email
+                                                ? 'border-red-300'
+                                                : 'border-gray-300'
                                         }`}
-                                        placeholder={t('contacts.form.emailPlaceholder')}
+                                        placeholder={t(
+                                            'contacts.form.emailPlaceholder'
+                                        )}
                                     />
                                     {formErrors.email && (
-                                        <p className="mt-1 text-sm text-red-600">{formErrors.email}</p>
+                                        <p className="mt-1 text-sm text-red-600">
+                                            {formErrors.email}
+                                        </p>
                                     )}
                                 </div>
 
                                 <div>
-                                    <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label
+                                        htmlFor="phone"
+                                        className="block text-sm font-medium text-gray-700 mb-1"
+                                    >
                                         {t('contacts.form.phone')}
                                     </label>
                                     <input
@@ -505,12 +643,18 @@ export const ContactList = (): JSX.Element => {
                                         value={formData.phone || ''}
                                         onChange={handleInputChange}
                                         className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ${
-                                            formErrors.phone ? 'border-red-300' : 'border-gray-300'
+                                            formErrors.phone
+                                                ? 'border-red-300'
+                                                : 'border-gray-300'
                                         }`}
-                                        placeholder={t('contacts.form.phonePlaceholder')}
+                                        placeholder={t(
+                                            'contacts.form.phonePlaceholder'
+                                        )}
                                     />
                                     {formErrors.phone && (
-                                        <p className="mt-1 text-sm text-red-600">{formErrors.phone}</p>
+                                        <p className="mt-1 text-sm text-red-600">
+                                            {formErrors.phone}
+                                        </p>
                                     )}
                                 </div>
 
@@ -523,7 +667,10 @@ export const ContactList = (): JSX.Element => {
                                         onChange={handleInputChange}
                                         className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                                     />
-                                    <label htmlFor="isFavorite" className="ml-2 block text-sm text-gray-700">
+                                    <label
+                                        htmlFor="isFavorite"
+                                        className="ml-2 block text-sm text-gray-700"
+                                    >
                                         {t('contacts.form.favorite')}
                                     </label>
                                 </div>
@@ -541,7 +688,9 @@ export const ContactList = (): JSX.Element => {
                                         disabled={isLoading}
                                         className="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
                                     >
-                                        {isLoading ? t('contacts.form.saving') : t('contacts.form.save')}
+                                        {isLoading
+                                            ? t('contacts.form.saving')
+                                            : t('contacts.form.save')}
                                     </button>
                                 </div>
                             </form>
@@ -558,10 +707,16 @@ export const ContactList = (): JSX.Element => {
                             <h3 className="text-lg font-medium text-gray-900 mb-4">
                                 {t('contacts.editContact')}
                             </h3>
-                            
-                            <form onSubmit={handleEditContact} className="space-y-4">
+
+                            <form
+                                onSubmit={handleEditContact}
+                                className="space-y-4"
+                            >
                                 <div>
-                                    <label htmlFor="edit-name" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label
+                                        htmlFor="edit-name"
+                                        className="block text-sm font-medium text-gray-700 mb-1"
+                                    >
                                         {t('contacts.form.name')}
                                     </label>
                                     <input
@@ -571,17 +726,26 @@ export const ContactList = (): JSX.Element => {
                                         value={formData.name || ''}
                                         onChange={handleInputChange}
                                         className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ${
-                                            formErrors.name ? 'border-red-300' : 'border-gray-300'
+                                            formErrors.name
+                                                ? 'border-red-300'
+                                                : 'border-gray-300'
                                         }`}
-                                        placeholder={t('contacts.form.namePlaceholder')}
+                                        placeholder={t(
+                                            'contacts.form.namePlaceholder'
+                                        )}
                                     />
                                     {formErrors.name && (
-                                        <p className="mt-1 text-sm text-red-600">{formErrors.name}</p>
+                                        <p className="mt-1 text-sm text-red-600">
+                                            {formErrors.name}
+                                        </p>
                                     )}
                                 </div>
 
                                 <div>
-                                    <label htmlFor="edit-email" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label
+                                        htmlFor="edit-email"
+                                        className="block text-sm font-medium text-gray-700 mb-1"
+                                    >
                                         {t('contacts.form.email')}
                                     </label>
                                     <input
@@ -591,17 +755,26 @@ export const ContactList = (): JSX.Element => {
                                         value={formData.email || ''}
                                         onChange={handleInputChange}
                                         className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ${
-                                            formErrors.email ? 'border-red-300' : 'border-gray-300'
+                                            formErrors.email
+                                                ? 'border-red-300'
+                                                : 'border-gray-300'
                                         }`}
-                                        placeholder={t('contacts.form.emailPlaceholder')}
+                                        placeholder={t(
+                                            'contacts.form.emailPlaceholder'
+                                        )}
                                     />
                                     {formErrors.email && (
-                                        <p className="mt-1 text-sm text-red-600">{formErrors.email}</p>
+                                        <p className="mt-1 text-sm text-red-600">
+                                            {formErrors.email}
+                                        </p>
                                     )}
                                 </div>
 
                                 <div>
-                                    <label htmlFor="edit-phone" className="block text-sm font-medium text-gray-700 mb-1">
+                                    <label
+                                        htmlFor="edit-phone"
+                                        className="block text-sm font-medium text-gray-700 mb-1"
+                                    >
                                         {t('contacts.form.phone')}
                                     </label>
                                     <input
@@ -611,12 +784,18 @@ export const ContactList = (): JSX.Element => {
                                         value={formData.phone || ''}
                                         onChange={handleInputChange}
                                         className={`w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 ${
-                                            formErrors.phone ? 'border-red-300' : 'border-gray-300'
+                                            formErrors.phone
+                                                ? 'border-red-300'
+                                                : 'border-gray-300'
                                         }`}
-                                        placeholder={t('contacts.form.phonePlaceholder')}
+                                        placeholder={t(
+                                            'contacts.form.phonePlaceholder'
+                                        )}
                                     />
                                     {formErrors.phone && (
-                                        <p className="mt-1 text-sm text-red-600">{formErrors.phone}</p>
+                                        <p className="mt-1 text-sm text-red-600">
+                                            {formErrors.phone}
+                                        </p>
                                     )}
                                 </div>
 
@@ -629,7 +808,10 @@ export const ContactList = (): JSX.Element => {
                                         onChange={handleInputChange}
                                         className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                                     />
-                                    <label htmlFor="edit-isFavorite" className="ml-2 block text-sm text-gray-700">
+                                    <label
+                                        htmlFor="edit-isFavorite"
+                                        className="ml-2 block text-sm text-gray-700"
+                                    >
                                         {t('contacts.form.favorite')}
                                     </label>
                                 </div>
@@ -647,7 +829,9 @@ export const ContactList = (): JSX.Element => {
                                         disabled={isLoading}
                                         className="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
                                     >
-                                        {isLoading ? t('contacts.form.saving') : t('contacts.form.save')}
+                                        {isLoading
+                                            ? t('contacts.form.saving')
+                                            : t('contacts.form.save')}
                                     </button>
                                 </div>
                             </form>
@@ -665,9 +849,11 @@ export const ContactList = (): JSX.Element => {
                                 {t('contacts.deleteTitle')}
                             </h3>
                             <p className="text-sm text-gray-500 mb-6">
-                                {t('contacts.deleteMessage', { name: selectedContact.name })}
+                                {t('contacts.deleteMessage', {
+                                    name: selectedContact.name,
+                                })}
                             </p>
-                            
+
                             <div className="flex space-x-3">
                                 <button
                                     onClick={() => setShowDeleteModal(false)}
@@ -680,7 +866,9 @@ export const ContactList = (): JSX.Element => {
                                     disabled={isLoading}
                                     className="flex-1 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 disabled:opacity-50"
                                 >
-                                    {isLoading ? t('contacts.form.deleting') : t('contacts.confirmDelete')}
+                                    {isLoading
+                                        ? t('contacts.form.deleting')
+                                        : t('contacts.confirmDelete')}
                                 </button>
                             </div>
                         </div>
@@ -688,5 +876,5 @@ export const ContactList = (): JSX.Element => {
                 </div>
             )}
         </div>
-    )
-}
+    );
+};

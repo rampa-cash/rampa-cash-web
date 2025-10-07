@@ -1,16 +1,16 @@
 // Components
-export { SendMoney } from './components/SendMoney'
-export { TransactionHistory } from './components/TransactionHistory'
-export { ReceiveMoney } from './components/ReceiveMoney'
+export { SendMoney } from './components/SendMoney';
+export { TransactionHistory } from './components/TransactionHistory';
+export { ReceiveMoney } from './components/ReceiveMoney';
 
 // API Client
-export { TransactionApiClient } from './api-client'
+export { TransactionApiClient } from './api-client';
 
 // Services
-export { TransactionService } from './services/transaction.service'
+export { TransactionService } from './services/transaction.service';
 
 // Hooks
-export { useTransactions } from './hooks/useTransactions'
+export { useTransactions } from './hooks/useTransactions';
 
 // Types
 export type {
@@ -25,4 +25,4 @@ export type {
     SendMoneyProps,
     TransactionHistoryProps,
     ReceiveMoneyProps,
-} from './types'
+} from './types';

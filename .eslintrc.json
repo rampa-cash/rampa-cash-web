@@ -1,17 +1,10 @@
 {
-    "extends": [
-        "next/core-web-vitals",
-        "next/typescript"
-    ],
+    "extends": ["next/core-web-vitals", "next/typescript"],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "project": "./tsconfig.json"
     },
-    "plugins": [
-        "@typescript-eslint",
-        "react-hooks",
-        "prefer-arrow"
-    ],
+    "plugins": ["@typescript-eslint", "react-hooks", "prefer-arrow"],
     "rules": {
         "@typescript-eslint/no-unused-vars": "error",
         "@typescript-eslint/no-explicit-any": "warn",
@@ -29,9 +22,7 @@
     },
     "overrides": [
         {
-            "files": [
-                "pages/api/**/*.ts"
-            ],
+            "files": ["pages/api/**/*.ts"],
             "rules": {
                 "no-console": "off"
             }
@@ -45,10 +36,7 @@
                 "no-console": [
                     "warn",
                     {
-                        "allow": [
-                            "error",
-                            "warn"
-                        ]
+                        "allow": ["error", "warn"]
                     }
                 ]
             }
