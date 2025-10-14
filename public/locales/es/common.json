@@ -408,10 +408,6 @@
                 "title": "Cookies y seguimiento",
                 "content": "Nuestro objetivo es usar solo cookies esenciales en el sitio web (ej., para servir páginas de forma segura). Sin cookies publicitarias de terceros. Si introducimos cookies de análisis opcionales, presentaremos un banner de consentimiento."
             },
-            "security": {
-                "title": "Seguridad",
-                "content": "Encriptación en tránsito/reposo, acceso basado en roles, menor privilegio, y registro de auditoría. No mantenemos las claves privadas de los usuarios. Investigamos y remediamos incidentes prontamente y notificaremos a autoridades/usuarios donde sea legalmente requerido."
-            },
             "children": {
                 "title": "Menores",
                 "content": "Rampa es para adultos (18+) y no está destinado para menores."
@@ -424,6 +420,41 @@
                 "title": "Contacto",
                 "content": "¿Preguntas o solicitudes?"
             }
+        }
+    },
+    "security": {
+        "title": "Seguridad que sientes desde el primer día",
+        "subtitle": "Nunca tenemos tu dinero: siempre permanece en tu billetera.",
+        "features": {
+            "selfCustody": {
+                "title": "Tu dinero permanece en tu billetera",
+                "description": "Nunca lo retenemos. Siempre tienes el control."
+            },
+            "noSeedPhrase": {
+                "title": "Sin frase semilla",
+                "description": "Crea tu billetera con tu número de teléfono, tu correo electrónico o tu cuenta de Apple/Google."
+            },
+            "onlyYou": {
+                "title": "Solo tú puedes mover fondos",
+                "description": "No podemos acceder a tu dinero. Nunca."
+            },
+            "easyRecovery": {
+                "title": "Recuperación fácil",
+                "description": "Face/Touch ID + PIN si cambias o pierdes tu teléfono."
+            },
+            "alwaysOn": {
+                "title": "Protección siempre activa",
+                "description": "Vigilamos actividad sospechosa 24/7."
+            },
+            "privateByDefault": {
+                "title": "Privado por defecto",
+                "description": "Tu información está encriptada de extremo a extremo."
+            }
+        },
+        "idCheck": {
+            "title": "Deposita o retira de forma simple y segura",
+            "description": "Al agregar o retirar dinero local, hacemos una verificación de identidad estándar rápida con socios autorizados.",
+            "technical": "Para los curiosos: Funciona con billeteras MPC con Web3Auth. Tu clave se divide en partes seguras y nunca se almacena en un solo lugar."
         }
     },
     "blog": {
