@@ -3,6 +3,7 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
 import { WaitlistSignup } from '../features/waitlist'
+import SecuritySection from '../components/SecuritySection'
 
 const Home: NextPage = () => {
     const { t } = useTranslation('common')
@@ -193,20 +194,21 @@ const Home: NextPage = () => {
                             <div className="text-gray-600 dark:text-gray-300 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">{t('pricing.stats.commission')}</div>
                         </div>
                         <div className="text-center group cursor-pointer hover:scale-105 transition-all duration-300 p-4 rounded-2xl hover:bg-white/50">
-                            <div className="text-3xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300">~30s</div>
+                            <div className="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">~30s</div>
                             <div className="text-gray-600 dark:text-gray-300 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">{t('pricing.stats.transferTime')}</div>
                         </div>
                         <div className="text-center group cursor-pointer hover:scale-105 transition-all duration-300 p-4 rounded-2xl hover:bg-white/50">
-                            <div className="text-3xl font-bold text-gray-900 group-hover:text-pink-600 transition-colors duration-300">180+</div>
+                            <div className="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors duration-300">180+</div>
                             <div className="text-gray-600 dark:text-gray-300 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">{t('pricing.stats.countries')}</div>
                         </div>
                         <div className="text-center group cursor-pointer hover:scale-105 transition-all duration-300 p-4 rounded-2xl hover:bg-white/50">
-                            <div className="text-3xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">24/7</div>
+                            <div className="text-3xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">24/7</div>
                             <div className="text-gray-600 dark:text-gray-300 group-hover:text-gray-700 dark:group-hover:text-gray-200 transition-colors duration-300">{t('pricing.stats.support')}</div>
                         </div>
                     </div>
                 </div>
             </section>
+            <SecuritySection />
             <section id="about-us" className="py-20 md:py-32 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-800 dark:via-blue-900 dark:to-indigo-900">
                 <div className="container mx-auto px-4 md:px-8 text-center">
                     <div className="mb-16">
