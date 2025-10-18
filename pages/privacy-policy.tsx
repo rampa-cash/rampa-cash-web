@@ -21,7 +21,7 @@ const PrivacyPolicy: NextPage = () => {
                                 <p><strong>{t('privacyPolicy.version')}</strong> 1.0</p>
                                 <p><strong>{t('privacyPolicy.effectiveDate')}</strong> {t('privacyPolicy.date')}</p>
                                 <p><strong>{t('privacyPolicy.controller')}</strong> Lafitech UG (Rampa)</p>
-                                <p><strong>{t('privacyPolicy.contact')}</strong> team@rampa.cash</p>
+                                <p><strong>{t('privacyPolicy.contact')}</strong> hello@rampa.cash</p>
                                 <p><strong>{t('privacyPolicy.registeredAddress')}</strong> Arnulfstr. 171, 80634 Munich, Germany</p>
                                 <p><strong>{t('privacyPolicy.supervisoryAuthority')}</strong> {t('privacyPolicy.supervisoryAuthorityText')}</p>
                             </div>
@@ -99,8 +99,8 @@ const PrivacyPolicy: NextPage = () => {
                                 <p className="text-gray-700 mb-3">{t('privacyPolicy.sections.userRights.intro')}</p>
                                 <p className="text-gray-700">
                                     {t('privacyPolicy.sections.userRights.contactInfo')} 
-                                    <a href="mailto:team@rampa.cash" className="text-indigo-600 hover:text-indigo-800 underline ml-1">
-                                        team@rampa.cash
+                                    <a href="mailto:hello@rampa.cash" className="text-indigo-600 hover:text-indigo-800 underline ml-1">
+                                        hello@rampa.cash
                                     </a>
                                     . {t('privacyPolicy.sections.userRights.complaint')}
                                 </p>
@@ -135,8 +135,8 @@ const PrivacyPolicy: NextPage = () => {
                                 <h2 className="text-xl font-bold mb-4 text-gray-800">12) {t('privacyPolicy.sections.contactSection.title')}</h2>
                                 <p className="text-gray-700">
                                     {t('privacyPolicy.sections.contactSection.content')} 
-                                    <a href="mailto:team@rampa.cash" className="text-indigo-600 hover:text-indigo-800 underline ml-1">
-                                        team@rampa.cash
+                                    <a href="mailto:hello@rampa.cash" className="text-indigo-600 hover:text-indigo-800 underline ml-1">
+                                        hello@rampa.cash
                                     </a>
                                 </p>
                             </section>
