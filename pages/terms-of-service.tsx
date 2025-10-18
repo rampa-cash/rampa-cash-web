@@ -21,7 +21,7 @@ const TermsOfService: NextPage = () => {
                                 <p><strong>{t('termsOfService.version')}</strong> 1.0</p>
                                 <p><strong>{t('termsOfService.effectiveDate')}</strong> {t('termsOfService.date')}</p>
                                 <p><strong>{t('termsOfService.company')}</strong> {t('termsOfService.companyInfo')}</p>
-                                <p><strong>{t('termsOfService.contact')}</strong> team@rampa.cash</p>
+                                <p><strong>{t('termsOfService.contact')}</strong> hello@rampa.cash</p>
                                 <p><strong>{t('termsOfService.registeredAddress')}</strong> Arnulfstr. 171, 80634 Munich, Germany</p>
                                 <p><strong>{t('termsOfService.handelsregister')}</strong> HRB 305485, Amtsgericht Munich</p>
                             </div>
@@ -134,8 +134,8 @@ const TermsOfService: NextPage = () => {
                                 <h2 className="text-xl font-bold mb-4 text-gray-800">13) {t('termsOfService.sections.contactSection.title')}</h2>
                                 <p className="text-gray-700">
                                     {t('termsOfService.sections.contactSection.content')} 
-                                    <a href="mailto:team@rampa.cash" className="text-indigo-600 hover:text-indigo-800 underline ml-1">
-                                        team@rampa.cash
+                                    <a href="mailto:hello@rampa.cash" className="text-indigo-600 hover:text-indigo-800 underline ml-1">
+                                        hello@rampa.cash
                                     </a>
                                 </p>
                             </section>
