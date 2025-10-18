@@ -31,7 +31,7 @@ const Imprint: NextPage = () => {
                             <h2 className="text-xl font-bold mb-4 text-gray-800">{t('imprint.sections.contact.title')}</h2>
                             <div className="space-y-2 text-gray-700">
                             <p><strong>{t('imprint.sections.contact.phone')}</strong> +49 176 71763207</p>
-                            <p><strong>{t('imprint.sections.contact.email')}</strong> team@rampa.cash</p>
+                            <p><strong>{t('imprint.sections.contact.email')}</strong> hello@rampa.cash</p>
                             <p><strong>{t('imprint.sections.contact.website')}</strong> www.rampa.cash</p>
                             </div>
                         </section>
