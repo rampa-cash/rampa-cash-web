@@ -119,6 +119,9 @@ export const Web3AuthProvider: React.FC<Web3AuthProviderProps> = ({
                 throw new Error('Failed to get Web3Auth token');
             }
 
+            // Log Web3Auth token for debugging
+            console.log('🔐 Web3Auth Identity Token:', web3AuthToken);
+
             // Call backend to exchange Web3Auth token for our JWT
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/web3auth/validate`,
@@ -140,6 +143,10 @@ export const Web3AuthProvider: React.FC<Web3AuthProviderProps> = ({
 
             const { accessToken, user: backendUser } = await response.json();
 
+            // Log backend access token for debugging
+            console.log('🎫 Backend Access Token:', accessToken);
+            console.log('👤 Backend User Data:', backendUser);
+
             // Store our backend JWT token securely
             Web3AuthJWTService.storeToken(accessToken);
 
@@ -155,6 +162,14 @@ export const Web3AuthProvider: React.FC<Web3AuthProviderProps> = ({
                 status: backendUser.status,
                 createdAt: backendUser.createdAt,
                 lastLoginAt: backendUser.lastLoginAt,
+            });
+
+            // Log successful login completion
+            console.log('✅ Web3Auth Login Successful!', {
+                userId: backendUser.id,
+                email: backendUser.email,
+                authProvider: backendUser.authProvider,
+                loginTime: new Date().toISOString()
             });
 
             // User data will be set by the useEffect above

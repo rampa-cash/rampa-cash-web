@@ -18,6 +18,13 @@ export class Web3AuthJWTService {
             const payload = JSON.parse(atob(token.split('.')[1]));
             const expiry = payload.exp * 1000; // Convert to milliseconds
 
+            // Log token storage for debugging
+            console.log('💾 Storing JWT Token:', {
+                token: token.substring(0, 50) + '...', // First 50 chars for security
+                expiry: new Date(expiry).toISOString(),
+                payload: payload
+            });
+
             setLocalStorage(this.TOKEN_KEY, token);
             setLocalStorage(this.TOKEN_EXPIRY_KEY, expiry.toString());
         } catch (error) {
