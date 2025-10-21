@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { BACKEND_CONFIG } from './constants';
 
 /**
  * isError: boolean = This is true when the axios service throws an error
@@ -35,15 +36,12 @@ export const serverRequest = async <T>(
     data?: unknown
 ): Promise<T> => {
     try {
-        const baseURL =
-            process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:3001';
-
         const axiosConfig = {
             method,
             url,
-            baseURL,
+            baseURL: BACKEND_CONFIG.baseURL,
             headers: {
-                'X-Auth-Token': token ?? '',
+                'Authorization': token ? `Bearer ${token}` : '',
                 'Content-Type': 'application/json',
             },
             data,

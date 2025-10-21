@@ -4,13 +4,13 @@ import {
     removeLocalStorage,
 } from '@/lib/browser-utils';
 
-// JWT Token Management Service for Web3Auth
+// JWT Token Management Service for Custom Backend JWT
 export class Web3AuthJWTService {
-    private static readonly TOKEN_KEY = 'web3auth_jwt_token';
-    private static readonly TOKEN_EXPIRY_KEY = 'web3auth_jwt_expiry';
+    private static readonly TOKEN_KEY = 'rampa_access_token';
+    private static readonly TOKEN_EXPIRY_KEY = 'rampa_token_expiry';
 
     /**
-     * Store JWT token with expiration
+     * Store custom backend JWT token with expiration
      */
     static storeToken(token: string): void {
         try {
@@ -19,7 +19,7 @@ export class Web3AuthJWTService {
             const expiry = payload.exp * 1000; // Convert to milliseconds
 
             // Log token storage for debugging
-            console.log('💾 Storing JWT Token:', {
+            console.log('💾 Storing Custom Backend JWT Token:', {
                 token: token.substring(0, 50) + '...', // First 50 chars for security
                 expiry: new Date(expiry).toISOString(),
                 payload: payload
@@ -28,12 +28,12 @@ export class Web3AuthJWTService {
             setLocalStorage(this.TOKEN_KEY, token);
             setLocalStorage(this.TOKEN_EXPIRY_KEY, expiry.toString());
         } catch (error) {
-            console.error('Failed to store Web3Auth token:', error);
+            console.error('Failed to store custom backend JWT token:', error);
         }
     }
 
     /**
-     * Retrieve stored JWT token
+     * Retrieve stored custom backend JWT token
      */
     static getToken(): string | null {
         try {
@@ -48,7 +48,7 @@ export class Web3AuthJWTService {
 
             return token;
         } catch (error) {
-            console.error('Failed to get Web3Auth token:', error);
+            console.error('Failed to get custom backend JWT token:', error);
             return null;
         }
     }
@@ -88,25 +88,33 @@ export class Web3AuthJWTService {
     }
 
     /**
-     * Decode JWT token payload
+     * Decode custom backend JWT token payload
      */
     static decodeToken(token: string): any | null {
         try {
             const payload = JSON.parse(atob(token.split('.')[1]));
             return payload;
         } catch (error) {
-            console.error('Failed to decode Web3Auth token:', error);
+            console.error('Failed to decode custom backend JWT token:', error);
             return null;
         }
     }
 
     /**
-     * Get user information from token
+     * Get user information from custom backend JWT token
      */
     static getUserFromToken(token: string): {
         id: string;
         email?: string;
         name?: string;
+        firstName?: string;
+        lastName?: string;
+        language?: string;
+        authProvider?: string;
+        isActive?: boolean;
+        status?: string;
+        createdAt?: string;
+        lastLoginAt?: string;
         wallets?: Array<{
             public_key: string;
             type: string;
@@ -118,13 +126,21 @@ export class Web3AuthJWTService {
             if (!payload) return null;
 
             return {
-                id: payload.sub || payload.userId || '',
+                id: payload.sub || payload.userId || payload.id || '',
                 email: payload.email,
                 name: payload.name,
+                firstName: payload.firstName,
+                lastName: payload.lastName,
+                language: payload.language,
+                authProvider: payload.authProvider,
+                isActive: payload.isActive,
+                status: payload.status,
+                createdAt: payload.createdAt,
+                lastLoginAt: payload.lastLoginAt,
                 wallets: payload.wallets || [],
             };
         } catch (error) {
-            console.error('Failed to extract user from token:', error);
+            console.error('Failed to extract user from custom backend JWT token:', error);
             return null;
         }
     }
@@ -159,12 +175,12 @@ export class Web3AuthJWTService {
     }
 
     /**
-     * Check if token is from Web3Auth
+     * Check if token is from our custom backend
      */
-    static isWeb3AuthToken(token: string): boolean {
+    static isCustomBackendToken(token: string): boolean {
         try {
             const payload = this.decodeToken(token);
-            return payload && payload.iss === 'https://api-auth.web3auth.io';
+            return payload && payload.iss && payload.iss.includes('rampa');
         } catch (error) {
             return false;
         }

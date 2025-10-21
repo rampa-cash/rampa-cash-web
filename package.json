@@ -41,6 +41,7 @@
         "i18next": "^25.3.5",
         "i18next-browser-languagedetector": "^8.2.0",
         "i18next-http-backend": "^3.0.2",
+        "jsonwebtoken": "^9.0.2",
         "next": "^14.0.0",
         "next-i18next": "^15.4.2",
         "qr": "^0.5.2",

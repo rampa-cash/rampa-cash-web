@@ -9,10 +9,13 @@ import {
     useWeb3AuthUser,
     useWeb3AuthConnect,
     useWeb3AuthDisconnect,
+    useWeb3Auth as useWeb3AuthInstance,
 } from '@web3auth/modal/react';
+import { WALLET_CONNECTORS, AUTH_CONNECTION } from '@web3auth/modal';
 import { useIdentityToken } from '@web3auth/modal/react';
-import { FEATURE_FLAGS } from '@/lib/constants';
+import { FEATURE_FLAGS, BACKEND_CONFIG, API_ENDPOINTS } from '@/lib/constants';
 import { Web3AuthJWTService } from '../services/web3auth-jwt.service';
+import { CredentialResponse } from '@google-cloud/oauth2';
 
 // Types
 interface Web3AuthUser {
@@ -43,6 +46,8 @@ interface Web3AuthContextType {
 
     // Authentication methods
     login: () => Promise<void>;
+    loginWithGoogle: () => Promise<void>;
+    loginWithCustomJWT: (jwtToken: string) => Promise<void>;
     logout: () => Promise<void>;
 
     // Token management
@@ -71,9 +76,9 @@ export const Web3AuthProvider: React.FC<Web3AuthProviderProps> = ({
     const { userInfo: web3AuthUser } = useWeb3AuthUser();
     const { connect, loading: isConnecting } = useWeb3AuthConnect();
     const { disconnect } = useWeb3AuthDisconnect();
+    const { web3Auth } = useWeb3AuthInstance();
     const {
         getIdentityToken,
-        token,
         loading: isTokenLoading,
     } = useIdentityToken();
 
@@ -102,9 +107,9 @@ export const Web3AuthProvider: React.FC<Web3AuthProviderProps> = ({
             setUser(null);
         }
         setIsInitialized(true);
-    }, [web3AuthUser]);
+    }, [web3AuthUser?.userId, web3AuthUser?.email, web3AuthUser?.name, web3AuthUser?.profileImage]);
 
-    // Login method
+    // Generic login method (opens modal)
     const login = async (): Promise<void> => {
         try {
             setError(null);
@@ -113,39 +118,75 @@ export const Web3AuthProvider: React.FC<Web3AuthProviderProps> = ({
                 throw new Error('Failed to connect to Web3Auth');
             }
 
-            // Get Web3Auth JWT token
-            const web3AuthToken = await getIdentityToken();
-            if (!web3AuthToken) {
-                throw new Error('Failed to get Web3Auth token');
+            await handleWeb3AuthLogin();
+        } catch (err) {
+            const errorMessage =
+                err instanceof Error ? err.message : 'Login failed';
+            setError(errorMessage);
+            console.error('Web3Auth login error:', err);
+            throw err;
+        }
+    };
+
+    // Login with Google using grouped connection
+    // const loginWithGoogle = async (): Promise<void> => {
+    const loginWithGoogle = async (response: CredentialResponse) => {
+        const idToken = response.credential;
+
+        try {
+            setError(null);
+            const provider = await web3Auth?.connectTo(WALLET_CONNECTORS.AUTH, {
+                groupedAuthConnectionId: "rampa-w3a-group-connection",
+                authConnectionId: "rampa-w3a-google",
+                authConnection: AUTH_CONNECTION.GOOGLE,
+                idToken,
+                extraLoginOptions: {
+                    isUserIdCaseSensitive: false,
+                    verifierIdField: "email", // Match your backend configuration
+                },
+            });
+
+            if (!provider) {
+                throw new Error('Failed to connect with Google');
             }
 
-            // Log Web3Auth token for debugging
-            console.log('🔐 Web3Auth Identity Token:', web3AuthToken);
+            await handleWeb3AuthLogin();
+        } catch (err) {
+            const errorMessage =
+                err instanceof Error ? err.message : 'Google login failed';
+            setError(errorMessage);
+            console.error('Google login error:', err);
+            throw err;
+        }
+    };
 
-            // Call backend to exchange Web3Auth token for our JWT
+
+    // Login with Custom JWT using direct connection
+    const loginWithCustomJWT = async (jwtToken: string): Promise<void> => {
+        try {
+            setError(null);
+            
+            // For custom JWT, we'll validate it directly with our backend
+            // and then use the regular login flow
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/web3auth/validate`,
+                `${BACKEND_CONFIG.baseURL}${API_ENDPOINTS.auth.web3authValidate}`,
                 {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        token: web3AuthToken,
+                        token: jwtToken,
                     }),
                 }
             );
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || 'Token validation failed');
+                throw new Error(errorData.message || 'Custom JWT validation failed');
             }
 
             const { accessToken, user: backendUser } = await response.json();
-
-            // Log backend access token for debugging
-            console.log('🎫 Backend Access Token:', accessToken);
-            console.log('👤 Backend User Data:', backendUser);
 
             // Store our backend JWT token securely
             Web3AuthJWTService.storeToken(accessToken);
@@ -165,21 +206,82 @@ export const Web3AuthProvider: React.FC<Web3AuthProviderProps> = ({
             });
 
             // Log successful login completion
-            console.log('✅ Web3Auth Login Successful!', {
+            console.log('✅ Custom JWT Login Successful!', {
                 userId: backendUser.id,
                 email: backendUser.email,
                 authProvider: backendUser.authProvider,
                 loginTime: new Date().toISOString()
             });
 
-            // User data will be set by the useEffect above
         } catch (err) {
             const errorMessage =
-                err instanceof Error ? err.message : 'Login failed';
+                err instanceof Error ? err.message : 'Custom JWT login failed';
             setError(errorMessage);
-            console.error('Web3Auth login error:', err);
+            console.error('Custom JWT login error:', err);
             throw err;
         }
+    };
+
+    // Common Web3Auth login handler
+    const handleWeb3AuthLogin = async (): Promise<void> => {
+        // Get Web3Auth JWT token
+        const web3AuthToken = await getIdentityToken();
+        if (!web3AuthToken) {
+            throw new Error('Failed to get Web3Auth token');
+        }
+
+        // Log Web3Auth token for debugging
+        console.log('🔐 Web3Auth Identity Token:', web3AuthToken);
+
+        // Call backend to exchange Web3Auth token for our custom JWT
+        const response = await fetch(
+            `${BACKEND_CONFIG.baseURL}${API_ENDPOINTS.auth.web3authValidate}`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    token: web3AuthToken,
+                }),
+            }
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Token validation failed');
+        }
+
+        const { accessToken, user: backendUser } = await response.json();
+
+        // Log backend access token for debugging
+        console.log('🎫 Backend Access Token:', accessToken);
+        console.log('👤 Backend User Data:', backendUser);
+
+        // Store our backend JWT token securely
+        Web3AuthJWTService.storeToken(accessToken);
+
+        // Store user data in context state
+        setUser({
+            id: backendUser.id,
+            email: backendUser.email,
+            firstName: backendUser.firstName,
+            lastName: backendUser.lastName,
+            language: backendUser.language,
+            authProvider: backendUser.authProvider,
+            isActive: backendUser.isActive,
+            status: backendUser.status,
+            createdAt: backendUser.createdAt,
+            lastLoginAt: backendUser.lastLoginAt,
+        });
+
+        // Log successful login completion
+        console.log('✅ Web3Auth Login Successful!', {
+            userId: backendUser.id,
+            email: backendUser.email,
+            authProvider: backendUser.authProvider,
+            loginTime: new Date().toISOString()
+        });
     };
 
     // Logout method
@@ -208,40 +310,31 @@ export const Web3AuthProvider: React.FC<Web3AuthProviderProps> = ({
         }
     };
 
-    // Get JWT token
+    // Get custom backend JWT token
     const getToken = async (): Promise<string | null> => {
         try {
             if (!isAuthenticated) {
                 return null;
             }
 
-            // If we already have a token, return it
-            if (token) {
-                return token;
+            // Return our custom backend JWT token
+            const customToken = Web3AuthJWTService.getToken();
+            if (customToken && Web3AuthJWTService.isTokenValid()) {
+                return customToken;
             }
 
-            // Otherwise, get a new token
-            const newToken = await getIdentityToken();
-            return newToken;
+            // If no valid custom token, user needs to re-login
+            return null;
         } catch (err) {
-            console.error('Failed to get Web3Auth token:', err);
+            console.error('Failed to get custom backend JWT token:', err);
             setError('Failed to get authentication token');
             return null;
         }
     };
 
-    // Check if token is valid
+    // Check if custom backend JWT token is valid
     const isTokenValid = (): boolean => {
-        if (!token) return false;
-
-        try {
-            // Decode JWT to check expiration
-            const payload = JSON.parse(atob(token.split('.')[1]));
-            const currentTime = Date.now() / 1000;
-            return payload.exp > currentTime;
-        } catch {
-            return false;
-        }
+        return Web3AuthJWTService.isTokenValid();
     };
 
     // Clear error
@@ -255,6 +348,8 @@ export const Web3AuthProvider: React.FC<Web3AuthProviderProps> = ({
         isAuthenticated,
         isLoading,
         login,
+        loginWithGoogle,
+        loginWithCustomJWT,
         logout,
         getToken,
         isTokenValid,

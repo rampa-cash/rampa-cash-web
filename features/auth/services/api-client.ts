@@ -1,13 +1,13 @@
 import axios from 'axios';
 import { Web3AuthJWTService } from './web3auth-jwt.service';
+import { BACKEND_CONFIG } from '@/lib/constants';
 
 // API Client with Web3Auth token injection
 export class Web3AuthApiClient {
     private client: any;
 
     constructor(
-        baseURL: string = process.env.NEXT_PUBLIC_BACKEND_URL ||
-            'http://localhost:3001'
+        baseURL: string = BACKEND_CONFIG.baseURL
     ) {
         this.client = axios.create({
             baseURL,
