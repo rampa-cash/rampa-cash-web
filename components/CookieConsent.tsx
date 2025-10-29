@@ -1,37 +1,41 @@
-import { useState, useEffect } from 'react'
-import { useTranslation } from 'next-i18next'
-import { acceptAllCookies, acceptEssentialOnly, hasConsent } from '../lib/cookie-utils'
+import { useState, useEffect } from 'react';
+import { useTranslation } from 'next-i18next';
+import {
+    acceptAllCookies,
+    acceptEssentialOnly,
+    hasConsent,
+} from '../lib/cookie-utils';
 
 const CookieConsent = (): JSX.Element | null => {
-    const { t } = useTranslation('common')
-    const [showBanner, setShowBanner] = useState(false)
-    const [isLoading, setIsLoading] = useState(true)
+    const { t } = useTranslation('common');
+    const [showBanner, setShowBanner] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         // Check if user has already given consent
         if (!hasConsent()) {
-            setShowBanner(true)
+            setShowBanner(true);
         }
-        setIsLoading(false)
-    }, [])
+        setIsLoading(false);
+    }, []);
 
     const handleAcceptAll = (): void => {
-        acceptAllCookies()
-        setShowBanner(false)
-    }
+        acceptAllCookies();
+        setShowBanner(false);
+    };
 
     const handleAcceptEssential = (): void => {
-        acceptEssentialOnly()
-        setShowBanner(false)
-    }
+        acceptEssentialOnly();
+        setShowBanner(false);
+    };
 
     const handleShowDetails = (): void => {
         // You can implement a detailed cookie policy modal here
-        window.open('/cookie-policy', '_blank')
-    }
+        window.open('/cookie-policy', '_blank');
+    };
 
     if (isLoading || !showBanner) {
-        return null
+        return null;
     }
 
     return (
@@ -72,7 +76,7 @@ const CookieConsent = (): JSX.Element | null => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default CookieConsent
+export default CookieConsent;

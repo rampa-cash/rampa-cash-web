@@ -6,6 +6,11 @@ export const APP_CONFIG = {
     url: 'https://www.rampa.cash',
 } as const;
 
+// Backend configuration
+export const BACKEND_CONFIG = {
+    baseURL: process.env.NEXT_PUBLIC_BACKEND_URL ?? 'https://api-rampa-cash-test.up.railway.app',
+} as const;
+
 // API endpoints
 export const API_ENDPOINTS = {
     waitlist: '/inquiry/waitlist',
@@ -19,6 +24,7 @@ export const API_ENDPOINTS = {
         forgotPassword: '/auth/forgot-password',
         resetPassword: '/auth/reset-password',
         logout: '/auth/logout',
+        web3authValidate: '/auth/web3auth/validate',
     },
     wallet: {
         create: '/wallet',
@@ -114,4 +120,9 @@ export const VALIDATION_LIMITS = {
 export const ENV = {
     isDevelopment: process.env.NODE_ENV === 'development',
     isProduction: process.env.NODE_ENV === 'production',
+} as const;
+
+// Feature flags
+export const FEATURE_FLAGS = {
+    showLoginButton: process.env.NEXT_PUBLIC_SHOW_LOGIN_BUTTON === 'true',
 } as const;

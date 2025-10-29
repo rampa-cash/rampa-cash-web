@@ -1,18 +1,18 @@
-import type { NextPage } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-import { VISACard } from '../../features/visa-card'
+import type { NextPage } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { GetStaticProps } from 'next';
+import { VISACard } from '../../features/visa-card';
 
 const VISACardPage: NextPage = () => {
-    return <VISACard />
-}
+    return <VISACard />;
+};
 
-export default VISACardPage
+export default VISACardPage;
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return {
         props: {
             ...(await serverSideTranslations(locale ?? 'en', ['common'])),
         },
-    }
-}
+    };
+};

@@ -1,10 +1,10 @@
 import { VISACardApiClient } from '../api-client';
-import type { 
-    VISACard, 
+import type {
+    VISACard,
     CreateVISACardRequest,
     UpdateVISACardRequest,
     VISACardStats,
-    SpendingLimitsCheck
+    SpendingLimitsCheck,
 } from '../types';
 
 /**
@@ -23,7 +23,7 @@ export class VISACardService {
             }
 
             const response = await VISACardApiClient.getVISACard(token);
-            
+
             return {
                 id: response.id,
                 userId: _userId,
@@ -46,15 +46,21 @@ export class VISACardService {
     /**
      * Create VISA card
      */
-    static async createVISACard(_userId: string, data: CreateVISACardRequest): Promise<VISACard> {
+    static async createVISACard(
+        _userId: string,
+        data: CreateVISACardRequest
+    ): Promise<VISACard> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
                 throw new Error('No authentication token available');
             }
 
-            const response = await VISACardApiClient.createVISACard(data, token);
-            
+            const response = await VISACardApiClient.createVISACard(
+                data,
+                token
+            );
+
             return {
                 id: response.id,
                 userId: _userId,
@@ -85,7 +91,7 @@ export class VISACardService {
             }
 
             const response = await VISACardApiClient.getAllVISACards(token);
-            
+
             return response.map(card => ({
                 id: card.id,
                 userId: _userId,
@@ -108,15 +114,23 @@ export class VISACardService {
     /**
      * Update VISA card
      */
-    static async updateVISACard(_userId: string, cardId: string, data: UpdateVISACardRequest): Promise<VISACard> {
+    static async updateVISACard(
+        _userId: string,
+        cardId: string,
+        data: UpdateVISACardRequest
+    ): Promise<VISACard> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
                 throw new Error('No authentication token available');
             }
 
-            const response = await VISACardApiClient.updateVISACard(cardId, data, token);
-            
+            const response = await VISACardApiClient.updateVISACard(
+                cardId,
+                data,
+                token
+            );
+
             return {
                 id: response.id,
                 userId: _userId,
@@ -139,7 +153,10 @@ export class VISACardService {
     /**
      * Activate VISA card
      */
-    static async activateVISACard(_userId: string, cardId: string): Promise<void> {
+    static async activateVISACard(
+        _userId: string,
+        cardId: string
+    ): Promise<void> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
@@ -156,7 +173,10 @@ export class VISACardService {
     /**
      * Suspend VISA card
      */
-    static async suspendVISACard(_userId: string, cardId: string): Promise<void> {
+    static async suspendVISACard(
+        _userId: string,
+        cardId: string
+    ): Promise<void> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
@@ -173,7 +193,10 @@ export class VISACardService {
     /**
      * Reactivate VISA card
      */
-    static async reactivateVISACard(_userId: string, cardId: string): Promise<void> {
+    static async reactivateVISACard(
+        _userId: string,
+        cardId: string
+    ): Promise<void> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
@@ -190,7 +213,10 @@ export class VISACardService {
     /**
      * Cancel VISA card
      */
-    static async cancelVISACard(_userId: string, cardId: string): Promise<void> {
+    static async cancelVISACard(
+        _userId: string,
+        cardId: string
+    ): Promise<void> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
@@ -207,14 +233,22 @@ export class VISACardService {
     /**
      * Update VISA card balance
      */
-    static async updateVISACardBalance(_userId: string, cardId: string, amount: string): Promise<{ balance: string }> {
+    static async updateVISACardBalance(
+        _userId: string,
+        cardId: string,
+        amount: string
+    ): Promise<{ balance: string }> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
                 throw new Error('No authentication token available');
             }
 
-            const response = await VISACardApiClient.updateVISACardBalance(cardId, amount, token);
+            const response = await VISACardApiClient.updateVISACardBalance(
+                cardId,
+                amount,
+                token
+            );
             return { balance: response.balance };
         } catch (error) {
             console.error('Failed to update VISA card balance:', error);
@@ -225,14 +259,22 @@ export class VISACardService {
     /**
      * Check VISA card spending limits
      */
-    static async checkVISACardSpendingLimits(_userId: string, cardId: string, amount: string): Promise<SpendingLimitsCheck> {
+    static async checkVISACardSpendingLimits(
+        _userId: string,
+        cardId: string,
+        amount: string
+    ): Promise<SpendingLimitsCheck> {
         try {
             const token = localStorage.getItem('accessToken');
             if (!token) {
                 throw new Error('No authentication token available');
             }
 
-            return await VISACardApiClient.checkVISACardSpendingLimits(cardId, amount, token);
+            return await VISACardApiClient.checkVISACardSpendingLimits(
+                cardId,
+                amount,
+                token
+            );
         } catch (error) {
             console.error('Failed to check VISA card spending limits:', error);
             throw error;

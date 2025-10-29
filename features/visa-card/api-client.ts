@@ -1,11 +1,11 @@
 import { serverRequest } from '../../lib/api-client';
 import { API_ENDPOINTS } from '../../lib/constants';
-import type { 
+import type {
     CreateVISACardRequest,
     UpdateVISACardRequest,
     VISACardResponse,
     VISACardStats,
-    SpendingLimitsCheck
+    SpendingLimitsCheck,
 } from './types';
 
 /**
@@ -30,7 +30,10 @@ export class VISACardApiClient {
      * Create VISA card
      * POST /visa-card
      */
-    static async createVISACard(data: CreateVISACardRequest, token: string): Promise<VISACardResponse> {
+    static async createVISACard(
+        data: CreateVISACardRequest,
+        token: string
+    ): Promise<VISACardResponse> {
         return serverRequest<VISACardResponse>(
             'POST',
             API_ENDPOINTS.visaCard.create,
@@ -55,7 +58,10 @@ export class VISACardApiClient {
      * Get VISA cards by status
      * GET /visa-card/by-status/{status}
      */
-    static async getVISACardsByStatus(status: 'pending' | 'active' | 'suspended' | 'cancelled', token: string): Promise<VISACardResponse[]> {
+    static async getVISACardsByStatus(
+        status: 'pending' | 'active' | 'suspended' | 'cancelled',
+        token: string
+    ): Promise<VISACardResponse[]> {
         return serverRequest<VISACardResponse[]>(
             'GET',
             `${API_ENDPOINTS.visaCard.byStatus}/${status}`,
@@ -67,7 +73,9 @@ export class VISACardApiClient {
      * Get expired VISA cards
      * GET /visa-card/expired
      */
-    static async getExpiredVISACards(token: string): Promise<VISACardResponse[]> {
+    static async getExpiredVISACards(
+        token: string
+    ): Promise<VISACardResponse[]> {
         return serverRequest<VISACardResponse[]>(
             'GET',
             API_ENDPOINTS.visaCard.expired,
@@ -91,7 +99,10 @@ export class VISACardApiClient {
      * Get specific VISA card
      * GET /visa-card/{id}
      */
-    static async getVISACardById(id: string, token: string): Promise<VISACardResponse> {
+    static async getVISACardById(
+        id: string,
+        token: string
+    ): Promise<VISACardResponse> {
         return serverRequest<VISACardResponse>(
             'GET',
             `${API_ENDPOINTS.visaCard.getById}/${id}`,
@@ -103,7 +114,11 @@ export class VISACardApiClient {
      * Update VISA card
      * PUT /visa-card/{id}
      */
-    static async updateVISACard(id: string, data: UpdateVISACardRequest, token: string): Promise<VISACardResponse> {
+    static async updateVISACard(
+        id: string,
+        data: UpdateVISACardRequest,
+        token: string
+    ): Promise<VISACardResponse> {
         return serverRequest<VISACardResponse>(
             'PUT',
             `${API_ENDPOINTS.visaCard.update}/${id}`,
@@ -116,7 +131,10 @@ export class VISACardApiClient {
      * Activate VISA card
      * POST /visa-card/{id}/activate
      */
-    static async activateVISACard(id: string, token: string): Promise<{
+    static async activateVISACard(
+        id: string,
+        token: string
+    ): Promise<{
         id: string;
         status: string;
         activatedAt: string;
@@ -125,91 +143,89 @@ export class VISACardApiClient {
             id: string;
             status: string;
             activatedAt: string;
-        }>(
-            'POST',
-            `${API_ENDPOINTS.visaCard.activate}/${id}`,
-            token
-        );
+        }>('POST', `${API_ENDPOINTS.visaCard.activate}/${id}`, token);
     }
 
     /**
      * Suspend VISA card
      * POST /visa-card/{id}/suspend
      */
-    static async suspendVISACard(id: string, token: string): Promise<{
+    static async suspendVISACard(
+        id: string,
+        token: string
+    ): Promise<{
         id: string;
         status: string;
     }> {
         return serverRequest<{
             id: string;
             status: string;
-        }>(
-            'POST',
-            `${API_ENDPOINTS.visaCard.suspend}/${id}`,
-            token
-        );
+        }>('POST', `${API_ENDPOINTS.visaCard.suspend}/${id}`, token);
     }
 
     /**
      * Reactivate VISA card
      * POST /visa-card/{id}/reactivate
      */
-    static async reactivateVISACard(id: string, token: string): Promise<{
+    static async reactivateVISACard(
+        id: string,
+        token: string
+    ): Promise<{
         id: string;
         status: string;
     }> {
         return serverRequest<{
             id: string;
             status: string;
-        }>(
-            'POST',
-            `${API_ENDPOINTS.visaCard.reactivate}/${id}`,
-            token
-        );
+        }>('POST', `${API_ENDPOINTS.visaCard.reactivate}/${id}`, token);
     }
 
     /**
      * Cancel VISA card
      * POST /visa-card/{id}/cancel
      */
-    static async cancelVISACard(id: string, token: string): Promise<{
+    static async cancelVISACard(
+        id: string,
+        token: string
+    ): Promise<{
         id: string;
         status: string;
     }> {
         return serverRequest<{
             id: string;
             status: string;
-        }>(
-            'POST',
-            `${API_ENDPOINTS.visaCard.cancel}/${id}`,
-            token
-        );
+        }>('POST', `${API_ENDPOINTS.visaCard.cancel}/${id}`, token);
     }
 
     /**
      * Update VISA card balance
      * POST /visa-card/{id}/update-balance
      */
-    static async updateVISACardBalance(id: string, amount: string, token: string): Promise<{
+    static async updateVISACardBalance(
+        id: string,
+        amount: string,
+        token: string
+    ): Promise<{
         id: string;
         balance: string;
     }> {
         return serverRequest<{
             id: string;
             balance: string;
-        }>(
-            'POST',
-            `${API_ENDPOINTS.visaCard.updateBalance}/${id}`,
-            token,
-            { amount }
-        );
+        }>('POST', `${API_ENDPOINTS.visaCard.updateBalance}/${id}`, token, {
+            amount,
+        });
     }
 
     /**
      * Check VISA card spending limits
      * POST /visa-card/{id}/check-spending-limits
      */
-    static async checkVISACardSpendingLimits(id: string, amount: string, token: string): Promise<SpendingLimitsCheck> {
+    static async checkVISACardSpendingLimits(
+        id: string,
+        amount: string,
+        token: string
+    ): Promise<SpendingLimitsCheck> {
         return serverRequest<SpendingLimitsCheck>(
             'POST',
             `${API_ENDPOINTS.visaCard.checkLimits}/${id}`,

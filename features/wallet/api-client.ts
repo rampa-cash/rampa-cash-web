@@ -1,12 +1,12 @@
 import { serverRequest } from '../../lib/api-client';
 import { API_ENDPOINTS } from '../../lib/constants';
-import type { 
+import type {
     CreateWalletRequest,
     UpdateWalletRequest,
     ConnectWalletRequest,
     WalletResponse,
     WalletBalanceResponse,
-    TransferRequest
+    TransferRequest,
 } from './types';
 
 /**
@@ -19,7 +19,10 @@ export class WalletApiClient {
      * Create new wallet
      * POST /wallet
      */
-    static async createWallet(data: CreateWalletRequest, token: string): Promise<WalletResponse> {
+    static async createWallet(
+        data: CreateWalletRequest,
+        token: string
+    ): Promise<WalletResponse> {
         return serverRequest<WalletResponse>(
             'POST',
             API_ENDPOINTS.wallet.create,
@@ -44,7 +47,10 @@ export class WalletApiClient {
      * Update wallet
      * PUT /wallet
      */
-    static async updateWallet(data: UpdateWalletRequest, token: string): Promise<WalletResponse> {
+    static async updateWallet(
+        data: UpdateWalletRequest,
+        token: string
+    ): Promise<WalletResponse> {
         return serverRequest<WalletResponse>(
             'PUT',
             API_ENDPOINTS.wallet.update,
@@ -69,7 +75,10 @@ export class WalletApiClient {
      * Get specific wallet balance
      * GET /wallet/balance
      */
-    static async getWalletBalance(tokenType: 'USDC' | 'EURC' | 'SOL', token: string): Promise<{
+    static async getWalletBalance(
+        tokenType: 'USDC' | 'EURC' | 'SOL',
+        token: string
+    ): Promise<{
         walletId: string;
         tokenType: 'USDC' | 'EURC' | 'SOL';
         balance: string;
@@ -78,19 +87,16 @@ export class WalletApiClient {
             walletId: string;
             tokenType: 'USDC' | 'EURC' | 'SOL';
             balance: string;
-        }>(
-            'GET',
-            API_ENDPOINTS.wallet.balance,
-            token,
-            { tokenType }
-        );
+        }>('GET', API_ENDPOINTS.wallet.balance, token, { tokenType });
     }
 
     /**
      * Get all wallet balances
      * GET /wallet/balances
      */
-    static async getWalletBalances(token: string): Promise<WalletBalanceResponse> {
+    static async getWalletBalances(
+        token: string
+    ): Promise<WalletBalanceResponse> {
         return serverRequest<WalletBalanceResponse>(
             'GET',
             API_ENDPOINTS.wallet.balances,
@@ -102,7 +108,10 @@ export class WalletApiClient {
      * Connect existing wallet
      * POST /wallet/connect
      */
-    static async connectWallet(data: ConnectWalletRequest, token: string): Promise<WalletResponse> {
+    static async connectWallet(
+        data: ConnectWalletRequest,
+        token: string
+    ): Promise<WalletResponse> {
         return serverRequest<WalletResponse>(
             'POST',
             API_ENDPOINTS.wallet.connect,
@@ -115,7 +124,10 @@ export class WalletApiClient {
      * Transfer funds
      * POST /wallet/transfer
      */
-    static async transfer(data: TransferRequest, token: string): Promise<{
+    static async transfer(
+        data: TransferRequest,
+        token: string
+    ): Promise<{
         message: string;
         fromWallet: string;
         toAddress: string;
@@ -128,12 +140,7 @@ export class WalletApiClient {
             toAddress: string;
             amount: string;
             tokenType: 'USDC' | 'EURC' | 'SOL';
-        }>(
-            'POST',
-            API_ENDPOINTS.wallet.transfer,
-            token,
-            data
-        );
+        }>('POST', API_ENDPOINTS.wallet.transfer, token, data);
     }
 
     /**
@@ -153,11 +160,7 @@ export class WalletApiClient {
                 id: string;
                 status: string;
             };
-        }>(
-            'POST',
-            API_ENDPOINTS.wallet.suspend,
-            token
-        );
+        }>('POST', API_ENDPOINTS.wallet.suspend, token);
     }
 
     /**
@@ -177,10 +180,6 @@ export class WalletApiClient {
                 id: string;
                 status: string;
             };
-        }>(
-            'POST',
-            API_ENDPOINTS.wallet.activate,
-            token
-        );
+        }>('POST', API_ENDPOINTS.wallet.activate, token);
     }
 }

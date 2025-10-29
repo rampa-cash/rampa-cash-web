@@ -3,8 +3,13 @@ FROM node:20-alpine
 # Set working directory
 WORKDIR /app
 
-# Install dependencies for better performance
-RUN apk add --no-cache libc6-compat curl
+# Install dependencies for better performance and native module compilation
+RUN apk add --no-cache \
+    libc6-compat \
+    curl \
+    python3 \
+    make \
+    g++
 
 # Copy package files
 COPY package*.json ./

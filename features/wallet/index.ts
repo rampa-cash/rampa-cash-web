@@ -1,14 +1,14 @@
 // Components
-export { WalletBalance } from './components/WalletBalance'
+export { WalletBalance } from './components/WalletBalance';
 
 // API Client
-export { WalletApiClient } from './api-client'
+export { WalletApiClient } from './api-client';
 
 // Services
-export { WalletService } from './services/wallet.service'
+export { WalletService } from './services/wallet.service';
 
 // Hooks
-export { useWallet } from './hooks/useWallet'
+export { useWallet } from './hooks/useWallet';
 
 // Types
 export type {
@@ -30,4 +30,4 @@ export type {
     WalletBalanceProps,
     WalletConnectProps,
     WalletTransferProps,
-} from './types'
+} from './types';

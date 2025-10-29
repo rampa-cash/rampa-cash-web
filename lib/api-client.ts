@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { BACKEND_CONFIG } from './constants';
 
 /**
  * isError: boolean = This is true when the axios service throws an error
@@ -35,26 +36,30 @@ export const serverRequest = async <T>(
     data?: unknown
 ): Promise<T> => {
     try {
-        const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL ?? 'http://localhost:3001';
-
         const axiosConfig = {
             method,
             url,
-            baseURL,
+            baseURL: BACKEND_CONFIG.baseURL,
             headers: {
-                'X-Auth-Token': token ?? '',
+                'Authorization': token ? `Bearer ${token}` : '',
                 'Content-Type': 'application/json',
             },
             data,
         };
 
         const response = await axios.request(axiosConfig);
-        
+
         return response.data as T;
     } catch (error: unknown) {
         if (error && typeof error === 'object' && 'response' in error) {
-            const axiosError = error as { response?: { data?: unknown; status?: number }; message?: string };
-            const errMsg = axiosError.response?.data ?? axiosError.message ?? 'Unknown error';
+            const axiosError = error as {
+                response?: { data?: unknown; status?: number };
+                message?: string;
+            };
+            const errMsg =
+                axiosError.response?.data ??
+                axiosError.message ??
+                'Unknown error';
             const errCode = axiosError.response?.status ?? 500;
             throw new APIException(errMsg, errCode);
         } else {
