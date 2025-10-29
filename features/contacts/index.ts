@@ -1,11 +1,11 @@
 // Components
-export { ContactList } from './components/ContactList'
+export { ContactList } from './components/ContactList';
 
 // API Client
-export { ContactApiClient } from './api-client'
+export { ContactApiClient } from './api-client';
 
 // Services
-export { ContactService } from './services/contact.service'
+export { ContactService } from './services/contact.service';
 
 // Types
 export type {
@@ -18,4 +18,4 @@ export type {
     ContactSyncResponse,
     ContactState,
     ContactListProps,
-} from './types'
+} from './types';

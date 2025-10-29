@@ -81,18 +81,6 @@ export interface AuthState {
     isAuthenticated: boolean;
 }
 
-export interface LoginFormProps {
-    onSuccess?: (response: AuthResponse) => void;
-    onError?: (error: string) => void;
-    className?: string;
-}
-
-export interface SignupFormProps {
-    onSuccess?: (response: AuthResponse) => void;
-    onError?: (error: string) => void;
-    className?: string;
-}
-
 export interface AuthProviderProps {
     children: React.ReactNode;
 }

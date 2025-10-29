@@ -1,11 +1,11 @@
 import { serverRequest } from '../../lib/api-client';
 import { API_ENDPOINTS } from '../../lib/constants';
-import type { 
+import type {
     OnRampRequest,
     OffRampRequest,
     OnRampResponse,
     OffRampResponse,
-    RampStats
+    RampStats,
 } from './types';
 
 /**
@@ -18,7 +18,10 @@ export class RampApiClient {
      * Initiate fiat to crypto conversion
      * POST /onramp/initiate
      */
-    static async initiateOnRamp(data: OnRampRequest, token: string): Promise<OnRampResponse> {
+    static async initiateOnRamp(
+        data: OnRampRequest,
+        token: string
+    ): Promise<OnRampResponse> {
         return serverRequest<OnRampResponse>(
             'POST',
             API_ENDPOINTS.onramp.initiate,
@@ -31,19 +34,20 @@ export class RampApiClient {
      * Get all on-ramps
      * GET /onramp
      */
-    static async getOnRamps(status?: string, limit?: number, offset?: number, token?: string): Promise<OnRampResponse[]> {
+    static async getOnRamps(
+        status?: string,
+        limit?: number,
+        offset?: number,
+        token?: string
+    ): Promise<OnRampResponse[]> {
         const queryParams = new URLSearchParams();
         if (status) queryParams.append('status', status);
         if (limit) queryParams.append('limit', limit.toString());
         if (offset) queryParams.append('offset', offset.toString());
 
         const url = `${API_ENDPOINTS.onramp.list}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
-        
-        return serverRequest<OnRampResponse[]>(
-            'GET',
-            url,
-            token
-        );
+
+        return serverRequest<OnRampResponse[]>('GET', url, token);
     }
 
     /**
@@ -62,18 +66,18 @@ export class RampApiClient {
      * Get on-ramp statistics
      * GET /onramp/stats/summary
      */
-    static async getOnRampStats(startDate?: string, endDate?: string, token?: string): Promise<RampStats> {
+    static async getOnRampStats(
+        startDate?: string,
+        endDate?: string,
+        token?: string
+    ): Promise<RampStats> {
         const queryParams = new URLSearchParams();
         if (startDate) queryParams.append('startDate', startDate);
         if (endDate) queryParams.append('endDate', endDate);
 
         const url = `${API_ENDPOINTS.onramp.stats}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
-        
-        return serverRequest<RampStats>(
-            'GET',
-            url,
-            token
-        );
+
+        return serverRequest<RampStats>('GET', url, token);
     }
 
     /**
@@ -92,7 +96,11 @@ export class RampApiClient {
      * Process on-ramp
      * POST /onramp/{id}
      */
-    static async processOnRamp(id: string, providerTransactionId: string, token: string): Promise<{
+    static async processOnRamp(
+        id: string,
+        providerTransactionId: string,
+        token: string
+    ): Promise<{
         id: string;
         status: string;
         providerTransactionId: string;
@@ -103,19 +111,20 @@ export class RampApiClient {
             status: string;
             providerTransactionId: string;
             completedAt: string;
-        }>(
-            'POST',
-            `${API_ENDPOINTS.onramp.process}/${id}`,
-            token,
-            { providerTransactionId }
-        );
+        }>('POST', `${API_ENDPOINTS.onramp.process}/${id}`, token, {
+            providerTransactionId,
+        });
     }
 
     /**
      * Fail on-ramp
      * POST /onramp/{id}/fail
      */
-    static async failOnRamp(id: string, failureReason: string, token: string): Promise<{
+    static async failOnRamp(
+        id: string,
+        failureReason: string,
+        token: string
+    ): Promise<{
         id: string;
         status: string;
         failureReason: string;
@@ -126,19 +135,20 @@ export class RampApiClient {
             status: string;
             failureReason: string;
             failedAt: string;
-        }>(
-            'POST',
-            `${API_ENDPOINTS.onramp.fail}/${id}`,
-            token,
-            { failureReason }
-        );
+        }>('POST', `${API_ENDPOINTS.onramp.fail}/${id}`, token, {
+            failureReason,
+        });
     }
 
     /**
      * Get on-ramp by provider
      * GET /onramp/providers/{provider}/transaction/{providerTransactionId}
      */
-    static async getOnRampByProvider(provider: string, providerTransactionId: string, token: string): Promise<OnRampResponse> {
+    static async getOnRampByProvider(
+        provider: string,
+        providerTransactionId: string,
+        token: string
+    ): Promise<OnRampResponse> {
         return serverRequest<OnRampResponse>(
             'GET',
             `${API_ENDPOINTS.onramp.byProvider}/${provider}/transaction/${providerTransactionId}`,
@@ -150,7 +160,10 @@ export class RampApiClient {
      * Initiate crypto to fiat conversion
      * POST /offramp/initiate
      */
-    static async initiateOffRamp(data: OffRampRequest, token: string): Promise<OffRampResponse> {
+    static async initiateOffRamp(
+        data: OffRampRequest,
+        token: string
+    ): Promise<OffRampResponse> {
         return serverRequest<OffRampResponse>(
             'POST',
             API_ENDPOINTS.offramp.initiate,
@@ -163,19 +176,20 @@ export class RampApiClient {
      * Get all off-ramps
      * GET /offramp
      */
-    static async getOffRamps(status?: string, limit?: number, offset?: number, token?: string): Promise<OffRampResponse[]> {
+    static async getOffRamps(
+        status?: string,
+        limit?: number,
+        offset?: number,
+        token?: string
+    ): Promise<OffRampResponse[]> {
         const queryParams = new URLSearchParams();
         if (status) queryParams.append('status', status);
         if (limit) queryParams.append('limit', limit.toString());
         if (offset) queryParams.append('offset', offset.toString());
 
         const url = `${API_ENDPOINTS.offramp.list}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
-        
-        return serverRequest<OffRampResponse[]>(
-            'GET',
-            url,
-            token
-        );
+
+        return serverRequest<OffRampResponse[]>('GET', url, token);
     }
 
     /**
@@ -194,25 +208,28 @@ export class RampApiClient {
      * Get off-ramp statistics
      * GET /offramp/stats/summary
      */
-    static async getOffRampStats(startDate?: string, endDate?: string, token?: string): Promise<RampStats> {
+    static async getOffRampStats(
+        startDate?: string,
+        endDate?: string,
+        token?: string
+    ): Promise<RampStats> {
         const queryParams = new URLSearchParams();
         if (startDate) queryParams.append('startDate', startDate);
         if (endDate) queryParams.append('endDate', endDate);
 
         const url = `${API_ENDPOINTS.offramp.stats}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
-        
-        return serverRequest<RampStats>(
-            'GET',
-            url,
-            token
-        );
+
+        return serverRequest<RampStats>('GET', url, token);
     }
 
     /**
      * Get specific off-ramp
      * GET /offramp/{id}
      */
-    static async getOffRamp(id: string, token: string): Promise<OffRampResponse> {
+    static async getOffRamp(
+        id: string,
+        token: string
+    ): Promise<OffRampResponse> {
         return serverRequest<OffRampResponse>(
             'GET',
             `${API_ENDPOINTS.offramp.get}/${id}`,
@@ -224,7 +241,11 @@ export class RampApiClient {
      * Process off-ramp
      * POST /offramp/{id}
      */
-    static async processOffRamp(id: string, providerTransactionId: string, token: string): Promise<{
+    static async processOffRamp(
+        id: string,
+        providerTransactionId: string,
+        token: string
+    ): Promise<{
         id: string;
         status: string;
         providerTransactionId: string;
@@ -235,19 +256,20 @@ export class RampApiClient {
             status: string;
             providerTransactionId: string;
             completedAt: string;
-        }>(
-            'POST',
-            `${API_ENDPOINTS.offramp.process}/${id}`,
-            token,
-            { providerTransactionId }
-        );
+        }>('POST', `${API_ENDPOINTS.offramp.process}/${id}`, token, {
+            providerTransactionId,
+        });
     }
 
     /**
      * Fail off-ramp
      * POST /offramp/{id}/fail
      */
-    static async failOffRamp(id: string, failureReason: string, token: string): Promise<{
+    static async failOffRamp(
+        id: string,
+        failureReason: string,
+        token: string
+    ): Promise<{
         id: string;
         status: string;
         failureReason: string;
@@ -258,19 +280,20 @@ export class RampApiClient {
             status: string;
             failureReason: string;
             failedAt: string;
-        }>(
-            'POST',
-            `${API_ENDPOINTS.offramp.fail}/${id}`,
-            token,
-            { failureReason }
-        );
+        }>('POST', `${API_ENDPOINTS.offramp.fail}/${id}`, token, {
+            failureReason,
+        });
     }
 
     /**
      * Get off-ramp by provider
      * GET /offramp/providers/{provider}/transaction/{providerTransactionId}
      */
-    static async getOffRampByProvider(provider: string, providerTransactionId: string, token: string): Promise<OffRampResponse> {
+    static async getOffRampByProvider(
+        provider: string,
+        providerTransactionId: string,
+        token: string
+    ): Promise<OffRampResponse> {
         return serverRequest<OffRampResponse>(
             'GET',
             `${API_ENDPOINTS.offramp.byProvider}/${provider}/transaction/${providerTransactionId}`,
