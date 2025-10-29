@@ -102,7 +102,7 @@ const CookiePolicy: NextPage = () => {
                                     {t('cookiePolicy.contact.description')}
                                 </p>
                                 <p className="text-indigo-600 font-medium mt-2">
-                                    team@rampa.cash
+                                    hello@rampa.cash
                                 </p>
                             </section>
                         </div>

@@ -413,10 +413,6 @@
                 "title": "Cookies & tracking",
                 "content": "We aim to use essential cookies only on the website (e.g., to serve pages securely). No third-party advertising cookies. If we introduce optional analytics cookies, we will present a consent banner."
             },
-            "security": {
-                "title": "Security",
-                "content": "Encryption in transit/at rest, role-based access, least-privilege, and audit logging. We do not hold users' private keys. We promptly investigate and remediate incidents and will notify authorities/users where legally required."
-            },
             "children": {
                 "title": "Children",
                 "content": "Rampa is for adults (18+) and is not intended for children."
@@ -429,6 +425,41 @@
                 "title": "Contact",
                 "content": "Questions or requests:"
             }
+        }
+    },
+    "security": {
+        "title": "Security you can feel from day one",
+        "subtitle": "Your money stays in your wallet. We never hold it.",
+        "features": {
+            "selfCustody": {
+                "title": "Your money stays in your wallet",
+                "description": "We never hold it. You're always in control."
+            },
+            "noSeedPhrase": {
+                "title": "No seed phrase",
+                "description": "Create your wallet with your phone number, your email or Apple/Google account."
+            },
+            "onlyYou": {
+                "title": "Only you can move funds",
+                "description": "We can't access your money. Ever."
+            },
+            "easyRecovery": {
+                "title": "Easy recovery",
+                "description": "Face/Touch ID + PIN if you change or lose your phone."
+            },
+            "alwaysOn": {
+                "title": "Always-on protection",
+                "description": "We watch for suspicious activity 24/7."
+            },
+            "privateByDefault": {
+                "title": "Private by default",
+                "description": "Your information is encrypted end-to-end."
+            }
+        },
+        "idCheck": {
+            "title": "Cash in or out, simply",
+            "description": "When adding or withdrawing local money, we do a quick standard ID check with licensed partners.",
+            "technical": "For the curious: Powered by MPC wallets with Web3Auth. Your key is split into secure parts and never stored in one place."
         }
     },
     "blog": {

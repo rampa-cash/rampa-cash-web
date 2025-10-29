@@ -45,7 +45,7 @@ const TermsOfService: NextPage = () => {
                                     <strong>
                                         {t('termsOfService.contact')}
                                     </strong>{' '}
-                                    team@rampa.cash
+                                    hello@rampa.cash
                                 </p>
                                 <p>
                                     <strong>
@@ -405,12 +405,12 @@ const TermsOfService: NextPage = () => {
                                 <p className="text-gray-700">
                                     {t(
                                         'termsOfService.sections.contactSection.content'
-                                    )}
+                                    )}{' '}
                                     <a
-                                        href="mailto:team@rampa.cash"
+                                        href="mailto:hello@rampa.cash"
                                         className="text-indigo-600 hover:text-indigo-800 underline ml-1"
                                     >
-                                        team@rampa.cash
+                                        hello@rampa.cash
                                     </a>
                                 </p>
                             </section>
