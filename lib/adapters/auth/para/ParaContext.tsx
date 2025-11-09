@@ -43,6 +43,51 @@ export const ParaContextProvider: React.FC<ParaContextProviderProps> = ({
     const { mutateAsync: issueJwtAsync } = useIssueJwt();
     const { mutateAsync: logoutAsync } = useParaLogout();
 
+    // Log user data and JWT token when account changes
+    React.useEffect(() => {
+        const logUserData = async (): Promise<void> => {
+            if (isConnected && account && wallet) {
+                try {
+                    // Get Para JWT token
+                    const paraJWT = await issueJwtAsync();
+                    const jwtToken =
+                        typeof paraJWT === 'string'
+                            ? paraJWT
+                            : (paraJWT as { jwt?: string })?.jwt ?? '';
+
+                    // Log user data and token
+                    // eslint-disable-next-line no-console
+                    console.log('=== Para User Data ===');
+                    // eslint-disable-next-line no-console
+                    console.log('Account:', {
+                        id: account.id,
+                        email: account.email,
+                        phone: account.phone,
+                        name: account.name,
+                        profileImage: account.profileImage,
+                    });
+                    // eslint-disable-next-line no-console
+                    console.log('Wallet:', {
+                        id: wallet.id,
+                        address: wallet.address,
+                        chain: wallet.chain,
+                    });
+                    // eslint-disable-next-line no-console
+                    console.log('Para JWT Token:', jwtToken);
+                    // eslint-disable-next-line no-console
+                    console.log('Is Connected:', isConnected);
+                    // eslint-disable-next-line no-console
+                    console.log('========================');
+                } catch (error) {
+                    // eslint-disable-next-line no-console
+                    console.error('Failed to get Para JWT token:', error);
+                }
+            }
+        };
+
+        void logUserData();
+    }, [isConnected, account, wallet, issueJwtAsync]);
+
     // Create Para SDK interface
     const paraSDK = React.useMemo(
         () => ({

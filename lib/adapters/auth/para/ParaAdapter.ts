@@ -100,13 +100,37 @@ export class ParaAdapter implements IAuthPort {
             // Open Para modal for authentication
             await this.paraSDK.openModal();
 
-            // Wait for connection
-            if (!this.paraSDK.isConnected || !this.paraSDK.wallet) {
-                throw new Error('Failed to connect to Para');
+            // Wait for user to complete authentication (with timeout)
+            // The modal will close when user completes authentication
+            // We need to wait for the SDK to update isConnected and wallet
+            const maxWaitTime = 300000; // 5 minutes max wait
+            const checkInterval = 500; // Check every 500ms
+            const startTime = Date.now();
+
+            while (
+                !this.paraSDK.isConnected ||
+                !this.paraSDK.wallet ||
+                !this.paraSDK.account
+            ) {
+                if (Date.now() - startTime > maxWaitTime) {
+                    throw new Error(
+                        'Authentication timeout - user did not complete login'
+                    );
+                }
+                // Wait a bit before checking again
+                await new Promise(resolve => setTimeout(resolve, checkInterval));
             }
 
             // Get Para JWT token
             const paraJWT = await this.paraSDK.issueJWT();
+
+            // Log Para JWT token for backend handshake
+            // eslint-disable-next-line no-console
+            console.log('=== Para Login - JWT Token for Backend ===');
+            // eslint-disable-next-line no-console
+            console.log('Para JWT Token:', paraJWT);
+            // eslint-disable-next-line no-console
+            console.log('==========================================');
 
             // Exchange Para JWT for backend token
             const backendResponse = await this.exchangeToken(paraJWT);
@@ -125,6 +149,28 @@ export class ParaAdapter implements IAuthPort {
             if (!user) {
                 throw new Error('Failed to get user after login');
             }
+
+            // Log complete user data and tokens after successful login
+            // eslint-disable-next-line no-console
+            console.log('=== Para Login Success - Complete User Data ===');
+            // eslint-disable-next-line no-console
+            console.log('User Data:', {
+                id: user.id,
+                email: user.email,
+                phone: user.phone,
+                name: user.name,
+                profileImage: user.profileImage,
+                walletAddress: user.walletAddress,
+                wallets: user.wallets,
+            });
+            // eslint-disable-next-line no-console
+            console.log('Para JWT Token (for backend handshake):', paraJWT);
+            // eslint-disable-next-line no-console
+            console.log('Backend Access Token:', this.backendToken);
+            // eslint-disable-next-line no-console
+            console.log('Token Expiry:', this.tokenExpiry);
+            // eslint-disable-next-line no-console
+            console.log('==============================================');
 
             this.isLoadingState = false;
             return user;
