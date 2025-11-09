@@ -118,7 +118,9 @@ export class ParaAdapter implements IAuthPort {
                     );
                 }
                 // Wait a bit before checking again
-                await new Promise(resolve => setTimeout(resolve, checkInterval));
+                await new Promise(resolve =>
+                    setTimeout(resolve, checkInterval)
+                );
             }
 
             // Get Para JWT token

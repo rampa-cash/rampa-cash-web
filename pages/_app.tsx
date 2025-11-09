@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
 import Layout from '../components/layout/Layout';
 import { ThemeProvider } from '../contexts/ThemeContext';
-// @ts-ignore - Para SDK types may not be available, but import works at runtime
+// @ts-expect-error - Para SDK types may not be available, but import works at runtime
 import { ParaProvider, Environment } from '@getpara/react-sdk';
 import {
     getParaConfig,
@@ -33,7 +33,6 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
     const paraModalConfig = getParaModalConfig();
 
     // Convert string environment to Environment enum
-    // @ts-ignore - Environment enum works at runtime
     const paraEnvironment =
         paraConfig.environment === 'beta' ? Environment.BETA : Environment.PROD;
 
@@ -42,7 +41,6 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
             <QueryClientProvider client={queryClient}>
                 <ParaProvider
                     paraClientConfig={{
-                        // @ts-ignore - Environment type works at runtime
                         env: paraEnvironment,
                         apiKey: paraConfig.apiKey,
                     }}

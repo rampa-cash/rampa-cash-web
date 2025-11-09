@@ -53,7 +53,7 @@ export const ParaContextProvider: React.FC<ParaContextProviderProps> = ({
                     const jwtToken =
                         typeof paraJWT === 'string'
                             ? paraJWT
-                            : (paraJWT as { jwt?: string })?.jwt ?? '';
+                            : ((paraJWT as { jwt?: string })?.jwt ?? '');
 
                     // Log user data and token
                     // eslint-disable-next-line no-console

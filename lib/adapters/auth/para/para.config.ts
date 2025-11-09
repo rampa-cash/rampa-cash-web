@@ -56,7 +56,7 @@ export const getParaModalConfig = (): ParaModalConfig => {
         recoverySecretStepEnabled: true,
         hideWallets: true,
         onRampTestMode: true,
-        onModalStepChange: (stepInfo: unknown) => {
+        onModalStepChange: (stepInfo: unknown): void => {
             const step = stepInfo as {
                 previousStep?: string;
                 currentStep?: string;
@@ -84,7 +84,7 @@ export const getParaModalConfig = (): ParaModalConfig => {
                 );
             }
         },
-        onClose: () => {
+        onClose: (): void => {
             // eslint-disable-next-line no-console
             console.log('Para Modal Closed');
         },
