@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticProps } from 'next';
-import { TransactionHistory } from '../../features/transactions';
+import { TransactionHistory } from '../../domain/transactions';
 
 const TransactionsPage: NextPage = () => {
     return <TransactionHistory />;

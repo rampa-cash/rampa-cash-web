@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
-import { useWeb3Auth } from '@/features/auth';
+import { useAuth } from '@/domain/auth';
 import { FEATURE_FLAGS } from '@/lib/constants';
 
 interface AuthButtonProps {
@@ -15,16 +15,16 @@ export const AuthButton = ({
     const { t } = useTranslation('common');
     const router = useRouter();
 
-    // Use our custom Web3Auth hook
-    const { isAuthenticated, isLoading, login, logout } = useWeb3Auth();
+    // Use our auth hook (port-based)
+    const { isAuthenticated, isLoading, login, logout } = useAuth();
 
     // Don't render if login button is disabled
     if (!FEATURE_FLAGS.showLoginButton) {
         return null;
     }
 
-    // Web3Auth login/logout handler
-    const handleWeb3AuthAction = async (): Promise<void> => {
+    // Auth login/logout handler
+    const handleAuthAction = async (): Promise<void> => {
         try {
             if (isAuthenticated) {
                 // User is logged in, so logout
@@ -55,7 +55,7 @@ export const AuthButton = ({
 
     return (
         <button
-            onClick={handleWeb3AuthAction}
+            onClick={handleAuthAction}
             disabled={isLoading}
             className={buttonClasses}
         >

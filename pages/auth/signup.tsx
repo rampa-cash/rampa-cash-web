@@ -8,7 +8,7 @@ const Signup: NextPage = () => {
     const router = useRouter();
 
     useEffect(() => {
-        // Redirect to home page since signup is now handled via Web3Auth in the header
+        // Redirect to home page since signup is now handled via Para authentication in the header
         router.push('/');
     }, [router]);
 

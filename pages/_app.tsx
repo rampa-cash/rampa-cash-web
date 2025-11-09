@@ -4,10 +4,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
 import Layout from '../components/layout/Layout';
 import { ThemeProvider } from '../contexts/ThemeContext';
-import { Web3AuthProvider } from '@web3auth/modal/react';
-import { web3AuthConfig } from '../features/auth/config/web3auth.config';
-import { Web3AuthProvider as CustomWeb3AuthProvider } from '../features/auth';
+import { ParaProvider } from '@getpara/react-sdk';
+import { getParaConfig, ParaContextProvider } from '@/lib/adapters/auth/para';
+import { AuthProviderWrapper } from '../domain/auth/contexts/AuthContext';
 import '../styles/globals.css';
+import '@getpara/react-sdk/styles.css';
 
 const App = ({ Component, pageProps }: AppProps): JSX.Element => {
     const [queryClient] = useState(
@@ -23,16 +24,27 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
             })
     );
 
+    const paraConfig = getParaConfig();
+
     return (
         <ThemeProvider>
             <QueryClientProvider client={queryClient}>
-                <Web3AuthProvider config={{ web3AuthOptions: web3AuthConfig }}>
-                    <CustomWeb3AuthProvider>
-                        <Layout>
-                            <Component {...pageProps} />
-                        </Layout>
-                    </CustomWeb3AuthProvider>
-                </Web3AuthProvider>
+                <ParaProvider
+                    paraClientConfig={{
+                        apiKey: paraConfig.apiKey,
+                    }}
+                    config={{
+                        appName: paraConfig.appName,
+                    }}
+                >
+                    <ParaContextProvider>
+                        <AuthProviderWrapper>
+                            <Layout>
+                                <Component {...pageProps} />
+                            </Layout>
+                        </AuthProviderWrapper>
+                    </ParaContextProvider>
+                </ParaProvider>
             </QueryClientProvider>
         </ThemeProvider>
     );

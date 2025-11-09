@@ -7,19 +7,19 @@ function generateKeyPair() {
         modulusLength: 2048,
         publicKeyEncoding: {
             type: 'spki',
-            format: 'pem'
+            format: 'pem',
         },
         privateKeyEncoding: {
             type: 'pkcs8',
-            format: 'pem'
-        }
+            format: 'pem',
+        },
     });
 }
 
 // Generate the JWT token
 function generateTestToken() {
     const { publicKey, privateKey } = generateKeyPair();
-    
+
     // Use the exact token creation code you provided
     var idToken = jwt.sign(
         {
@@ -38,15 +38,22 @@ function generateTestToken() {
     console.log('🔑 Generated JWT Token:');
     console.log(idToken);
     console.log('\n📋 Token Details:');
-    console.log('Payload:', JSON.stringify({
-        sub: 'stvnbvsts@gmail.com',
-        email: 'stvnbvsts@gmail.com',
-        name: 'Steven Bustos',
-        aud: 'urn:rampa-web3auth',
-        iss: 'https://auth.rampa.local',
-        iat: Math.floor(Date.now() / 1000),
-        exp: Math.floor(Date.now() / 1000) + 60 * 60,
-    }, null, 2));
+    console.log(
+        'Payload:',
+        JSON.stringify(
+            {
+                sub: 'stvnbvsts@gmail.com',
+                email: 'stvnbvsts@gmail.com',
+                name: 'Steven Bustos',
+                aud: 'urn:rampa-web3auth',
+                iss: 'https://auth.rampa.local',
+                iat: Math.floor(Date.now() / 1000),
+                exp: Math.floor(Date.now() / 1000) + 60 * 60,
+            },
+            null,
+            2
+        )
+    );
     console.log('\n🔐 Public Key (for verification):');
     console.log(publicKey);
     console.log('\n🔒 Private Key (for signing):');
@@ -58,10 +65,10 @@ function generateTestToken() {
 // Test the token with your backend
 async function testTokenWithBackend(token) {
     const backendUrl = 'https://api-rampa-cash-test.up.railway.app';
-    
+
     try {
         console.log('\n🧪 Testing token with backend...');
-        
+
         const response = await fetch(`${backendUrl}/auth/web3auth/validate`, {
             method: 'POST',
             headers: {
@@ -73,7 +80,10 @@ async function testTokenWithBackend(token) {
         });
 
         console.log('📡 Response Status:', response.status);
-        console.log('📡 Response Headers:', Object.fromEntries(response.headers.entries()));
+        console.log(
+            '📡 Response Headers:',
+            Object.fromEntries(response.headers.entries())
+        );
 
         if (response.ok) {
             const data = await response.json();
@@ -92,15 +102,15 @@ async function testTokenWithBackend(token) {
 // Main execution
 async function main() {
     console.log('🚀 Generating test JWT token...\n');
-    
+
     const { token, publicKey, privateKey } = generateTestToken();
-    
+
     console.log('\n' + '='.repeat(80));
     console.log('📝 Copy this token to test in your frontend:');
     console.log('='.repeat(80));
     console.log(token);
     console.log('='.repeat(80));
-    
+
     // Test with backend
     await testTokenWithBackend(token);
 }

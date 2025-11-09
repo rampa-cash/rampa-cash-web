@@ -41,7 +41,7 @@ export const serverRequest = async <T>(
             url,
             baseURL: BACKEND_CONFIG.baseURL,
             headers: {
-                'Authorization': token ? `Bearer ${token}` : '',
+                Authorization: token ? `Bearer ${token}` : '',
                 'Content-Type': 'application/json',
             },
             data,
