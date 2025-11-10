@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticProps } from 'next';
-import { Dashboard } from '../../features/dashboard';
-import { AuthGuard } from '../../features/auth';
+import { Dashboard } from '../../domain/dashboard';
+import { AuthGuard } from '../../domain/auth';
 
 const DashboardPage: NextPage = () => {
     return (

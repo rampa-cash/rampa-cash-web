@@ -13,11 +13,11 @@ Grouped connections allow multiple authentication methods (Google, Custom JWT) t
 Before using grouped connections, you need to configure them in the Web3Auth Dashboard:
 
 1. **Create Individual Connection:**
-   - `rampa-w3a-google` (Google OAuth)
+    - `rampa-w3a-google` (Google OAuth)
 
 2. **Create Grouped Connection:**
-   - Group Name: `rampa-w3a-group-connection`
-   - Link the Google connection
+    - Group Name: `rampa-w3a-group-connection`
+    - Link the Google connection
 
 **Note:** Custom JWT authentication is handled directly through your backend API, not through Web3Auth connections.
 
@@ -32,12 +32,12 @@ export const web3AuthConfig: Web3AuthOptions = {
     modalConfig: {
         connectors: {
             [WALLET_CONNECTORS.AUTH]: {
-                label: "auth",
+                label: 'auth',
                 loginMethods: {
                     google: {
-                        name: "Google Login",
-                        authConnectionId: "rampa-w3a-google",
-                        groupedAuthConnectionId: "rampa-w3a-group-connection",
+                        name: 'Google Login',
+                        authConnectionId: 'rampa-w3a-google',
+                        groupedAuthConnectionId: 'rampa-w3a-group-connection',
                     },
                     // Custom JWT is handled directly through backend API
                 },
@@ -61,10 +61,10 @@ function MyComponent() {
         user,
         isAuthenticated,
         isLoading,
-        login,                    // Opens modal with all options
-        loginWithGoogle,          // Direct Google login
-        loginWithEmail,           // Direct email login
-        loginWithCustomJWT,       // Direct custom JWT login
+        login, // Opens modal with all options
+        loginWithGoogle, // Direct Google login
+        loginWithEmail, // Direct email login
+        loginWithCustomJWT, // Direct custom JWT login
         logout,
         error,
         clearError,
@@ -77,6 +77,7 @@ function MyComponent() {
 ### 2. Authentication Methods
 
 #### Generic Login (Modal)
+
 ```typescript
 const handleLogin = async () => {
     try {
@@ -88,6 +89,7 @@ const handleLogin = async () => {
 ```
 
 #### Google Login
+
 ```typescript
 const handleGoogleLogin = async () => {
     try {
@@ -99,6 +101,7 @@ const handleGoogleLogin = async () => {
 ```
 
 #### Email Passwordless Login
+
 ```typescript
 const handleEmailLogin = async (email: string) => {
     try {
@@ -110,6 +113,7 @@ const handleEmailLogin = async (email: string) => {
 ```
 
 #### Custom JWT Login
+
 ```typescript
 const handleCustomJWTLogin = async (jwtToken: string) => {
     try {
@@ -158,6 +162,7 @@ See `components/auth/GroupedAuthExample.tsx` for a complete working example.
 ### Backend Integration
 
 The implementation calls your backend at:
+
 - **Endpoint:** `POST /auth/web3auth/validate`
 - **Payload:** `{ token: web3AuthJWT }`
 - **Response:** `{ accessToken: customJWT, user: userData }`
@@ -165,6 +170,7 @@ The implementation calls your backend at:
 ### Error Handling
 
 All authentication methods include comprehensive error handling:
+
 - Network errors
 - Authentication failures
 - Token validation errors
@@ -198,6 +204,7 @@ function TestPage() {
 ### Debug Information
 
 The implementation includes comprehensive logging:
+
 - Web3Auth token details
 - Backend response data
 - User information

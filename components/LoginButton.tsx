@@ -3,45 +3,36 @@ import { useTranslation } from 'next-i18next';
 import { useAuth } from '@/domain/auth';
 import { FEATURE_FLAGS } from '@/lib/constants';
 
-interface AuthButtonProps {
+interface LoginButtonProps {
     variant?: 'desktop' | 'mobile';
     className?: string;
 }
 
-export const AuthButton = ({
+export const LoginButton = ({
     variant = 'desktop',
     className = '',
-}: AuthButtonProps): JSX.Element | null => {
+}: LoginButtonProps): JSX.Element | null => {
     const { t } = useTranslation('common');
     const router = useRouter();
+    const { isAuthenticated, isLoading, login } = useAuth();
 
-    // Use our auth hook (port-based)
-    const { isAuthenticated, isLoading, login, logout } = useAuth();
-
-    // Don't render if login button is disabled
-    if (!FEATURE_FLAGS.showLoginButton) {
+    // Don't render if login button is disabled or user is already authenticated
+    if (!FEATURE_FLAGS.showLoginButton || isAuthenticated) {
         return null;
     }
 
-    // Auth login/logout handler
-    const handleAuthAction = async (): Promise<void> => {
+    const handleLogin = async (): Promise<void> => {
         try {
-            if (isAuthenticated) {
-                // User is logged in, so logout
-                await logout();
-            } else {
-                // User is not logged in, so login
-                await login();
-                // Redirect to dashboard after successful login
-                router.push('/dashboard');
-            }
+            await login();
+            // Redirect to dashboard after successful login
+            router.push('/dashboard');
         } catch (error) {
             // Handle error silently or show user-friendly message
             // TODO: Implement proper error handling/notification system
         }
     };
 
-    // Base classes for both variants
+    // Base classes
     const baseClasses =
         'bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 hover:from-indigo-700 hover:via-purple-700 hover:to-pink-700 text-white font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100';
 
@@ -55,7 +46,7 @@ export const AuthButton = ({
 
     return (
         <button
-            onClick={handleAuthAction}
+            onClick={handleLogin}
             disabled={isLoading}
             className={buttonClasses}
         >
@@ -87,27 +78,6 @@ export const AuthButton = ({
                 ) : (
                     t('auth.connecting') || 'Connecting...'
                 )
-            ) : isAuthenticated ? (
-                variant === 'desktop' ? (
-                    <div className="flex items-center">
-                        <svg
-                            className="w-4 h-4 mr-2"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                            />
-                        </svg>
-                        {t('auth.logout') || 'Logout'}
-                    </div>
-                ) : (
-                    t('auth.logout') || 'Logout'
-                )
             ) : variant === 'desktop' ? (
                 <div className="flex items-center">
                     <svg
@@ -132,4 +102,4 @@ export const AuthButton = ({
     );
 };
 
-export default AuthButton;
+export default LoginButton;

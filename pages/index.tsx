@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticProps } from 'next';
-import { WaitlistSignup } from '../features/waitlist';
+import { WaitlistSignup } from '../domain/waitlist';
 import SecuritySection from '../components/SecuritySection';
 
 const Home: NextPage = () => {

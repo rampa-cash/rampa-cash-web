@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticProps } from 'next';
-import { ReceiveMoney } from '../../features/transactions';
+import { ReceiveMoney } from '../../domain/transactions';
 
 const ReceivePage: NextPage = () => {
     return <ReceiveMoney />;

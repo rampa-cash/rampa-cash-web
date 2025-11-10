@@ -8,7 +8,9 @@ export const APP_CONFIG = {
 
 // Backend configuration
 export const BACKEND_CONFIG = {
-    baseURL: process.env.NEXT_PUBLIC_BACKEND_URL ?? 'https://api-rampa-cash-test.up.railway.app',
+    baseURL:
+        process.env.NEXT_PUBLIC_BACKEND_URL ??
+        'https://api-rampa-cash-test.up.railway.app',
 } as const;
 
 // API endpoints
@@ -25,6 +27,7 @@ export const API_ENDPOINTS = {
         resetPassword: '/auth/reset-password',
         logout: '/auth/logout',
         web3authValidate: '/auth/web3auth/validate',
+        paraValidate: '/auth/para/validate',
     },
     wallet: {
         create: '/wallet',

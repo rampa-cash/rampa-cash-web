@@ -1,14 +1,18 @@
-import axios from 'axios';
-import { Web3AuthJWTService } from './web3auth-jwt.service';
+/**
+ * API Client with Token Injection
+ *
+ * Automatically injects authentication tokens from the auth adapter
+ */
+
+import axios, { AxiosInstance } from 'axios';
 import { BACKEND_CONFIG } from '@/lib/constants';
+import { IAuthPort } from '../interfaces/authentication-service.interface';
 
-// API Client with Web3Auth token injection
-export class Web3AuthApiClient {
-    private client: any;
+export class AuthApiClient {
+    private client: AxiosInstance;
+    private authAdapter: IAuthPort | null = null;
 
-    constructor(
-        baseURL: string = BACKEND_CONFIG.baseURL
-    ) {
+    constructor(baseURL: string = BACKEND_CONFIG.baseURL) {
         this.client = axios.create({
             baseURL,
             timeout: parseInt(process.env.NEXT_PUBLIC_API_TIMEOUT || '10000'),
@@ -17,37 +21,56 @@ export class Web3AuthApiClient {
             },
         });
 
-        // Add request interceptor to inject Web3Auth token
+        // Add request interceptor to inject auth token
         this.client.interceptors.request.use(
-            (config: any) => {
-                const token = Web3AuthJWTService.getToken();
-                if (token && Web3AuthJWTService.isTokenValid()) {
-                    config.headers.Authorization = `Bearer ${token}`;
+            async config => {
+                if (this.authAdapter) {
+                    const token = await this.authAdapter.getToken();
+                    if (token && this.authAdapter.isTokenValid()) {
+                        config.headers.Authorization = `Bearer ${token}`;
+                    }
                 }
                 return config;
             },
-            (error: any) => {
+            error => {
                 return Promise.reject(error);
             }
         );
 
         // Add response interceptor to handle auth errors
         this.client.interceptors.response.use(
-            (response: any) => {
+            response => {
                 return response;
             },
-            (error: any) => {
-                if (error.response?.status === 401) {
+            async error => {
+                if (error.response?.status === 401 && this.authAdapter) {
                     // Token is invalid or expired
-                    Web3AuthJWTService.clearToken();
-                    // Redirect to login or trigger logout
-                    if (typeof window !== 'undefined') {
-                        window.location.href = '/';
+                    // Try to refresh token
+                    try {
+                        await this.authAdapter.refreshToken();
+                        // Retry the original request
+                        const token = await this.authAdapter.getToken();
+                        if (token) {
+                            error.config.headers.Authorization = `Bearer ${token}`;
+                            return this.client.request(error.config);
+                        }
+                    } catch (refreshError) {
+                        // Refresh failed, redirect to login
+                        if (typeof window !== 'undefined') {
+                            window.location.href = '/';
+                        }
                     }
                 }
                 return Promise.reject(error);
             }
         );
+    }
+
+    /**
+     * Set the auth adapter for token injection
+     */
+    setAuthAdapter(adapter: IAuthPort): void {
+        this.authAdapter = adapter;
     }
 
     /**
@@ -111,6 +134,65 @@ export class Web3AuthApiClient {
     }
 
     /**
+     * Login endpoint
+     */
+    async login(data: {
+        authProvider: string;
+        authProviderId: string;
+        walletAddress?: string;
+    }): Promise<any> {
+        return this.post('/auth/login', data);
+    }
+
+    /**
+     * Signup endpoint
+     */
+    async signup(data: {
+        authProvider: string;
+        authProviderId: string;
+        firstName: string;
+        lastName: string;
+        email: string;
+        phone?: string;
+        language?: string;
+    }): Promise<any> {
+        return this.post('/auth/signup', data);
+    }
+
+    /**
+     * Get current user
+     */
+    async getMe(token: string): Promise<any> {
+        return this.get('/auth/me', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+    }
+
+    /**
+     * Refresh token
+     */
+    async refreshToken(refreshToken: string): Promise<any> {
+        return this.post('/auth/refresh', { refreshToken });
+    }
+
+    /**
+     * Logout
+     */
+    async logout(token: string): Promise<void> {
+        return this.post(
+            '/auth/logout',
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+    }
+
+    /**
      * Handle API errors
      */
     private handleError(error: any): Error {
@@ -145,47 +227,10 @@ export class Web3AuthApiClient {
 
         return new Error('An unexpected error occurred');
     }
-
-    /**
-     * Check if user is authenticated
-     */
-    isAuthenticated(): boolean {
-        return Web3AuthJWTService.isTokenValid();
-    }
-
-    /**
-     * Get current user info from token
-     */
-    getCurrentUser(): any | null {
-        const token = Web3AuthJWTService.getToken();
-        if (!token) return null;
-
-        return Web3AuthJWTService.getUserFromToken(token);
-    }
-
-    /**
-     * Get wallet addresses from token
-     */
-    getWalletAddresses(): string[] {
-        const token = Web3AuthJWTService.getToken();
-        if (!token) return [];
-
-        return Web3AuthJWTService.getWalletAddresses(token);
-    }
-
-    /**
-     * Get primary wallet address
-     */
-    getPrimaryWalletAddress(): string | null {
-        const token = Web3AuthJWTService.getToken();
-        if (!token) return null;
-
-        return Web3AuthJWTService.getPrimaryWalletAddress(token);
-    }
 }
 
 // Create singleton instance
-export const apiClient = new Web3AuthApiClient();
+export const apiClient = new AuthApiClient();
 
 // Export for convenience
 export default apiClient;

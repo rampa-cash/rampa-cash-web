@@ -3,7 +3,7 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
-import { useWeb3Auth } from '@/features/auth';
+import { useAuth } from '@/domain/auth';
 
 // Mock user data - in real app this would come from auth context
 const mockUser = {
@@ -53,7 +53,7 @@ export const Dashboard = (): JSX.Element => {
     const { t } = useTranslation('common');
     const router = useRouter();
     const [isRefreshing, setIsRefreshing] = useState(false);
-    const { logout: web3AuthLogout } = useWeb3Auth();
+    const { logout } = useAuth();
 
     const handleRefresh = async () => {
         setIsRefreshing(true);
@@ -64,8 +64,8 @@ export const Dashboard = (): JSX.Element => {
 
     const handleLogout = async () => {
         try {
-            // Use Web3Auth logout
-            await web3AuthLogout();
+            // Use auth logout
+            await logout();
             // Redirect to home after logout
             router.push('/');
         } catch (error) {
