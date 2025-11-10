@@ -18,6 +18,7 @@ import {
     useLogout as useParaLogout,
 } from '@getpara/react-sdk';
 import { ParaAdapter } from './ParaAdapter';
+import { AuthProviderWrapper } from '@/domain/auth/contexts/AuthContext';
 
 interface ParaContextType {
     adapter: ParaAdapter;
@@ -36,12 +37,17 @@ export const ParaContextProvider: React.FC<ParaContextProviderProps> = ({
     children,
 }) => {
     const { openModal } = useModal();
-    const { isConnected, data: account } = useAccount();
-    const { data: wallet } = useWallet();
-    const { mutateAsync: signMessageAsync } = useSignMessage();
-    const { mutateAsync: signTransactionAsync } = useSignTransaction();
-    const { mutateAsync: issueJwtAsync } = useIssueJwt();
-    const { mutateAsync: logoutAsync } = useParaLogout();
+    const accountResult = useAccount();
+    const walletResult = useWallet();
+    const { signMessageAsync } = useSignMessage();
+    const { signTransactionAsync } = useSignTransaction();
+    const { issueJwtAsync } = useIssueJwt();
+    const { logoutAsync } = useParaLogout();
+
+    // Extract values from query results
+    const isConnected = accountResult.isConnected ?? false;
+    const account = accountResult.embedded ?? accountResult.external ?? null;
+    const wallet = walletResult.data ?? null;
 
     // Log user data and JWT token when account changes
     React.useEffect(() => {
@@ -57,20 +63,28 @@ export const ParaContextProvider: React.FC<ParaContextProviderProps> = ({
 
                     // Log user data and token
                     // eslint-disable-next-line no-console
+                    const accountData = account as {
+                        id?: string;
+                        email?: string;
+                        phone?: string;
+                        name?: string;
+                        profileImage?: string;
+                        [key: string]: unknown;
+                    };
                     console.log('=== Para User Data ===');
                     // eslint-disable-next-line no-console
                     console.log('Account:', {
-                        id: account.id,
-                        email: account.email,
-                        phone: account.phone,
-                        name: account.name,
-                        profileImage: account.profileImage,
+                        id: accountData.id,
+                        email: accountData.email,
+                        phone: accountData.phone,
+                        name: accountData.name,
+                        profileImage: accountData.profileImage,
                     });
                     // eslint-disable-next-line no-console
                     console.log('Wallet:', {
                         id: wallet.id,
                         address: wallet.address,
-                        chain: wallet.chain,
+                        chain: (wallet as { chain?: string })?.chain,
                     });
                     // eslint-disable-next-line no-console
                     console.log('Para JWT Token:', jwtToken);
@@ -95,21 +109,27 @@ export const ParaContextProvider: React.FC<ParaContextProviderProps> = ({
             wallet: wallet
                 ? {
                       id: wallet.id,
-                      address: wallet.address,
-                      chain: wallet.chain,
+                      address: wallet.address ?? '',
+                      chain: (wallet as { chain?: string })?.chain,
                   }
                 : null,
             account: account
                 ? {
-                      id: account.id,
-                      email: account.email,
-                      phone: account.phone,
-                      name: account.name,
-                      profileImage: account.profileImage,
+                      id: (account as { id?: string })?.id ?? '',
+                      email: (account as { email?: string })?.email,
+                      phone: (account as { phone?: string })?.phone,
+                      name: (account as { name?: string })?.name,
+                      profileImage: (
+                          account as {
+                              profileImage?: string;
+                          }
+                      )?.profileImage,
                   }
                 : null,
             isConnected,
             openModal: async (): Promise<void> => {
+                // Use the latest openModal function from Para's useModal hook
+                // This ensures we always use the current modal state
                 await openModal();
             },
             signMessage: async (
@@ -120,15 +140,27 @@ export const ParaContextProvider: React.FC<ParaContextProviderProps> = ({
                     walletId,
                     messageBase64,
                 });
-                return result.signature ?? result;
+                // Result might be a string or an object with signature
+                return typeof result === 'string'
+                    ? result
+                    : ((result as { signature?: string })?.signature ?? '');
             },
             signTransaction: async (
                 walletId: string,
                 transaction: unknown
             ): Promise<unknown> => {
+                // Para SDK expects rlpEncodedTxBase64 and chainId
+                // For now, we'll need to handle this based on the actual transaction format
+                // This is a placeholder - actual implementation depends on transaction type
+                const tx = transaction as {
+                    rlpEncodedTxBase64?: string;
+                    chainId?: string;
+                    [key: string]: unknown;
+                };
                 const result = await signTransactionAsync({
                     walletId,
-                    transaction,
+                    rlpEncodedTxBase64: tx.rlpEncodedTxBase64 ?? '',
+                    chainId: tx.chainId ?? '',
                 });
                 return result;
             },
@@ -137,14 +169,15 @@ export const ParaContextProvider: React.FC<ParaContextProviderProps> = ({
             },
             issueJWT: async (): Promise<string> => {
                 const result = await issueJwtAsync();
-                return result.jwt ?? result;
+                // Result is { token: string; keyId: string }
+                return typeof result === 'string' ? result : result.token;
             },
         }),
         [
             isConnected,
             wallet,
             account,
-            openModal,
+            openModal, // Include openModal in dependencies to ensure we use latest function
             signMessageAsync,
             signTransactionAsync,
             logoutAsync,
@@ -152,12 +185,27 @@ export const ParaContextProvider: React.FC<ParaContextProviderProps> = ({
         ]
     );
 
-    // Create adapter instance
+    // Create adapter instance - use useMemo with stable dependencies
+    // Only recreate when paraSDK reference changes (which happens when Para state changes)
+    const accountId = account ? (account as { id?: string })?.id : null;
+    const walletId = wallet?.id;
+
     const adapter = React.useMemo(() => {
         const paraAdapter = new ParaAdapter(paraSDK);
         paraAdapter.setSDK(paraSDK);
         return paraAdapter;
-    }, [paraSDK]);
+    }, [
+        // Only recreate when these core values change, not on every render
+        isConnected,
+        accountId, // Use account ID as dependency instead of whole account object
+        walletId, // Use wallet ID as dependency instead of whole wallet object
+    ]);
+
+    // Update adapter's SDK reference immediately when Para state changes
+    // This ensures the adapter always has the latest state without recreating it
+    React.useEffect(() => {
+        adapter.setSDK(paraSDK);
+    }, [adapter, paraSDK]);
 
     return (
         <ParaContext.Provider
@@ -168,8 +216,23 @@ export const ParaContextProvider: React.FC<ParaContextProviderProps> = ({
                 account,
             }}
         >
-            {children}
+            <ParaAdapterProvider adapter={adapter}>
+                {children}
+            </ParaAdapterProvider>
         </ParaContext.Provider>
+    );
+};
+
+/**
+ * Component that provides the Para adapter to AuthProviderWrapper
+ * This bridges ParaContext (adapter layer) with AuthContext (domain layer)
+ */
+const ParaAdapterProvider: React.FC<{
+    children: ReactNode;
+    adapter: ParaAdapter;
+}> = ({ children, adapter }) => {
+    return (
+        <AuthProviderWrapper adapter={adapter}>{children}</AuthProviderWrapper>
     );
 };
 

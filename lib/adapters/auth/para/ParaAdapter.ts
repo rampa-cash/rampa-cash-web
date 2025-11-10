@@ -11,6 +11,7 @@ import {
     AuthToken,
     LoginOptions,
     AuthError,
+    WalletInfo,
 } from '@/domain/auth/interfaces/authentication-service.interface';
 import { BACKEND_CONFIG, API_ENDPOINTS } from '@/lib/constants';
 
@@ -95,6 +96,21 @@ export class ParaAdapter implements IAuthPort {
 
             if (!this.paraSDK) {
                 throw new Error('Para SDK not initialized');
+            }
+
+            // Check if already connected - if so, return current user
+            if (
+                this.paraSDK.isConnected &&
+                this.paraSDK.account &&
+                this.paraSDK.wallet
+            ) {
+                // eslint-disable-next-line no-console
+                console.log('Already authenticated, returning current user');
+                const currentUser = this.getCurrentAccount();
+                if (currentUser) {
+                    this.isLoadingState = false;
+                    return currentUser;
+                }
             }
 
             // Open Para modal for authentication
@@ -424,6 +440,80 @@ export class ParaAdapter implements IAuthPort {
                     : 'Failed to sign transaction'
             );
         }
+    }
+
+    /**
+     * Get current connection state (synchronous, for React reactivity)
+     */
+    getIsConnected(): boolean {
+        return this.paraSDK?.isConnected ?? false;
+    }
+
+    /**
+     * Get current account/user (synchronous, for React reactivity)
+     */
+    getCurrentAccount(): AuthUser | null {
+        if (!this.paraSDK?.account || !this.paraSDK?.wallet) {
+            return null;
+        }
+
+        // Return account data mapped to AuthUser format
+        return {
+            id: this.paraSDK.account.id,
+            email: this.paraSDK.account.email,
+            phone: this.paraSDK.account.phone,
+            name: this.paraSDK.account.name,
+            profileImage: this.paraSDK.account.profileImage,
+            walletAddress: this.paraSDK.wallet.address,
+            wallets: this.paraSDK.wallet.address
+                ? [
+                      {
+                          public_key: this.paraSDK.wallet.address,
+                          type: 'para',
+                          curve: 'ed25519',
+                      },
+                  ]
+                : undefined,
+            authProvider: 'para',
+        };
+    }
+
+    /**
+     * Get current wallet info (synchronous, for React reactivity)
+     */
+    getCurrentWallet(): WalletInfo | null {
+        if (!this.paraSDK?.wallet) {
+            return null;
+        }
+
+        return {
+            address: this.paraSDK.wallet.address,
+            chain: this.paraSDK.wallet.chain,
+            id: this.paraSDK.wallet.id,
+        };
+    }
+
+    /**
+     * Open wallet modal (for viewing wallet, switching wallets, etc.)
+     * When user is already authenticated, this opens the wallet management screen
+     */
+    async openWalletModal(): Promise<void> {
+        if (!this.paraSDK) {
+            throw new Error('Para SDK not initialized');
+        }
+
+        // Check if user is connected before opening modal
+        if (!this.paraSDK.isConnected) {
+            throw new Error('User is not authenticated. Please login first.');
+        }
+
+        // Ensure we have the latest SDK state
+        // The modal will automatically show the appropriate screen based on auth state
+        // If authenticated: shows wallet management (ACCOUNT_MAIN screen)
+        // If not authenticated: shows login flow
+        // eslint-disable-next-line no-console
+        console.log('Opening Para wallet modal (user is authenticated)');
+        await this.paraSDK.openModal();
     }
 
     /**

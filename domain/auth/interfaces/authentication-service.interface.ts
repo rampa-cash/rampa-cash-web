@@ -50,6 +50,15 @@ export interface AuthError {
 }
 
 /**
+ * Wallet information for reactive state
+ */
+export interface WalletInfo {
+    address?: string;
+    chain?: string;
+    id?: string;
+}
+
+/**
  * Authentication Port Interface
  * All authentication adapters must implement this interface
  */
@@ -123,4 +132,25 @@ export interface IAuthPort {
      * Sign a transaction
      */
     signTransaction(transaction: any): Promise<any>;
+
+    /**
+     * Get current connection state (synchronous, for React reactivity)
+     */
+    getIsConnected(): boolean;
+
+    /**
+     * Get current account/user (synchronous, for React reactivity)
+     */
+    getCurrentAccount(): AuthUser | null;
+
+    /**
+     * Get current wallet info (synchronous, for React reactivity)
+     */
+    getCurrentWallet(): WalletInfo | null;
+
+    /**
+     * Open wallet modal (for viewing wallet, switching wallets, etc.)
+     * This is different from login - it opens the wallet management modal
+     */
+    openWalletModal(): Promise<void>;
 }

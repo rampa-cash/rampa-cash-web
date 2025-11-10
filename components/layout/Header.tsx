@@ -5,7 +5,9 @@ import { useTranslation } from 'next-i18next';
 import { useRouter } from 'next/router';
 import LanguageSwitcher from '../LanguageSwitcher';
 import ThemeToggle from '../ThemeToggle';
-import AuthButton from '../AuthButton';
+import LoginButton from '../LoginButton';
+import WalletButton from '../WalletButton';
+import LogoutButton from '../LogoutButton';
 
 const Header = (): JSX.Element => {
     const { t } = useTranslation('common');
@@ -139,14 +141,20 @@ const Header = (): JSX.Element => {
 
                     <LanguageSwitcher />
                     <ThemeToggle />
-                    <AuthButton variant="desktop" />
+                    <div className="flex items-center space-x-2">
+                        <LoginButton variant="desktop" />
+                        <WalletButton variant="desktop" />
+                        <LogoutButton variant="desktop" />
+                    </div>
                 </div>
 
                 {/* Mobile Menu Button and Language Switcher */}
                 <div className="flex items-center md:hidden space-x-2">
                     <LanguageSwitcher />
                     <ThemeToggle />
-                    <AuthButton variant="mobile" />
+                    <LoginButton variant="mobile" />
+                    <WalletButton variant="mobile" />
+                    <LogoutButton variant="mobile" />
                     <button
                         className="bg-indigo-600 text-white px-2 py-1 text-xs rounded-md font-medium hover:bg-indigo-700 transition"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
