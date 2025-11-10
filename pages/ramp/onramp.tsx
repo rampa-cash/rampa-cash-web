@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticProps } from 'next';
-import { OnRamp } from '../../features/ramp';
+import { OnRamp } from '../../domain/ramp';
 
 const OnRampPage: NextPage = () => {
     return <OnRamp />;

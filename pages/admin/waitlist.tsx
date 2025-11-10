@@ -1,6 +1,6 @@
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticProps } from 'next';
-import { WaitlistAdmin } from '../../features/waitlist';
+import { WaitlistAdmin } from '../../domain/waitlist';
 
 const WaitlistAdminPage = (): JSX.Element => {
     return <WaitlistAdmin />;

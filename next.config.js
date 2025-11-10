@@ -2,6 +2,10 @@
 const nextConfig = {
     reactStrictMode: true,
     swcMinify: true,
+    compiler: {
+        // Enable styled-components support
+        styledComponents: true,
+    },
     i18n: {
         locales: ['en', 'es'],
         defaultLocale: 'en',

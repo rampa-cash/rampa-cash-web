@@ -1,6 +1,6 @@
 import React, { useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/router';
-import { useWeb3Auth } from '../hooks/useWeb3Auth';
+import { useAuth } from '../contexts/AuthContext';
 import { FEATURE_FLAGS } from '@/lib/constants';
 
 interface AuthGuardProps {
@@ -25,7 +25,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
     requireAuth = true,
 }) => {
     const router = useRouter();
-    const { isAuthenticated, isLoading, error } = useWeb3Auth();
+    const { isAuthenticated, isLoading, error } = useAuth();
 
     useEffect(() => {
         // Don't redirect if feature is disabled
@@ -91,7 +91,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
                         <h2 className="text-xl font-semibold text-gray-900 mb-2">
                             Authentication Error
                         </h2>
-                        <p className="text-gray-600 mb-4">{error}</p>
+                        <p className="text-gray-600 mb-4">{error.message}</p>
                         <button
                             onClick={() => router.push('/')}
                             className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition-colors"
