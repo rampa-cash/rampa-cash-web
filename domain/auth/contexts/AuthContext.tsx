@@ -76,7 +76,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 }) => {
     const [user, setUser] = useState<AuthUser | null>(null);
     const [isInitialized, setIsInitialized] = useState(false);
-    const [verificationStatus, setVerificationStatus] = useState<VerificationStatus | null>(null);
+    const [verificationStatus, setVerificationStatus] =
+        useState<VerificationStatus | null>(null);
 
     // Initialize adapter (only once)
     useEffect(() => {
@@ -269,15 +270,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     }, [adapter]);
 
     // Get verification status
-    const getVerificationStatus = useCallback(async (): Promise<VerificationStatus> => {
-        // Check if adapter has getVerificationStatus method
-        if (typeof (adapter as any).getVerificationStatus === 'function') {
-            const status = await (adapter as any).getVerificationStatus();
-            setVerificationStatus(status);
-            return status;
-        }
-        throw new Error('Verification status not supported by adapter');
-    }, [adapter]);
+    const getVerificationStatus =
+        useCallback(async (): Promise<VerificationStatus> => {
+            // Check if adapter has getVerificationStatus method
+            if (typeof (adapter as any).getVerificationStatus === 'function') {
+                const status = await (adapter as any).getVerificationStatus();
+                setVerificationStatus(status);
+                return status;
+            }
+            throw new Error('Verification status not supported by adapter');
+        }, [adapter]);
 
     // Refresh verification status
     const refreshVerificationStatus = useCallback(async () => {
@@ -285,19 +287,23 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
     }, [getVerificationStatus]);
 
     // Check if can perform financial operations
-    const canPerformFinancialOperations = useCallback(async (): Promise<boolean> => {
-        // Check if adapter has canPerformFinancialOperations method
-        if (typeof (adapter as any).canPerformFinancialOperations === 'function') {
-            return await (adapter as any).canPerformFinancialOperations();
-        }
-        // Fallback: check verification status
-        try {
-            const status = await getVerificationStatus();
-            return status.isVerified;
-        } catch {
-            return false;
-        }
-    }, [adapter, getVerificationStatus]);
+    const canPerformFinancialOperations =
+        useCallback(async (): Promise<boolean> => {
+            // Check if adapter has canPerformFinancialOperations method
+            if (
+                typeof (adapter as any).canPerformFinancialOperations ===
+                'function'
+            ) {
+                return await (adapter as any).canPerformFinancialOperations();
+            }
+            // Fallback: check verification status
+            try {
+                const status = await getVerificationStatus();
+                return status.isVerified;
+            } catch {
+                return false;
+            }
+        }, [adapter, getVerificationStatus]);
 
     // Poll verification status after login
     useEffect(() => {

@@ -44,7 +44,7 @@ export const ParaContextProvider: React.FC<ParaContextProviderProps> = ({
     const { signTransactionAsync } = useSignTransaction();
     const { issueJwtAsync } = useIssueJwt();
     const { logoutAsync } = useParaLogout();
-    
+
     // Use useClient hook to get Para client instance
     // Reference: https://docs.getpara.com/v2/react/guides/sessions-transfer
     const paraClient = useClient();
@@ -182,21 +182,29 @@ export const ParaContextProvider: React.FC<ParaContextProviderProps> = ({
                 // Reference: https://docs.getpara.com/v2/react/guides/sessions-transfer
                 try {
                     if (!paraClient) {
-                        throw new Error('Para client not available. Make sure you are logged in.');
+                        throw new Error(
+                            'Para client not available. Make sure you are logged in.'
+                        );
                     }
-                    
+
                     // Export session using the Para client
                     // By default, this includes signers. Use { excludeSigners: true } if signing not needed on server
                     const result = await paraClient.exportSession();
-                    
+
                     // The result should be a string (serialized session)
                     if (typeof result === 'string') {
                         return result;
-                    } else if (result && typeof result === 'object' && 'session' in result) {
+                    } else if (
+                        result &&
+                        typeof result === 'object' &&
+                        'session' in result
+                    ) {
                         // Handle case where result is an object with session property
                         return (result as { session: string }).session;
                     } else {
-                        throw new Error('Unexpected exportSession result format');
+                        throw new Error(
+                            'Unexpected exportSession result format'
+                        );
                     }
                 } catch (error) {
                     throw new Error(

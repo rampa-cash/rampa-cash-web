@@ -107,7 +107,9 @@ export class ParaAdapter implements IAuthPort {
                 this.paraSDK.wallet
             ) {
                 // eslint-disable-next-line no-console
-                console.log('Already authenticated, importing session to backend');
+                console.log(
+                    'Already authenticated, importing session to backend'
+                );
                 const currentUser = this.getCurrentAccount();
                 if (currentUser) {
                     // Still need to import session to backend
@@ -167,7 +169,10 @@ export class ParaAdapter implements IAuthPort {
                 walletAddress: user.walletAddress,
             });
             // eslint-disable-next-line no-console
-            console.log('Session Token:', this.backendToken?.substring(0, 10) + '...');
+            console.log(
+                'Session Token:',
+                this.backendToken?.substring(0, 10) + '...'
+            );
             // eslint-disable-next-line no-console
             console.log('Token Expiry:', this.tokenExpiry);
             // eslint-disable-next-line no-console
@@ -197,8 +202,11 @@ export class ParaAdapter implements IAuthPort {
         // Try to export session from Para SDK
         // First try the exportSession method if available
         let serializedSession: string;
-        
-        if (this.paraSDK.exportSession && typeof this.paraSDK.exportSession === 'function') {
+
+        if (
+            this.paraSDK.exportSession &&
+            typeof this.paraSDK.exportSession === 'function'
+        ) {
             serializedSession = await this.paraSDK.exportSession();
         } else {
             // Fallback: Try to access Para client directly
@@ -211,7 +219,7 @@ export class ParaAdapter implements IAuthPort {
                 // This is a workaround - ideally Para SDK should provide exportSession hook
                 throw new Error(
                     'Cannot export session: exportSession method not available. ' +
-                    'Please ensure Para SDK is properly initialized and exportSession is accessible.'
+                        'Please ensure Para SDK is properly initialized and exportSession is accessible.'
                 );
             }
         }

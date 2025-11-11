@@ -70,7 +70,7 @@ export const serverRequest = async <T>(
                 response?: { data?: unknown; status?: number };
                 message?: string;
             };
-            
+
             // Handle 401 - try to refresh session and retry once
             if (axiosError.response?.status === 401 && retryCount === 0) {
                 // Try to refresh token if refresh function is available
@@ -79,15 +79,24 @@ export const serverRequest = async <T>(
                         const newToken = await globalTokenRefreshFn();
                         if (newToken) {
                             // Retry with new token
-                            return serverRequest(method, url, newToken, data, retryCount + 1);
+                            return serverRequest(
+                                method,
+                                url,
+                                newToken,
+                                data,
+                                retryCount + 1
+                            );
                         }
                     } catch (refreshError) {
                         // eslint-disable-next-line no-console
-                        console.error('Failed to refresh token on 401 error:', refreshError);
+                        console.error(
+                            'Failed to refresh token on 401 error:',
+                            refreshError
+                        );
                     }
                 }
             }
-            
+
             const errMsg =
                 axiosError.response?.data ??
                 axiosError.message ??
