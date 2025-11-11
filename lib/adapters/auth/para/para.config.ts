@@ -13,8 +13,8 @@ export interface ParaConfig {
 }
 
 export interface ParaModalConfig {
-    oAuthMethods?: string[];
-    authLayout?: string[];
+    oAuthMethods?: ('GOOGLE' | 'TWITTER' | 'APPLE' | 'DISCORD' | 'FACEBOOK' | 'FARCASTER' | 'TELEGRAM')[];
+    authLayout?: ('AUTH:FULL' | 'AUTH:CONDENSED' | 'EXTERNAL:FULL' | 'EXTERNAL:CONDENSED')[];
     recoverySecretStepEnabled?: boolean;
     hideWallets?: boolean;
     onRampTestMode?: boolean;
@@ -51,8 +51,8 @@ export const getParaConfig = (): ParaConfig => {
 
 export const getParaModalConfig = (): ParaModalConfig => {
     return {
-        oAuthMethods: ['GOOGLE', 'APPLE'],
-        authLayout: ['AUTH:FULL'],
+        oAuthMethods: ['GOOGLE', 'APPLE'] as ('GOOGLE' | 'APPLE')[],
+        authLayout: ['AUTH:FULL'] as ('AUTH:FULL' | 'AUTH:CONDENSED' | 'EXTERNAL:FULL' | 'EXTERNAL:CONDENSED')[],
         recoverySecretStepEnabled: true,
         hideWallets: true,
         onRampTestMode: true,
