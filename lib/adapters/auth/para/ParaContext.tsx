@@ -16,6 +16,7 @@ import {
     useSignTransaction,
     useIssueJwt,
     useLogout as useParaLogout,
+    useClient,
 } from '@getpara/react-sdk';
 import { ParaAdapter } from './ParaAdapter';
 import { AuthProviderWrapper } from '@/domain/auth/contexts/AuthContext';
@@ -43,6 +44,10 @@ export const ParaContextProvider: React.FC<ParaContextProviderProps> = ({
     const { signTransactionAsync } = useSignTransaction();
     const { issueJwtAsync } = useIssueJwt();
     const { logoutAsync } = useParaLogout();
+
+    // Use useClient hook to get Para client instance
+    // Reference: https://docs.getpara.com/v2/react/guides/sessions-transfer
+    const paraClient = useClient();
 
     // Extract values from query results
     const isConnected = accountResult.isConnected ?? false;
@@ -172,6 +177,41 @@ export const ParaContextProvider: React.FC<ParaContextProviderProps> = ({
                 // Result is { token: string; keyId: string }
                 return typeof result === 'string' ? result : result.token;
             },
+            exportSession: async (): Promise<string> => {
+                // Use useClient hook to access Para client and export session
+                // Reference: https://docs.getpara.com/v2/react/guides/sessions-transfer
+                try {
+                    if (!paraClient) {
+                        throw new Error(
+                            'Para client not available. Make sure you are logged in.'
+                        );
+                    }
+
+                    // Export session using the Para client
+                    // By default, this includes signers. Use { excludeSigners: true } if signing not needed on server
+                    const result = await paraClient.exportSession();
+
+                    // The result should be a string (serialized session)
+                    if (typeof result === 'string') {
+                        return result;
+                    } else if (
+                        result &&
+                        typeof result === 'object' &&
+                        'session' in result
+                    ) {
+                        // Handle case where result is an object with session property
+                        return (result as { session: string }).session;
+                    } else {
+                        throw new Error(
+                            'Unexpected exportSession result format'
+                        );
+                    }
+                } catch (error) {
+                    throw new Error(
+                        `Failed to export session: ${error instanceof Error ? error.message : 'Unknown error'}`
+                    );
+                }
+            },
         }),
         [
             isConnected,
@@ -182,6 +222,7 @@ export const ParaContextProvider: React.FC<ParaContextProviderProps> = ({
             signTransactionAsync,
             logoutAsync,
             issueJwtAsync,
+            paraClient, // Include paraClient in dependencies
         ]
     );
 

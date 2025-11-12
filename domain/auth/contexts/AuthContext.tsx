@@ -22,6 +22,13 @@ import {
     AuthError,
 } from '../interfaces/authentication-service.interface';
 import { FEATURE_FLAGS } from '@/lib/constants';
+import { setTokenRefreshFunction } from '@/lib/api-client';
+
+interface VerificationStatus {
+    verificationStatus: string;
+    missingFields: string[];
+    isVerified: boolean;
+}
 
 interface AuthContextType {
     // User state
@@ -45,6 +52,13 @@ interface AuthContextType {
     signTransaction: (transaction: any) => Promise<any>;
     openWalletModal: () => Promise<void>;
 
+    // Verification status
+    verificationStatus: VerificationStatus | null;
+    isVerified: boolean;
+    getVerificationStatus: () => Promise<VerificationStatus>;
+    refreshVerificationStatus: () => Promise<void>;
+    canPerformFinancialOperations: () => Promise<boolean>;
+
     // Error handling
     clearError: () => void;
 }
@@ -62,6 +76,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
 }) => {
     const [user, setUser] = useState<AuthUser | null>(null);
     const [isInitialized, setIsInitialized] = useState(false);
+    const [verificationStatus, setVerificationStatus] =
+        useState<VerificationStatus | null>(null);
 
     // Initialize adapter (only once)
     useEffect(() => {
@@ -80,6 +96,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
             void init();
         }
     }, [adapter, isInitialized]);
+
+    // Set token refresh function for api-client (reactive refresh on 401)
+    useEffect(() => {
+        setTokenRefreshFunction(async () => {
+            try {
+                await adapter.refreshToken();
+                return await adapter.getToken();
+            } catch (error) {
+                // eslint-disable-next-line no-console
+                console.error('Failed to refresh token in api-client:', error);
+                return null;
+            }
+        });
+    }, [adapter]);
 
     // Sync user state with adapter's reactive state
     // Use a ref to track previous state and avoid unnecessary updates
@@ -239,6 +269,70 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         adapter.clearError();
     }, [adapter]);
 
+    // Get verification status
+    const getVerificationStatus =
+        useCallback(async (): Promise<VerificationStatus> => {
+            // Check if adapter has getVerificationStatus method
+            if (typeof (adapter as any).getVerificationStatus === 'function') {
+                const status = await (adapter as any).getVerificationStatus();
+                setVerificationStatus(status);
+                return status;
+            }
+            throw new Error('Verification status not supported by adapter');
+        }, [adapter]);
+
+    // Refresh verification status
+    const refreshVerificationStatus = useCallback(async () => {
+        await getVerificationStatus();
+    }, [getVerificationStatus]);
+
+    // Check if can perform financial operations
+    const canPerformFinancialOperations =
+        useCallback(async (): Promise<boolean> => {
+            // Check if adapter has canPerformFinancialOperations method
+            if (
+                typeof (adapter as any).canPerformFinancialOperations ===
+                'function'
+            ) {
+                return await (adapter as any).canPerformFinancialOperations();
+            }
+            // Fallback: check verification status
+            try {
+                const status = await getVerificationStatus();
+                return status.isVerified;
+            } catch {
+                return false;
+            }
+        }, [adapter, getVerificationStatus]);
+
+    // Poll verification status after login
+    useEffect(() => {
+        if (!isAuthenticated) {
+            setVerificationStatus(null);
+            return;
+        }
+
+        // Initial fetch
+        const fetchStatus = async () => {
+            try {
+                await getVerificationStatus();
+            } catch (error) {
+                // eslint-disable-next-line no-console
+                console.error('Failed to fetch verification status:', error);
+            }
+        };
+
+        fetchStatus();
+
+        // Poll every 30 seconds
+        const interval = setInterval(fetchStatus, 30000);
+
+        return () => clearInterval(interval);
+    }, [isAuthenticated, getVerificationStatus]);
+
+    // Derived verification state
+    const isVerified = verificationStatus?.isVerified ?? false;
+
     // Context value
     const contextValue: AuthContextType = {
         user,
@@ -254,6 +348,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({
         signMessage,
         signTransaction,
         openWalletModal,
+        verificationStatus,
+        isVerified,
+        getVerificationStatus,
+        refreshVerificationStatus,
+        canPerformFinancialOperations,
         clearError,
     };
 

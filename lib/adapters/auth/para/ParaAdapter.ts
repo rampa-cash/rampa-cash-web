@@ -44,6 +44,7 @@ interface ParaSDK {
     ) => Promise<unknown>;
     logout: () => Promise<void>;
     issueJWT: () => Promise<string>;
+    exportSession?: () => Promise<string>; // Add exportSession method
 }
 
 export class ParaAdapter implements IAuthPort {
@@ -52,6 +53,7 @@ export class ParaAdapter implements IAuthPort {
     private errorState: AuthError | null = null;
     private backendToken: string | null = null;
     private tokenExpiry: number | null = null;
+    private refreshTimer: NodeJS.Timeout | null = null;
 
     constructor(paraSDK?: ParaSDK) {
         if (paraSDK) {
@@ -98,16 +100,20 @@ export class ParaAdapter implements IAuthPort {
                 throw new Error('Para SDK not initialized');
             }
 
-            // Check if already connected - if so, return current user
+            // Check if already connected - if so, import session and return current user
             if (
                 this.paraSDK.isConnected &&
                 this.paraSDK.account &&
                 this.paraSDK.wallet
             ) {
                 // eslint-disable-next-line no-console
-                console.log('Already authenticated, returning current user');
+                console.log(
+                    'Already authenticated, importing session to backend'
+                );
                 const currentUser = this.getCurrentAccount();
                 if (currentUser) {
+                    // Still need to import session to backend
+                    await this.importSessionToBackend();
                     this.isLoadingState = false;
                     return currentUser;
                 }
@@ -139,28 +145,8 @@ export class ParaAdapter implements IAuthPort {
                 );
             }
 
-            // Get Para JWT token
-            const paraJWT = await this.paraSDK.issueJWT();
-
-            // Log Para JWT token for backend handshake
-            // eslint-disable-next-line no-console
-            console.log('=== Para Login - JWT Token for Backend ===');
-            // eslint-disable-next-line no-console
-            console.log('Para JWT Token:', paraJWT);
-            // eslint-disable-next-line no-console
-            console.log('==========================================');
-
-            // Exchange Para JWT for backend token
-            const backendResponse = await this.exchangeToken(paraJWT);
-
-            // Store backend token
-            this.backendToken = backendResponse.accessToken;
-            if (backendResponse.expiresAt) {
-                this.tokenExpiry = backendResponse.expiresAt;
-            } else if (backendResponse.expiresIn) {
-                this.tokenExpiry =
-                    Date.now() + backendResponse.expiresIn * 1000;
-            }
+            // NEW: Export session and send to backend
+            await this.importSessionToBackend();
 
             // Build user object
             const user = await this.getUser();
@@ -168,9 +154,11 @@ export class ParaAdapter implements IAuthPort {
                 throw new Error('Failed to get user after login');
             }
 
-            // Log complete user data and tokens after successful login
+            // Start background refresh
+            this.startBackgroundRefresh();
+
             // eslint-disable-next-line no-console
-            console.log('=== Para Login Success - Complete User Data ===');
+            console.log('=== Para Login Success ===');
             // eslint-disable-next-line no-console
             console.log('User Data:', {
                 id: user.id,
@@ -179,16 +167,16 @@ export class ParaAdapter implements IAuthPort {
                 name: user.name,
                 profileImage: user.profileImage,
                 walletAddress: user.walletAddress,
-                wallets: user.wallets,
             });
             // eslint-disable-next-line no-console
-            console.log('Para JWT Token (for backend handshake):', paraJWT);
-            // eslint-disable-next-line no-console
-            console.log('Backend Access Token:', this.backendToken);
+            console.log(
+                'Session Token:',
+                this.backendToken?.substring(0, 10) + '...'
+            );
             // eslint-disable-next-line no-console
             console.log('Token Expiry:', this.tokenExpiry);
             // eslint-disable-next-line no-console
-            console.log('==============================================');
+            console.log('========================');
 
             this.isLoadingState = false;
             return user;
@@ -203,10 +191,81 @@ export class ParaAdapter implements IAuthPort {
         }
     }
 
+    /**
+     * Import session to backend by exporting Para session and sending it
+     */
+    private async importSessionToBackend(): Promise<void> {
+        if (!this.paraSDK?.isConnected) {
+            throw new Error('Para SDK not connected');
+        }
+
+        // Try to export session from Para SDK
+        // First try the exportSession method if available
+        let serializedSession: string;
+
+        if (
+            this.paraSDK.exportSession &&
+            typeof this.paraSDK.exportSession === 'function'
+        ) {
+            serializedSession = await this.paraSDK.exportSession();
+        } else {
+            // Fallback: Try to access Para client directly
+            // The Para client might be available through the SDK
+            const paraClient = (this.paraSDK as any).client;
+            if (paraClient && typeof paraClient.exportSession === 'function') {
+                serializedSession = await paraClient.exportSession();
+            } else {
+                // If we can't export session, we need to get it from Para SDK hooks
+                // This is a workaround - ideally Para SDK should provide exportSession hook
+                throw new Error(
+                    'Cannot export session: exportSession method not available. ' +
+                        'Please ensure Para SDK is properly initialized and exportSession is accessible.'
+                );
+            }
+        }
+
+        // Send to backend
+        const response = await fetch(
+            `${BACKEND_CONFIG.baseURL}/auth/session/import`,
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ serializedSession }),
+            }
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(
+                errorData.message || 'Failed to import session to backend'
+            );
+        }
+
+        const { sessionToken, user, expiresAt } = await response.json();
+
+        // Store sessionToken
+        this.backendToken = sessionToken;
+        this.tokenExpiry = new Date(expiresAt).getTime();
+
+        // Log for debugging
+        // eslint-disable-next-line no-console
+        console.log('Session imported successfully:', {
+            sessionToken: sessionToken.substring(0, 10) + '...',
+            userId: user?.id,
+            isVerified: user?.isVerified,
+        });
+    }
+
     async logout(): Promise<void> {
         try {
             this.isLoadingState = true;
             this.clearError();
+
+            // Clear background refresh timer
+            if (this.refreshTimer) {
+                clearInterval(this.refreshTimer);
+                this.refreshTimer = null;
+            }
 
             // Clear backend token
             this.backendToken = null;
@@ -228,6 +287,10 @@ export class ParaAdapter implements IAuthPort {
             // Still clear local state even if Para logout fails
             this.backendToken = null;
             this.tokenExpiry = null;
+            if (this.refreshTimer) {
+                clearInterval(this.refreshTimer);
+                this.refreshTimer = null;
+            }
             throw error;
         }
     }
@@ -297,22 +360,17 @@ export class ParaAdapter implements IAuthPort {
 
     async getToken(): Promise<string | null> {
         try {
-            // Return backend token if valid
+            // Proactive refresh before returning token
+            await this.refreshSessionIfNeeded();
+
+            // Return backend sessionToken if valid
             if (this.backendToken && this.isTokenValid()) {
                 return this.backendToken;
             }
 
-            // If no valid token, try to refresh
+            // If no valid token and user is connected, try to re-import session
             if (this.paraSDK?.isConnected) {
-                const paraJWT = await this.paraSDK.issueJWT();
-                const backendResponse = await this.exchangeToken(paraJWT);
-                this.backendToken = backendResponse.accessToken;
-                if (backendResponse.expiresAt) {
-                    this.tokenExpiry = backendResponse.expiresAt;
-                } else if (backendResponse.expiresIn) {
-                    this.tokenExpiry =
-                        Date.now() + backendResponse.expiresIn * 1000;
-                }
+                await this.importSessionToBackend();
                 return this.backendToken;
             }
 
@@ -354,26 +412,31 @@ export class ParaAdapter implements IAuthPort {
 
     async refreshToken(): Promise<AuthToken | null> {
         try {
-            if (!this.paraSDK || !this.paraSDK.isConnected) {
+            if (!this.backendToken) {
                 return null;
             }
 
-            const paraJWT = await this.paraSDK.issueJWT();
-            const backendResponse = await this.exchangeToken(paraJWT);
+            const response = await fetch(
+                `${BACKEND_CONFIG.baseURL}/auth/session/refresh`,
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sessionToken: this.backendToken }),
+                }
+            );
 
-            this.backendToken = backendResponse.accessToken;
-            if (backendResponse.expiresAt) {
-                this.tokenExpiry = backendResponse.expiresAt;
-            } else if (backendResponse.expiresIn) {
-                this.tokenExpiry =
-                    Date.now() + backendResponse.expiresIn * 1000;
+            if (!response.ok) {
+                return null;
             }
 
+            const { sessionToken, expiresAt } = await response.json();
+
+            this.backendToken = sessionToken;
+            this.tokenExpiry = new Date(expiresAt).getTime();
+
             return {
-                accessToken: backendResponse.accessToken,
-                refreshToken: backendResponse.refreshToken,
-                expiresIn: backendResponse.expiresIn,
-                expiresAt: this.tokenExpiry ?? undefined,
+                accessToken: sessionToken,
+                expiresAt: this.tokenExpiry,
             };
         } catch (error) {
             // eslint-disable-next-line no-console
@@ -517,32 +580,75 @@ export class ParaAdapter implements IAuthPort {
     }
 
     /**
-     * Exchange Para JWT for backend token
+     * Proactive refresh: Check if session needs refresh and refresh if needed
      */
-    private async exchangeToken(paraJWT: string): Promise<{
-        accessToken: string;
-        refreshToken?: string;
-        expiresIn?: number;
-        expiresAt?: number;
+    private async refreshSessionIfNeeded(): Promise<void> {
+        if (!this.backendToken || !this.tokenExpiry) return;
+
+        const now = Date.now();
+        const timeUntilExpiry = this.tokenExpiry - now;
+        const refreshThreshold = 5 * 60 * 1000; // 5 minutes before expiry
+
+        if (timeUntilExpiry < refreshThreshold) {
+            await this.refreshToken();
+        }
+    }
+
+    /**
+     * Start background refresh timer
+     */
+    private startBackgroundRefresh(): void {
+        if (this.refreshTimer) {
+            clearInterval(this.refreshTimer);
+        }
+
+        this.refreshTimer = setInterval(async () => {
+            await this.refreshSessionIfNeeded();
+        }, 60 * 1000); // Check every minute
+    }
+
+    /**
+     * Get verification status from backend
+     */
+    async getVerificationStatus(): Promise<{
+        verificationStatus: string;
+        missingFields: string[];
+        isVerified: boolean;
     }> {
+        const token = await this.getToken();
+        if (!token) {
+            throw new Error('Not authenticated');
+        }
+
         const response = await fetch(
-            `${BACKEND_CONFIG.baseURL}${API_ENDPOINTS.auth.paraValidate}`,
+            `${BACKEND_CONFIG.baseURL}/user/verification-status`,
             {
-                method: 'POST',
+                method: 'GET',
                 headers: {
+                    Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    token: paraJWT,
-                }),
             }
         );
 
         if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.message || 'Token validation failed');
+            throw new Error('Failed to get verification status');
         }
 
         return await response.json();
+    }
+
+    /**
+     * Check if user can perform financial operations
+     */
+    async canPerformFinancialOperations(): Promise<boolean> {
+        try {
+            const status = await this.getVerificationStatus();
+            return status.isVerified;
+        } catch (error) {
+            // eslint-disable-next-line no-console
+            console.error('Failed to check verification status:', error);
+            return false;
+        }
     }
 }
