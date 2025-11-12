@@ -81,7 +81,7 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
                         config={{
                             appName: paraConfig.appName,
                         }}
-                        paraModalConfig={paraModalConfig}
+                        paraModalConfig={paraModalConfig as any}
                     >
                         <ParaContextProvider>
                             <Layout>

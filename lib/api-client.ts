@@ -29,11 +29,25 @@ export class APIException<T> {
     }
 }
 
+// Optional token refresh function that can be set globally
+let globalTokenRefreshFn: (() => Promise<string | null>) | null = null;
+
+/**
+ * Set global token refresh function
+ * This allows api-client to refresh tokens on 401 errors
+ */
+export const setTokenRefreshFunction = (
+    refreshFn: () => Promise<string | null>
+): void => {
+    globalTokenRefreshFn = refreshFn;
+};
+
 export const serverRequest = async <T>(
     method: string,
     url: string,
     token: string | undefined,
-    data?: unknown
+    data?: unknown,
+    retryCount = 0
 ): Promise<T> => {
     try {
         const axiosConfig = {
@@ -56,6 +70,33 @@ export const serverRequest = async <T>(
                 response?: { data?: unknown; status?: number };
                 message?: string;
             };
+
+            // Handle 401 - try to refresh session and retry once
+            if (axiosError.response?.status === 401 && retryCount === 0) {
+                // Try to refresh token if refresh function is available
+                if (globalTokenRefreshFn) {
+                    try {
+                        const newToken = await globalTokenRefreshFn();
+                        if (newToken) {
+                            // Retry with new token
+                            return serverRequest(
+                                method,
+                                url,
+                                newToken,
+                                data,
+                                retryCount + 1
+                            );
+                        }
+                    } catch (refreshError) {
+                        // eslint-disable-next-line no-console
+                        console.error(
+                            'Failed to refresh token on 401 error:',
+                            refreshError
+                        );
+                    }
+                }
+            }
+
             const errMsg =
                 axiosError.response?.data ??
                 axiosError.message ??
