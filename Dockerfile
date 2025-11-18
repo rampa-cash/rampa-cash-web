@@ -11,11 +11,13 @@ RUN apk add --no-cache \
     make \
     g++
 
-# Copy package files
+# Copy package files and npm config
 COPY package*.json ./
+COPY .npmrc ./
 
 # Install dependencies
-RUN npm ci
+# Using --legacy-peer-deps to resolve peer dependency conflicts with @getpara packages
+RUN npm ci --legacy-peer-deps
 
 # Copy source code
 COPY . .
