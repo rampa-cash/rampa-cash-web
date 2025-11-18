@@ -2,299 +2,129 @@
 
 > Financial empowerment platform for families
 
-[![Next.js](https://img.shields.io/badge/Next.js-black?logo=next.js&logoColor=white)](*)
-[![React](https://img.shields.io/badge/React-%2320232a.svg?logo=react&logoColor=%2361DAFB)](#)
-[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff)](#)
-
-[![TailwindCSS](https://img.shields.io/badge/Tailwind%20CSS-%2338B2AC.svg?logo=tailwind-css&logoColor=white)](#)
-[![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)](#)
-
 Rampa brings Web3 and decentralized apps to real people, making it so simple that they don't realize they're using them. Built with Next.js.
 
-## 🚀 Features
+## 🚀 Quick Start (Docker)
 
-### Core Functionality
-
-- **Waitlist Management**: Simple email collection and management
-- **Multi-language Support**: English and Spanish localization
-- **Responsive Design**: Mobile-first approach with modern UI
-
-### User Experience
-
-- **Intuitive Interface**: Clean, modern UI built with Tailwind CSS
-- **Mobile-First Design**: Responsive design for all devices
-
-### Technical Features
-
-- **TypeScript**: Full type safety across the application
-- **API Routes**: RESTful API endpoints for all functionality
-- **Environment Configuration**: Secure environment variable management
-- **Error Handling**: Comprehensive error handling and user feedback
-- **Docker Support**: Containerized deployment with optimized builds
-
-## 📦 Installation
+This project is designed to run in Docker. For the complete setup, see the main [rampa-cash-docker README](../../README.md).
 
 ### Prerequisites
 
-- Node.js 18+
-- npm or yarn
+- Docker and Docker Compose installed
+- Access to the `rampa-cash-docker` repository
 
-- Docker & Docker Compose (for containerized deployment)
+### First-time Setup
 
-### Local Development Setup
+1. **Set up environment variables**:
+   ```bash
+   # Create .env file in this directory
+   # Configure backend API URL and other required variables
+   ```
 
-1. **Clone the repository**
+2. **Start services from the root directory**:
+   ```bash
+   cd ../..  # Go to rampa-cash-docker root
+   make up
+   ```
 
-    ```bash
-    git clone <repository-url>
-    cd rampa-cash-web
-    ```
+3. **Access the application**:
+   - **Frontend**: http://localhost:3000
+   - **Backend API**: http://localhost:3001
 
-2. **Install dependencies**
+### Environment Configuration
 
-    ```bash
-    npm install
-    # or
-    yarn install
-    ```
-
-3. **Environment Configuration**
-   Create a `.env.local` file in the root directory:
-
-    ```env
-
-    # Backend API Configuration
-    BACKEND_API_URL=http://localhost:8000
-    ```
-
-4. **Run the development server**
-
-    ```bash
-    npm run dev
-    # or
-    yarn dev
-    ```
-
-5. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-### Docker Setup
-
-#### Prerequisites
-
-- Docker installed on your system
-- Docker Compose installed on your system
-
-#### Production Deployment with Docker
-
-**Using Docker Compose (Recommended):**
-
-1. **Build and run the application:**
-
-    ```bash
-    docker-compose up --build
-    ```
-
-2. **Run in detached mode:**
-
-    ```bash
-    docker-compose up -d --build
-    ```
-
-3. **Stop the application:**
-    ```bash
-    docker-compose down
-    ```
-
-**Using Docker directly:**
-
-1. **Build the image:**
-
-    ```bash
-    docker build -t rampa-cash-web .
-    ```
-
-2. **Run the container:**
-    ```bash
-    docker run -p 3000:3000 --env-file .env rampa-cash-web
-    ```
-
-#### Development Mode with Docker
-
-For development with hot reloading:
-
-```bash
-docker-compose --profile dev up --build
+Create a `.env` file in this directory with:
+```env
+# Backend API Configuration
+BACKEND_API_URL=http://localhost:3001
+# Add other required environment variables
 ```
 
-This will run the development server on port 3001 with hot reloading enabled.
+## 📋 Available Commands
 
-#### Docker Features
+### Development (Inside Container)
 
-- **Production**: Multi-stage build with optimized Next.js standalone output
-- **Development**: Single-stage build with volume mounting for hot reloading
-- **Health Checks**: Built-in monitoring for API endpoints
-- **Security**: Non-root user execution
-- **Optimization**: Alpine Linux base image for minimal size
+```bash
+# Access Web container
+make shell-web  # From rampa-cash-docker root
 
-#### Ports
+# Inside container:
+npm run dev      # Start development server with hot reload
+npm run build    # Build for production
+npm run start    # Start production server
+npm run lint     # Run ESLint
+```
 
-- **Production**: `http://localhost:3000`
-- **Development**: `http://localhost:3001`
+### Using Make Commands (From Root Directory)
+
+```bash
+make shell-web   # Access Web container shell
+make logs-web    # View Web container logs
+make restart     # Restart all services
+```
 
 ## 🏗️ Project Structure
 
 ```
 rampa-cash-web/
 ├── components/          # React components
-│   ├── Navigation.tsx   # Main navigation component
-│   ├── WaitlistSignup.tsx # Waitlist signup form
+│   ├── auth/           # Authentication components
+│   ├── layout/         # Layout components
 │   └── ui/             # Reusable UI components
-├── data/               # Static data files
-│   └── waitlist.json   # Waitlist data storage
+├── domain/             # Feature modules
+│   ├── auth/           # Authentication logic
+│   ├── dashboard/      # Dashboard features
+│   ├── ramp/           # On/off-ramp features
+│   ├── transactions/   # Transaction features
+│   ├── visa-card/      # VISA card features
+│   └── wallet/         # Wallet features
 ├── lib/                # Utility libraries
 │   ├── api-client.ts   # Centralized API client
-│   ├── api-utils.ts    # API utilities & error handling
-│   ├── constants.ts    # Application constants
-│   ├── utils.ts        # General utilities
-│   └── validators.ts   # Zod validation schemas
+│   ├── api-utils.ts     # API utilities & error handling
+│   └── validators.ts    # Zod validation schemas
 ├── pages/              # Next.js pages and API routes
-│   ├── admin/          # Admin pages
-│   └── index.tsx       # Home page
 ├── public/             # Static assets
-├── styles/             # Global styles
-├── Dockerfile          # Production Docker configuration
-├── Dockerfile.dev      # Development Docker configuration
-├── docker-compose.yml  # Docker Compose configuration
-├── .dockerignore       # Docker build exclusions
-└── package.json        # Dependencies and scripts
+└── styles/             # Global styles
 ```
-
-## 🔌 API Endpoints
-
-### Waitlist Management
-
-- **POST** `/api/waitlist` - Add email to waitlist
-- **GET** `/api/waitlist` - Get waitlist count (admin)
-
-## 🚀 Deployment
-
-### Docker Deployment (Recommended)
-
-Follow the Docker setup instructions above for containerized deployment.
-
-### Vercel Deployment
-
-1. Connect your GitHub repository to Vercel
-2. Configure environment variables in Vercel dashboard
-3. Deploy automatically on push to main branch
-
-### Manual Deployment
-
-1. Build the application:
-
-    ```bash
-    npm run build
-    ```
-
-2. Start the production server:
-    ```bash
-    npm start
-    ```
-
-### Environment Variables for Production
-
-Ensure all required environment variables are set in your production environment:
-
-- `BACKEND_API_URL`
 
 ## 🔧 Development
 
-### Available Scripts
+### Hot Reload
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run start` - Start production server
-- `npm run lint` - Run ESLint
+The development server supports hot reload. Changes to files are automatically reflected in the browser.
 
 ### Code Style
 
-This project uses ESLint with Next.js configuration. Run `npm run lint` to check for code style issues.
-
-### Testing
-
-Currently, the project doesn't include automated tests. Consider adding:
-
-- Unit tests with Jest
-- Integration tests for API endpoints
-- E2E tests with Playwright or Cypress
-
-## 🔐 Security Considerations
-
-### Production Security
-
-- **Never commit private keys** to version control
-- Use environment variables for sensitive data
-- Implement proper authentication for admin routes
-- Add rate limiting to API endpoints
-- Use HTTPS in production
-
-### Docker Security
-
-- Never commit `.env` files to version control
-- Use Docker secrets for sensitive environment variables in production
-- The production container runs as a non-root user (nextjs:nodejs)
-- Regular base image updates
+This project uses ESLint with Next.js configuration:
+```bash
+make shell-web
+npm run lint
+```
 
 ## 🐛 Troubleshooting
+
+### Container Issues
+
+- View Web logs: `make logs-web`
+- Access container shell: `make shell-web`
+- Check service status: `make status` (from root directory)
+- Rebuild containers: `make build` (from root directory)
 
 ### Build Issues
 
 - Ensure all environment variables are set in `.env` file
 - Check that Docker has enough memory allocated (recommended: 4GB+)
 - Verify all dependencies are installed correctly
+- Check logs: `make logs-web`
 
-### Runtime Issues
+### Common Errors
 
-- Check container logs: `docker-compose logs`
-- Verify environment variables are loaded: `docker-compose exec rampa-cash-web env`
-- Check application logs for specific error messages
+1. **"Cannot connect to API"**: Verify backend API is running and `BACKEND_API_URL` is correct
+2. **"Port already in use"**: Ensure port 3000 is available or change it in `docker-compose.yml`
+3. **"Module not found"**: Rebuild containers: `make build` (from root directory)
 
-### Performance
+## 📚 Additional Resources
 
-- The production image uses Next.js standalone output for optimal performance
-- Alpine Linux base image keeps the container size minimal
-- Health checks ensure application availability
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is proprietary software. All rights reserved.
-
-## 🆘 Support
-
-For support and questions:
-
-- Create an issue in the repository
-- Contact the development team
-- Check the documentation
-
-## 🔮 Roadmap
-
-- [ ] Multi-language support
-- [ ] Advanced analytics dashboard
-- [ ] Mobile app development
-- [ ] Additional payment methods
-- [ ] Enhanced security features
-- [ ] Regulatory compliance tools
-
----
-
-**RAMPA** - Making Web3 invisible, making money transfers instant. 🚀
+- Main Docker setup: See [rampa-cash-docker README](../../README.md)
+- Next.js Documentation: https://nextjs.org/docs
+- React Documentation: https://react.dev/
